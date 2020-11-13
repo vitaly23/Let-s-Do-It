@@ -21,7 +21,7 @@ public class OperationController {
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public OperationBoundary getOperation(@RequestBody OperationBoundary operation) {
-		operation.setOperationId(new Identifier("Kaki", "BaTAhat"));
+		operation.setOperationId(new Identifier("default space", "default id"));
 		return operation;
 	}
 }

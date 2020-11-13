@@ -21,8 +21,8 @@ public class OperationBoundary {
 		this.type = "type";
 		this.item = new Item(new Identifier("space","id"));
 		this.createdTimestamp = new Date();
-		this.invokedBy = "Ben & Aviram Hagvarim";
-		this.operationAttributes = new HashMap<String, String>(){{put("Ben","Ze Noten li");}};
+		this.invokedBy = "Ben & Aviram";
+		this.operationAttributes = new HashMap<String, String>(){{put("","");}};
 	}
 	
 	
