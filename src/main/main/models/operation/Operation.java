@@ -1,17 +1,17 @@
 package main.models.operation;
 
 public class Operation {
-	private Identifier id;
+	private ItemIdentifier id;
 	
 	public Operation() {
-		this.id = new Identifier("123","456");
+		this.id = new ItemIdentifier("123","456");
 	}
 
-	public Identifier getId() {
+	public ItemIdentifier getId() {
 		return id;
 	}
 
-	public void setId(Identifier id) {
+	public void setId(ItemIdentifier id) {
 		this.id = id;
 	}
 }
