@@ -13,16 +13,16 @@ public class OperationBoundary {
 	public String type;
 	public Item item;
 	public Date createdTimestamp;
-	public String invokedBy; //TODO: Change it to User
-	public Map<String, String> operationAttributes;
+	public UserBoundary invokedBy; //TODO: Change it to User
+	public Map<String, Object> operationAttributes;
 	
 	public OperationBoundary() {
 		this.operationId = new ItemIdentifier("space","id");
 		this.type = "type";
 		this.item = new Item(new ItemIdentifier("space","id"));
 		this.createdTimestamp = new Date();
-		this.invokedBy = "Ben & Aviram";
-		this.operationAttributes = new HashMap<String, String>(){{put("","");}};
+		this.invokedBy = new UserBoundary();
+		this.operationAttributes = new HashMap<String, Object>(){{put("","");}};
 	}
 	
 	
@@ -50,16 +50,16 @@ public class OperationBoundary {
 	public void setCreatedTimestamp(Date createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
-	public String getInvokedBy() {
+	public UserBoundary getInvokedBy() {
 		return invokedBy;
 	}
-	public void setInvokedBy(String invokedBy) {
+	public void setInvokedBy(UserBoundary invokedBy) {
 		this.invokedBy = invokedBy;
 	}
-	public Map<String, String> getOperationAttributes() {
+	public Map<String, Object> getOperationAttributes() {
 		return operationAttributes;
 	}
-	public void setOperationAttributes(Map<String, String> operationAttributes) {
+	public void setOperationAttributes(Map<String, Object> operationAttributes) {
 		this.operationAttributes = operationAttributes;
 	}
 }

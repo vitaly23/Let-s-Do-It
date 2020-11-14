@@ -41,7 +41,7 @@ public class DigitalItemController {
 			method = RequestMethod.GET,
 			path = "/dts/items/{userSpace}/{userEmail}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public DigitalItemBoundary[] retrieveAllDigitalItems(@PathVariable("itemSpace") String itemSpace, @PathVariable("itemId") String itemId) {
+	public DigitalItemBoundary[] retrieveAllDigitalItems(@PathVariable("userSpace") String itemSpace, @PathVariable("userEmail") String itemId) {
 		return new DigitalItemBoundary[] {new DigitalItemBoundary(), new DigitalItemBoundary()};
 	}
 }
