@@ -1,16 +1,16 @@
 package main.models.operation;
 
-public class Identifier {
+public class ItemIdentifier {
 	
 	public String space;
 	public String id;
 	
-	public Identifier() {
+	public ItemIdentifier() {
 		this.space = "default space";
 		this.id = "default id";
 	}
 	
-	public Identifier(String space, String id) {
+	public ItemIdentifier(String space, String id) {
 		this.space = space;
 		this.id = id;
 	}

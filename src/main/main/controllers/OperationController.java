@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.boundaries.OperationBoundary;
-import main.models.operation.Identifier;
+import main.models.operation.ItemIdentifier;
 import main.models.operation.Operation;
 
 @RestController
@@ -21,7 +21,7 @@ public class OperationController {
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public OperationBoundary getOperation(@RequestBody OperationBoundary operation) {
-		operation.setOperationId(new Identifier("default space", "default id"));
+		operation.setOperationId(new ItemIdentifier("default space", "default id"));
 		return operation;
 	}
 }

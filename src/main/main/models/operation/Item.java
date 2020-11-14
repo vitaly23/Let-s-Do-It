@@ -1,20 +1,20 @@
 package main.models.operation;
 
 public class Item {
-	public Identifier itemId;
+	public ItemIdentifier itemId;
 	
 	public Item() {
-		this.itemId = new Identifier("","");
+		this.itemId = new ItemIdentifier("","");
 	}
-	public Item(Identifier itemId) {
+	public Item(ItemIdentifier itemId) {
 		this.itemId = itemId;
 	}
 
-	public Identifier getItemId() {
+	public ItemIdentifier getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(Identifier itemId) {
+	public void setItemId(ItemIdentifier itemId) {
 		this.itemId = itemId;
 	}
 }
