@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.boundaries.OperationBoundary;
+import main.boundaries.UserBoundary;
 
 @RestController
 public class AdminController {
@@ -32,7 +33,6 @@ public class AdminController {
 		// TODO delete all operations from DB
 	}
 	
-	/* TODO
 	@RequestMapping(
 			method = RequestMethod.GET,
 			path = "/dts/admin/users/{adminSpace}/{adminEmail}",
@@ -40,7 +40,7 @@ public class AdminController {
 	public UserBoundary[] exportAllUsers(@PathVariable("adminSpace") String adminSpace,@PathVariable("adminEmail") String adminEmail) {
 			
 		return new UserBoundary[] {new UserBoundary(), new UserBoundary()};
-	}*/
+	}
 	
 	@RequestMapping(
 			method = RequestMethod.GET,
