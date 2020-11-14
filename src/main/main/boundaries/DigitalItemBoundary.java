@@ -6,7 +6,7 @@ import java.util.Map;
 
 import main.models.operation.ItemIdentifier;
 import main.models.operation.Location;
-//import main.models.operation.UserId;
+import main.models.operation.UserId;
 
 public class DigitalItemBoundary {
 	
@@ -15,7 +15,7 @@ public class DigitalItemBoundary {
 	private String name;
 	private Boolean active;
 	private Date createdTimestamp;
-	//private UserId createdBy;
+	private UserId createdBy;
 	private Location location;
 	private Map<String, String> itemAttributes;
 	
@@ -26,7 +26,7 @@ public class DigitalItemBoundary {
 		this.name = "name";
 		this.active = true;
 		this.createdTimestamp = new Date();
-		//this.createdBy = new UserId(); TODO
+		this.createdBy = new UserId();
 		this.location = new Location();
 		this.itemAttributes = new HashMap<String,String>() {{put("key","val");}};
 	}
@@ -71,7 +71,7 @@ public class DigitalItemBoundary {
 	public void setCreatedTimestamp(Date createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
-	/*
+	
 	public UserId getCreatedBy() {
 		return createdBy;
 	}
@@ -79,7 +79,7 @@ public class DigitalItemBoundary {
 	public void setCreatedBy(UserId createdBy) {
 		this.createdBy = createdBy;
 	}
-	*/
+	
 	public Location getLocation() {
 		return location;
 	}
