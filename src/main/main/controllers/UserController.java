@@ -35,7 +35,7 @@ public class UserController {
 	public UserBoundary createNewUser (@RequestBody NewUserDetailsBoundary newUser) {
 
 		
-		return new UserBoundary(newUser);
+		return new UserBoundary();
 	}
 	@RequestMapping(method = RequestMethod.PUT,
 			path = "/dts/users/{userSpace}/{userEmail}",
