@@ -4,76 +4,75 @@
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/accessors-smart-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/android-json-0.0.20131108.vaadin1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/apiguardian-api-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/asm-5.0.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/assertj-core-3.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/byte-buddy-1.10.14.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/byte-buddy-agent-1.10.14.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/classmate-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/hamcrest-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/hibernate-validator-6.1.5.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-annotations-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-core-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-databind-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-datatype-jdk8-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-datatype-jsr310-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jackson-module-parameter-names-2.11.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jakarta.activation-api-1.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jakarta.annotation-api-1.3.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jakarta.el-3.0.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jakarta.validation-api-2.0.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jakarta.xml.bind-api-2.3.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jboss-logging-3.4.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jsonassert-1.5.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/json-path-2.4.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/json-smart-2.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/jul-to-slf4j-1.7.30.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-jupiter-5.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-jupiter-api-5.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-jupiter-engine-5.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-jupiter-params-5.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-platform-commons-1.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/junit-platform-engine-1.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/log4j-api-2.13.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/log4j-to-slf4j-2.13.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/logback-classic-1.2.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/logback-core-1.2.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/mockito-core-3.3.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/mockito-junit-jupiter-3.3.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/objenesis-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/opentest4j-1.2.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/slf4j-api-1.7.30.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/snakeyaml-1.26.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-aop-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-beans-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-autoconfigure-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-cache-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-json-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-logging-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-test-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-tomcat-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-validation-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-starter-web-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-test-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-boot-test-autoconfigure-2.3.4.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-context-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-context-support-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-core-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-expression-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-jcl-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-test-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-web-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/spring-webmvc-5.2.9.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/tomcat-embed-core-9.0.38.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/tomcat-embed-websocket-9.0.38.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Vitaly Gorelik/Desktop/ioc-web-dependencies/xmlunit-core-2.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/accessors-smart-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/android-json-0.0.20131108.vaadin1.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/apiguardian-api-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/asm-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/assertj-core-3.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/byte-buddy-1.10.14.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/byte-buddy-agent-1.10.14.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/classmate-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/hamcrest-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/hibernate-validator-6.1.5.Final.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-annotations-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-core-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-databind-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-datatype-jdk8-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-datatype-jsr310-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jackson-module-parameter-names-2.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jakarta.activation-api-1.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jakarta.annotation-api-1.3.5.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jakarta.el-3.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jakarta.validation-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jakarta.xml.bind-api-2.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jboss-logging-3.4.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jsonassert-1.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/json-path-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/json-smart-2.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/jul-to-slf4j-1.7.30.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-jupiter-5.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-jupiter-api-5.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-jupiter-engine-5.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-jupiter-params-5.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-platform-commons-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/junit-platform-engine-1.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/log4j-api-2.13.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/log4j-to-slf4j-2.13.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/logback-classic-1.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/logback-core-1.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/mockito-core-3.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/mockito-junit-jupiter-3.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/objenesis-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/opentest4j-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/slf4j-api-1.7.30.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/snakeyaml-1.26.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-aop-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-beans-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-autoconfigure-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-cache-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-json-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-logging-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-test-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-tomcat-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-validation-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-starter-web-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-test-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-boot-test-autoconfigure-2.3.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-context-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-context-support-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-core-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-expression-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-jcl-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-test-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-web-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/spring-webmvc-5.2.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/tomcat-embed-core-9.0.38.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/tomcat-embed-websocket-9.0.38.jar"/>
+	<classpathentry kind="lib" path="C:/javadevstack2021a/lib/ioc-web-dependencies/xmlunit-core-2.7.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
