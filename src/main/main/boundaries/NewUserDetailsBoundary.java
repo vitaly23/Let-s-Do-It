@@ -2,14 +2,14 @@ package main.boundaries;
 
 public class NewUserDetailsBoundary {
 	private String email;
-	private RoleBoundary role;
+	private String role;
 	private String username;
 	private String avatar;
 	
 	
 	public NewUserDetailsBoundary() {
 		this.email="demo@maildomain.com";
-		this.role=new RoleBoundary();
+		this.role="PLAYER";
 		this.username="Demo User";
 		this.avatar="ooOO_()_OOoo";
 	}
@@ -25,12 +25,12 @@ public class NewUserDetailsBoundary {
 	}
 
 
-	public RoleBoundary getRole() {
+	public String getRole() {
 		return role;
 	}
 
 
-	public void setRole(RoleBoundary role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
