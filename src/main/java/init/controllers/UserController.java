@@ -14,7 +14,8 @@ import boundaries.UserBoundary;
 public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/users/login/{userSpace}/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary retriveUserDetails(@PathVariable("userSpace") String userSpace,
+	public UserBoundary retriveUserDetails(
+			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail) {
 
 		return new UserBoundary();
@@ -28,8 +29,10 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/dts/users/{userSpace}/{userEmail}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateExistingUser(@PathVariable("userSpace") String userSpace,
-			@PathVariable("userEmail") String userEmail, @RequestBody UserBoundary updateUserDetails) {
+	public void updateExistingUser(
+			@PathVariable("userSpace") String userSpace,
+			@PathVariable("userEmail") String userEmail,
+			@RequestBody UserBoundary updateUserDetails) {
 
 	}
 
