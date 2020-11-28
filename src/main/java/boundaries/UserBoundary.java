@@ -1,16 +1,17 @@
 package boundaries;
 
+import dts.data.UserRole;
 import models.users.User;
 
 public class UserBoundary {
 	private User userId;
-	private String role;
+	private UserRole role;
 	private String username;
 	private String avatar;
 
 	public UserBoundary() {
 		this.userId = new User();
-		this.role = "PLAYER";
+		this.role = role.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
 
@@ -24,11 +25,11 @@ public class UserBoundary {
 		this.userId = userId;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

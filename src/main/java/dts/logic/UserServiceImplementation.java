@@ -45,7 +45,7 @@ public class UserServiceImplementation implements UsersService {
 		newUser.setAvatar(UserBoundary.getAvatar());
 		newUser.setRole(UserBoundary.getRole());
 		newUser.setUserId(UserBoundary.getUserId());
-		newUser.setUsername(UserBoundary.getRole());
+		newUser.setUsername(UserBoundary.getRole().toString());
 		userStorage.put(newUser.getUserId(), userConverter.toEntity(newUser));
 		return newUser; 
 	}
@@ -78,7 +78,7 @@ public class UserServiceImplementation implements UsersService {
 			current.setAvatar(UserBoundary.getAvatar());
 			current.setRole(UserBoundary.getRole());
 			current.setUserId(UserBoundary.getUserId());
-			current.setUsername(UserBoundary.getRole());
+			current.setUsername(UserBoundary.getRole().toString());
 			userStorage.put(uid, userConverter.toEntity(current));
 		}
 		return null;
