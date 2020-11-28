@@ -3,7 +3,7 @@ package models.operations;
 public class Location {
 	private double lan;
 	private double lng;
-	
+
 	public Location() {
 		this.lan = 5.3;
 		this.lng = 2.7;
@@ -24,8 +24,5 @@ public class Location {
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
-	
-	
-	
-	
+
 }

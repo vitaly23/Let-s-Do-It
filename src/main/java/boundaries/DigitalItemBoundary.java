@@ -8,9 +8,8 @@ import models.operations.ItemIdentifier;
 import models.operations.Location;
 import models.users.User;
 
-
 public class DigitalItemBoundary {
-	
+
 	private ItemIdentifier itemId;
 	private String type;
 	private String name;
@@ -19,9 +18,9 @@ public class DigitalItemBoundary {
 	private User createdBy;
 	private Location location;
 	private Map<String, String> itemAttributes;
-	
+
 	public DigitalItemBoundary() {
-		
+
 		this.itemId = new ItemIdentifier();
 		this.type = "new_type";
 		this.name = "name";
@@ -29,9 +28,12 @@ public class DigitalItemBoundary {
 		this.createdTimestamp = new Date();
 		this.createdBy = new User();
 		this.location = new Location();
-		this.itemAttributes = new HashMap<String,String>() {{put("key","val");}};
+		this.itemAttributes = new HashMap<String, String>() {
+			{
+				put("key", "val");
+			}
+		};
 	}
-
 
 	public ItemIdentifier getItemId() {
 		return itemId;
@@ -72,7 +74,7 @@ public class DigitalItemBoundary {
 	public void setCreatedTimestamp(Date createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
-	
+
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -80,7 +82,7 @@ public class DigitalItemBoundary {
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
-	
+
 	public Location getLocation() {
 		return location;
 	}
@@ -96,6 +98,5 @@ public class DigitalItemBoundary {
 	public void setItemAttributes(Map<String, String> itemAttributes) {
 		this.itemAttributes = itemAttributes;
 	}
-	
-	
+
 }

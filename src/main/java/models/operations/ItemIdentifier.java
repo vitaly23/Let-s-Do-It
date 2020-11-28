@@ -1,15 +1,15 @@
 package models.operations;
 
 public class ItemIdentifier {
-	
+
 	public String space;
 	public String id;
-	
+
 	public ItemIdentifier() {
 		this.space = "default space";
 		this.id = "default id";
 	}
-	
+
 	public ItemIdentifier(String space, String id) {
 		this.space = space;
 		this.id = id;

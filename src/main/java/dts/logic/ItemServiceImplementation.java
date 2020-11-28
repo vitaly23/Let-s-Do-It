@@ -1,4 +1,4 @@
-package services;
+package dts.logic;
 
 import java.util.Collections;
 import java.util.Date;
@@ -14,20 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import boundaries.DigitalItemBoundary;
+import dts.data.ItemEntity;
 import logic.ItemConverter;
-import models.operations.ItemEntity;
 import models.operations.ItemIdentifier;
 import models.users.User;
 
-
 public class ItemServiceImplementation implements ItemService {
-
 
 	private String spaceName;
 	private Map<String, ItemEntity> itemStore;
 	private AtomicLong idGenerator;
 	private ItemConverter itemConvertor;
-
 
 	@Value("${spring.application.name:demodemo}")
 	public void setHelperName(String spaceName) {
@@ -36,14 +33,12 @@ public class ItemServiceImplementation implements ItemService {
 
 	}
 
-
 	@Autowired
 	public void setMessageConverter(ItemConverter itemConvertor) {
 
 		this.itemConvertor = itemConvertor;
 
 	}
-
 
 	@PostConstruct
 	public void init() {
@@ -56,35 +51,25 @@ public class ItemServiceImplementation implements ItemService {
 
 	}
 
-
 	// To do create with String managerSpace, String managerEmail
 	@Override
 	public DigitalItemBoundary create(String managerSpace, String managerEmail, DigitalItemBoundary newItem) {
 
 		String id = "" + idGenerator.getAndIncrement();
 
-
 		newItem.setCreatedTimestamp(new Date());
 
-		
-
-		newItem.setItemId(new ItemIdentifier(spaceName,id));
-
-		
+		newItem.setItemId(new ItemIdentifier(spaceName, id));
 
 		newItem.setCreatedBy(new User(managerSpace, managerEmail));
 
-
 		ItemEntity entity = this.itemConvertor.toEntity(newItem);
 
-
 		itemStore.put(id, entity);
-
 
 		return newItem;
 
 	}
-
 
 	@Override
 
@@ -100,33 +85,25 @@ public class ItemServiceImplementation implements ItemService {
 
 		}
 
-		
-
 		// update ??
 
 		item = this.itemConvertor.toEntity(update);
 
-		
-
 		itemStore.put(itemId, item);
-
 
 		return this.itemConvertor.toBoundary(item);
 
 	}
 
-
 	@Override
 
 	public List<DigitalItemBoundary> getAll(String userSpace, String userEmail) {
-
 
 		return this.itemStore.values().stream().map(entity -> itemConvertor.toBoundary(entity))
 
 				.collect(Collectors.toList());
 
 	}
-
 
 	@Override
 
@@ -144,15 +121,12 @@ public class ItemServiceImplementation implements ItemService {
 
 	}
 
-
 	@Override
 
 	public void deleteAll(String adminSpace, String adminEmail) {
 
 		this.itemStore.clear();
 
-
 	}
-
 
 }
