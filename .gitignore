@@ -6,10 +6,13 @@
 # Node artifact files
 node_modules/
 dist/
+bin/
+build/
 
 # Unwanted files
 .project
 .classpath
+.settings
 
 # Compiled Java class files
 *.class
