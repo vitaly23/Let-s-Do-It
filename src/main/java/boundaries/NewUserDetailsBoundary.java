@@ -44,8 +44,5 @@ public class NewUserDetailsBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	/*
-	 * public String toString() { return "NewUserDetailsBoundary [email=" + email +
-	 * ", role=" + role + ", username=" + username + ", avatar=" + avatar + "]"; }
-	 */
+
 }

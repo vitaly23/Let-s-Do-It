@@ -1,37 +1,35 @@
 package boundaries;
 
+import dts.data.UserRole;
 import models.users.User;
 
 public class UserBoundary {
 	private User userId;
-	private String role;
+	private UserRole role;
 	private String username;
 	private String avatar;
 
 	public UserBoundary() {
 		this.userId = new User();
-		this.role = "PLAYER";
+		this.role = role.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
 
 	}
-
-	/*
-	 * public UserBoundary(NewUserDetailsBoundary newUser) {
-	 * this.userId.setEmail(newUser.getEmail()); this.userId.setSpace("2021a.demo");
-	 * this.setUsername(newUser.getUsername());;
-	 * //this.role.setRole(newUser.getRole()); this.setAvatar(newUser.getAvatar());;
-	 * }
-	 */
+	
+	public User getUserId() {
+		return userId;
+	}
+	
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 
@@ -51,13 +49,4 @@ public class UserBoundary {
 		this.avatar = avatar;
 	}
 	
-
-	public User getUserId() {
-		return userId;
-	}
-
-	public String toString() {
-		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
-				+ "]";
-	}
 }
