@@ -7,9 +7,12 @@
 node_modules/
 dist/
 
+# Unwanted files
+.project
+.classpath
+
 # Compiled Java class files
 *.class
-.project
 
 # Compiled Python bytecode
 *.py[cod]
