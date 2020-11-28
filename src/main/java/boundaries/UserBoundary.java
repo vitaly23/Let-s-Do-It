@@ -50,6 +50,11 @@ public class UserBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	
+
+	public User getUserId() {
+		return userId;
+	}
 
 	public String toString() {
 		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
