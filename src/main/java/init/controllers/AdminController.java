@@ -13,32 +13,37 @@ import boundaries.UserBoundary;
 public class AdminController {
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/users/{adminSpace}/{adminEmail}")
-	public void deleteAllUsers(@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllUsers(
+			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		// TODO delete all users from DB
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/items/{adminSpace}/{adminEmail}")
-	public void deleteAllItems(@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllItems(
+			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		// TODO delete all items from DB
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/operations/{adminSpace}/{adminEmail}")
-	public void deleteAllOperations(@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllOperations(
+			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		// TODO delete all operations from DB
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/users/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary[] exportAllUsers(@PathVariable("adminSpace") String adminSpace,
+	public UserBoundary[] exportAllUsers(
+			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 
 		return new UserBoundary[] { new UserBoundary(), new UserBoundary() };
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/operations/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public OperationBoundary[] exportAllOperations(@PathVariable("adminSpace") String adminSpace,
+	public OperationBoundary[] exportAllOperations(
+			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		return new OperationBoundary[] { new OperationBoundary(), new OperationBoundary() };
 	}
