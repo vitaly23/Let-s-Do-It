@@ -8,10 +8,6 @@ public class UserEntity {
 	private String role;
 	private String username;
 	private String avatar;
-	
-	public UserEntity() {
-		
-	}
 
 	public User getUserId() {
 		return userId;
@@ -44,8 +40,5 @@ public class UserEntity {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
-	
-
 	
 }

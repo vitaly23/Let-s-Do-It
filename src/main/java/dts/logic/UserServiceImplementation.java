@@ -106,5 +106,4 @@ public class UserServiceImplementation implements UsersService {
 		return spaceName;
 	}
 	
-
 }
