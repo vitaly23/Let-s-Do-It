@@ -4,8 +4,9 @@ public class RoleBoundary {
 	String role;
 
 	public RoleBoundary() {
-		role="PLAYER";
+		role = "PLAYER";
 	}
+
 	public String getRole() {
 		return role;
 	}

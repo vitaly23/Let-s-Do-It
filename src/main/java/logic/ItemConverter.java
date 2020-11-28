@@ -1,10 +1,9 @@
 package logic;
 
 import boundaries.DigitalItemBoundary;
-import models.operations.ItemEntity;
+import dts.data.ItemEntity;
 
 public class ItemConverter {
-
 
 	// convert boundary to new item(entity)
 
@@ -12,22 +11,17 @@ public class ItemConverter {
 
 		ItemEntity entity = new ItemEntity();
 
-
 		if (itemBoundary.getActive() != null) {
 
 			entity.setActive(itemBoundary.getActive());
 
 		}
 
-		
-
 		if (itemBoundary.getItemId() != null) {
 
 			entity.setItemId(itemBoundary.getItemId());
 
 		}
-
-		
 
 		if (itemBoundary.getName() != null) {
 
@@ -47,7 +41,6 @@ public class ItemConverter {
 
 		}
 
-
 		if (itemBoundary.getType() != null) {
 
 			entity.setType(itemBoundary.getType());
@@ -60,24 +53,19 @@ public class ItemConverter {
 
 		}
 
-		
-
-		if(itemBoundary.getCreatedTimestamp() != null) {
+		if (itemBoundary.getCreatedTimestamp() != null) {
 
 			entity.setCreatedTimestamp(itemBoundary.getCreatedTimestamp());
 
 		}
 
-
 		return entity;
 
 	}
 
-
 	public DigitalItemBoundary toBoundary(ItemEntity itemEntity) {
 
 		DigitalItemBoundary itemBoundary = new DigitalItemBoundary();
-
 
 		if (itemEntity.getActive() != null) {
 
@@ -85,15 +73,11 @@ public class ItemConverter {
 
 		}
 
-		
-
 		if (itemEntity.getItemId() != null) {
 
 			itemBoundary.setItemId(itemEntity.getItemId());
 
 		}
-
-		
 
 		if (itemEntity.getName() != null) {
 
@@ -113,7 +97,6 @@ public class ItemConverter {
 
 		}
 
-
 		if (itemEntity.getType() != null) {
 
 			itemBoundary.setType(itemEntity.getType());
@@ -126,14 +109,11 @@ public class ItemConverter {
 
 		}
 
-		
-
-		if(itemEntity.getCreatedTimestamp() != null) {
+		if (itemEntity.getCreatedTimestamp() != null) {
 
 			itemBoundary.setCreatedTimestamp(itemEntity.getCreatedTimestamp());
 
 		}
-
 
 		return itemBoundary;
 

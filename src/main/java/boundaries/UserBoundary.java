@@ -7,22 +7,22 @@ public class UserBoundary {
 	private String role;
 	private String username;
 	private String avatar;
-	
+
 	public UserBoundary() {
-		this.userId= new User();
-		this.role="PLAYER";
-		this.username="Demo User";
-		this.avatar="ooOO_()_OOoo";
-		
+		this.userId = new User();
+		this.role = "PLAYER";
+		this.username = "Demo User";
+		this.avatar = "ooOO_()_OOoo";
+
 	}
-	/*public UserBoundary(NewUserDetailsBoundary newUser) {
-		this.userId.setEmail(newUser.getEmail());
-		this.userId.setSpace("2021a.demo");
-		this.setUsername(newUser.getUsername());;
-		//this.role.setRole(newUser.getRole());
-		this.setAvatar(newUser.getAvatar());;
-	}
-	*/
+
+	/*
+	 * public UserBoundary(NewUserDetailsBoundary newUser) {
+	 * this.userId.setEmail(newUser.getEmail()); this.userId.setSpace("2021a.demo");
+	 * this.setUsername(newUser.getUsername());;
+	 * //this.role.setRole(newUser.getRole()); this.setAvatar(newUser.getAvatar());;
+	 * }
+	 */
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
@@ -50,8 +50,9 @@ public class UserBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+
 	public String toString() {
-		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar="
-				+ avatar + "]";
+		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
+				+ "]";
 	}
 }
