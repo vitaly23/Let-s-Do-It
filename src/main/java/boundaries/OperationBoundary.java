@@ -13,7 +13,7 @@ public class OperationBoundary {
 	public String type;
 	public Item item;
 	public Date createdTimestamp;
-	public UserBoundary invokedBy; // TODO: Change it to User
+	public UserBoundary invokedBy;
 	public Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {

@@ -16,14 +16,11 @@ public class UserBoundary {
 		this.avatar = "ooOO_()_OOoo";
 
 	}
-
-	/*
-	 * public UserBoundary(NewUserDetailsBoundary newUser) {
-	 * this.userId.setEmail(newUser.getEmail()); this.userId.setSpace("2021a.demo");
-	 * this.setUsername(newUser.getUsername());;
-	 * //this.role.setRole(newUser.getRole()); this.setAvatar(newUser.getAvatar());;
-	 * }
-	 */
+	
+	public User getUserId() {
+		return userId;
+	}
+	
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
@@ -52,13 +49,4 @@ public class UserBoundary {
 		this.avatar = avatar;
 	}
 	
-
-	public User getUserId() {
-		return userId;
-	}
-
-	public String toString() {
-		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
-				+ "]";
-	}
 }
