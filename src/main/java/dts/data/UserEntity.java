@@ -5,7 +5,7 @@ import models.users.User;
 public class UserEntity {
 	
 	private User userId;
-	private String role;
+	private UserRole role;
 	private String username;
 	private String avatar;
 	
@@ -21,11 +21,11 @@ public class UserEntity {
 		this.userId = userId;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 
