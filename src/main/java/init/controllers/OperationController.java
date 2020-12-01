@@ -21,11 +21,11 @@ public class OperationController {
 		this.operationService=operationService;
 	}
 	
-	//check this method need operationService?
+	
 	@RequestMapping(method = RequestMethod.POST, path = "/dts/operations", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public OperationBoundary getOperation(@RequestBody OperationBoundary operation) {
+	public OperationBoundary invokeOpreation(@RequestBody OperationBoundary operation) {
 		
-		operation.setOperationId(new ItemIdentifier("default space", "default id"));
-		return operation;
+		
+		return (OperationBoundary) this.operationService.invokeOpreation(operation);
 	}
 }
