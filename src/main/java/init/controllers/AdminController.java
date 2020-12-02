@@ -1,5 +1,7 @@
 package init.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,19 +54,31 @@ public class AdminController {
 		this.operationService.deleteAllActions(adminSpace, adminEmail);
 	}
 
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/users/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserBoundary[] exportAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-
-		return new UserBoundary[] { new UserBoundary(), new UserBoundary() };
+		List<UserBoundary> listUser=this.usersService.getAllUsers(adminSpace, adminEmail);
+		if(listUser == null) {
+			return null;
+		}
+		UserBoundary[] array = new UserBoundary[listUser.size()];
+		listUser.toArray(array);
+		return array;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/operations/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		return new OperationBoundary[] { new OperationBoundary(), new OperationBoundary() };
+		List<OperationBoundary>listBoundary= this.operationService.getAllOperations(adminSpace, adminEmail);
+		if(listBoundary ==null) {
+			return null;
+		}
+		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
+		listBoundary.toArray(array);
+		return array;
 	}
 
 }
