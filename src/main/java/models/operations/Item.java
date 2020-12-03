@@ -1,7 +1,7 @@
 package models.operations;
 
 public class Item {
-	public ItemIdentifier itemId;
+	private ItemIdentifier itemId;
 
 	public Item() {
 		this.itemId = new ItemIdentifier("", "");
