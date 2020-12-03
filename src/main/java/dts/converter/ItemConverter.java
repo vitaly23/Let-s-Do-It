@@ -1,4 +1,4 @@
-package logic;
+package dts.converter;
 
 import org.springframework.stereotype.Component;
 import boundaries.ItemBoundary;

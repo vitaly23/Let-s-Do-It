@@ -1,4 +1,4 @@
-package init.controllers;
+package dts.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,7 +25,7 @@ public class DigitalItemController {
 	public ItemBoundary createNewDigitalItem(@RequestBody ItemBoundary item,
 			@PathVariable("managerSpace") String managerSpace,
 			@PathVariable("managerEmail") String managerEmail /* //item with no ItemId */) {
-
+		System.err.println("added item");
 		return this.itemService.create(managerSpace, managerEmail, item);
 	}
 

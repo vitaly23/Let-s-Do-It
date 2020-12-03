@@ -1,4 +1,4 @@
-package init.controllers;
+package dts.controllers;
 
 import java.util.List;
 
@@ -21,7 +21,10 @@ public class AdminController {
 	private ItemService itemService;
 	private UsersService usersService;
 	private OperationService operationService;
-
+	
+	public AdminController() {
+		// TODO Auto-generated constructor stub
+	}
 	@Autowired
 	public AdminController(ItemService itemService, UsersService usersService, OperationService operationService) {
 

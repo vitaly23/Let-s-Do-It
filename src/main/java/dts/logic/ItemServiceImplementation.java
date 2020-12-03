@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import boundaries.ItemBoundary;
+import dts.converter.ItemConverter;
 import dts.data.ItemEntity;
-import logic.ItemConverter;
 import models.operations.ItemIdentifier;
 import models.users.User;
 
@@ -96,5 +96,15 @@ public class ItemServiceImplementation implements ItemService {
 	public void deleteAll(String adminSpace, String adminEmail) {
 		this.itemStore.clear();
 	}
+
+	public ItemConverter getItemConvertor() {
+		return itemConvertor;
+	}
+
+	public void setItemConvertor(ItemConverter itemConvertor) {
+		this.itemConvertor = itemConvertor;
+	}
+	
+	
 
 }

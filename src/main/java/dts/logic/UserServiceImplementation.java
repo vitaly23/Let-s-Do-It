@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import boundaries.UserBoundary;
-import logic.UserConverter;
+import dts.converter.UserConverter;
 import dts.data.UserEntity;
 import models.users.User;
 
@@ -105,5 +105,15 @@ public class UserServiceImplementation implements UsersService {
 	public String getSpaceName() {
 		return spaceName;
 	}
+
+	public UserConverter getUserConverter() {
+		return userConverter;
+	}
+
+	public void setUserConverter(UserConverter userConverter) {
+		this.userConverter = userConverter;
+	}
+	
+	
 	
 }

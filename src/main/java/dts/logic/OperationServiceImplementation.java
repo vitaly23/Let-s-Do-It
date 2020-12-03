@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import dts.converter.OperationConverter;
 import dts.data.OperationEntity;
-import logic.OperationConverter;
 import dts.data.UserRole;
 
 import boundaries.OperationBoundary;
@@ -81,5 +81,13 @@ public class OperationServiceImplementation implements OperationService {
 	public String getSpaceName() {
 		return spaceName;
 	}
+	public OperationConverter getOperationEntityConverter() {
+		return operationEntityConverter;
+	}
+	public void setOperationEntityConverter(OperationConverter operationEntityConverter) {
+		this.operationEntityConverter = operationEntityConverter;
+	}
+	
+	
 
 }
