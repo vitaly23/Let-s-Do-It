@@ -6,6 +6,7 @@ import java.util.Map;
 
 import models.operations.Item;
 import models.operations.ItemIdentifier;
+import models.users.User;
 
 public class OperationBoundary {
 
@@ -13,7 +14,7 @@ public class OperationBoundary {
 	public String type;
 	public Item item;
 	public Date createdTimestamp;
-	public UserBoundary invokedBy;
+	public User invokedBy;
 	public Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {
@@ -21,7 +22,7 @@ public class OperationBoundary {
 		this.type = "type";
 		this.item = new Item(new ItemIdentifier("space", "id"));
 		this.createdTimestamp = new Date();
-		this.invokedBy = new UserBoundary();
+		this.invokedBy = new User();
 		this.operationAttributes = new HashMap<String, Object>() {
 			{
 				put("", "");
@@ -61,11 +62,11 @@ public class OperationBoundary {
 		this.createdTimestamp = createdTimestamp;
 	}
 
-	public UserBoundary getInvokedBy() {
+	public User getInvokedBy() {
 		return invokedBy;
 	}
 
-	public void setInvokedBy(UserBoundary invokedBy) {
+	public void setInvokedBy(User invokedBy) {
 		this.invokedBy = invokedBy;
 	}
 

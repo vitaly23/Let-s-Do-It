@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import boundaries.DigitalItemBoundary;
+import boundaries.ItemBoundary;
 import dts.data.ItemEntity;
 import logic.ItemConverter;
 import models.operations.ItemIdentifier;
@@ -45,7 +45,7 @@ public class ItemServiceImplementation implements ItemService {
 	}
 
 	@Override
-	public DigitalItemBoundary create(String managerSpace, String managerEmail, DigitalItemBoundary newItem) {
+	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		String id = "" + idGenerator.getAndIncrement();
 		newItem.setCreatedTimestamp(new Date());
 		newItem.setItemId(new ItemIdentifier(spaceName, id));
@@ -57,9 +57,9 @@ public class ItemServiceImplementation implements ItemService {
 	}
 
 	@Override
-	public DigitalItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
+	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 
-			DigitalItemBoundary update) {
+			ItemBoundary update) {
 		ItemIdentifier itemIdentifier= new ItemIdentifier(itemSpace,itemId);
 		ItemEntity item = this.itemStore.get(itemIdentifier);
 		if (item == null) {
@@ -78,12 +78,12 @@ public class ItemServiceImplementation implements ItemService {
 	}
 
 	@Override
-	public List<DigitalItemBoundary> getAll(String userSpace, String userEmail) {
+	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
 		return this.itemStore.values().stream().map(entity -> itemConvertor.toBoundary(entity)).collect(Collectors.toList());
 	}
 
 	@Override
-	public DigitalItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId) {
+	public ItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId) {
 		ItemIdentifier itemIdentifier= new ItemIdentifier(itemSpace,itemId);
 		ItemEntity item = this.itemStore.get(itemIdentifier);
 		if (item == null) {
