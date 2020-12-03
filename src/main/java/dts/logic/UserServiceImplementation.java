@@ -1,5 +1,6 @@
 package dts.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +83,6 @@ public class UserServiceImplementation implements UsersService {
 			userStorage.put(uid, userConverter.toEntity(current));
 		}
 		return null;
-		
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class UserServiceImplementation implements UsersService {
 					userConverter.toBoundary(entity))// Stream<MessageBoundary>
 					.collect(Collectors.toList()); // List<UserBoundary> 
 		}
-		return null;
+		return new ArrayList<UserBoundary>();
 	}
 
 	@Override

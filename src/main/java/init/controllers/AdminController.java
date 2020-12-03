@@ -52,9 +52,6 @@ public class AdminController {
 	public UserBoundary[] exportAllUsers(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
-		if (listUser == null) {
-			return null;
-		}
 		UserBoundary[] array = new UserBoundary[listUser.size()];
 		listUser.toArray(array);
 		return array;
@@ -64,9 +61,6 @@ public class AdminController {
 	public OperationBoundary[] exportAllOperations(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
-		if (listBoundary == null) {
-			return null;
-		}
 		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
 		listBoundary.toArray(array);
 		return array;
