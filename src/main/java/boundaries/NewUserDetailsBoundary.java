@@ -44,5 +44,6 @@ public class NewUserDetailsBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	
 
 }

@@ -2,18 +2,18 @@ package dts.logic;
 
 import java.util.List;
 
-import boundaries.DigitalItemBoundary;
+import boundaries.ItemBoundary;
 
 public interface ItemService {
 
-	public DigitalItemBoundary create(String managerSpace, String managerEmail, DigitalItemBoundary newItem);
+	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem);
 
-	public DigitalItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
-			DigitalItemBoundary update);
+	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
+			ItemBoundary update);
 
-	public List<DigitalItemBoundary> getAll(String userSpace, String userEmail);
+	public List<ItemBoundary> getAll(String userSpace, String userEmail);
 
-	public DigitalItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId);
+	public ItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId);
 
 	public void deleteAll(String adminSpace, String adminEmail);
 

@@ -1,5 +1,6 @@
 package dts.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -40,22 +41,22 @@ public class UserServiceImplementation implements UsersService {
 	}
 	
 	@Override
-	public UserBoundary createUser(UserBoundary UserBoundary) {
+	public UserBoundary createUser(UserBoundary user) {
 		UserBoundary newUser = new UserBoundary();
-		newUser.setAvatar(UserBoundary.getAvatar());
-		newUser.setRole(UserBoundary.getRole());
-		newUser.setUserId(UserBoundary.getUserId());
-		newUser.setUsername(UserBoundary.getRole().toString());
+		newUser.setAvatar(user.getAvatar());
+		newUser.setRole(user.getRole());
+		newUser.setUserId(user.getUserId());
+		newUser.setUsername(user.getRole().toString());
 		userStorage.put(newUser.getUserId(), userConverter.toEntity(newUser));
 		return newUser; 
 	}
 
 	@Override
-	public UserBoundary login(String UserSpace, String userEmail) {
+	public UserBoundary login(String userSpace, String userEmail) {
 		User uid = new User();
-		if(UserSpace != null && userEmail != null) {
+		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
-			uid.setSpace(UserSpace);
+			uid.setSpace(userSpace);
 		}
 		
 		if(uid != null && userStorage.containsKey(uid)){
@@ -66,23 +67,22 @@ public class UserServiceImplementation implements UsersService {
 	}
 
 	@Override
-	public UserBoundary updateUser(UserBoundary UserBoundary, String UserSpace, String userEmail) {
+	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
 		User uid = new User();
-		if(UserSpace != null && userEmail != null) {
+		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
-			uid.setSpace(UserSpace);
+			uid.setSpace(userSpace);
 		}
 		
 		if (uid != null && userStorage.containsKey(uid)) {
 			UserBoundary current = userConverter.toBoundary(userStorage.get(uid)); 
-			current.setAvatar(UserBoundary.getAvatar());
-			current.setRole(UserBoundary.getRole());
-			current.setUserId(UserBoundary.getUserId());
-			current.setUsername(UserBoundary.getRole().toString());
+			current.setAvatar(update.getAvatar());
+			current.setRole(update.getRole());
+			current.setUserId(update.getUserId());
+			current.setUsername(update.getRole().toString());
 			userStorage.put(uid, userConverter.toEntity(current));
 		}
 		return null;
-		
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class UserServiceImplementation implements UsersService {
 					userConverter.toBoundary(entity))// Stream<MessageBoundary>
 					.collect(Collectors.toList()); // List<UserBoundary> 
 		}
-		return null;
+		return new ArrayList<UserBoundary>();
 	}
 
 	@Override

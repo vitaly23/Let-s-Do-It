@@ -1,7 +1,7 @@
 package boundaries;
 
 public class RoleBoundary {
-	String role;
+	private String role;
 
 	public RoleBoundary() {
 		role = "PLAYER";

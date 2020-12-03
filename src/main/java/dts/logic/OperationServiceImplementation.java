@@ -27,8 +27,9 @@ public class OperationServiceImplementation implements OperationService {
 	private UsersService userService;
 	
 	@Autowired
-	public void setEntityConverter(OperationConverter operationConverter) {
+	public void setEntityConverter(OperationConverter operationConverter,UsersService userService) {
 		this.operationEntityConverter = operationConverter;
+		this.userService=userService;
 
 	}
 	@Value("${spring.application.name:demodemo}")

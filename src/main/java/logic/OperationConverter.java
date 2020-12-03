@@ -4,8 +4,12 @@ import dts.data.ItemEntity;
 import dts.data.OperationEntity;
 import models.operations.Item;
 import models.operations.ItemIdentifier;
+
+import org.springframework.stereotype.Component;
+
 import boundaries.OperationBoundary;
 
+@Component
 public class OperationConverter {
 
 	//convert boundary to entity
@@ -13,7 +17,7 @@ public class OperationConverter {
 		OperationEntity entity= new OperationEntity();
 
 		if(operationBoundary.getOperationId() != null) {
-			entity.getOperationId().setId(""+Long.parseLong(operationBoundary.getOperationId().id));
+			entity.getOperationId().setId(""+Long.parseLong(operationBoundary.getOperationId().getId()));
 		}
 		if(operationBoundary.getItem() != null) {
 			entity.setItem(new ItemEntity());
