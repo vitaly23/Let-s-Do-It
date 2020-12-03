@@ -17,7 +17,7 @@ public class DigitalItemBoundary {
 	private Date createdTimestamp;
 	private User createdBy;
 	private Location location;
-	private Map<String, String> itemAttributes;
+	private Map<String, Object> itemAttributes;
 
 	public DigitalItemBoundary() {
 
@@ -28,7 +28,7 @@ public class DigitalItemBoundary {
 		this.createdTimestamp = new Date();
 		this.createdBy = new User();
 		this.location = new Location();
-		this.itemAttributes = new HashMap<String, String>() {
+		this.itemAttributes = new HashMap<String, Object>() {
 			{
 				put("key", "val");
 			}
@@ -91,11 +91,11 @@ public class DigitalItemBoundary {
 		this.location = location;
 	}
 
-	public Map<String, String> getItemAttributes() {
+	public Map<String, Object> getItemAttributes() {
 		return itemAttributes;
 	}
 
-	public void setItemAttributes(Map<String, String> itemAttributes) {
+	public void setItemAttributes(Map<String, Object> itemAttributes) {
 		this.itemAttributes = itemAttributes;
 	}
 

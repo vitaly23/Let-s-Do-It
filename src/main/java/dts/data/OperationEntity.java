@@ -5,13 +5,14 @@ import java.util.Map;
 
 import boundaries.UserBoundary;
 import models.operations.ItemIdentifier;
+import models.users.User;
 
 public class OperationEntity {
 	public ItemIdentifier operationId;
 	public String type;
 	public ItemEntity item;
 	public Date createdTimestamp;
-	public UserBoundary invokedBy; 
+	public User invokedBy; 
 	public Map<String, Object> operationAttributes;
 
 
@@ -47,10 +48,10 @@ public class OperationEntity {
 		this.item=item;
 
 	}
-	public UserBoundary getInvokedBy() {
+	public User getInvokedBy() {
 		return invokedBy;
 	}
-	public void setInvokedBy(UserBoundary invokedBy) {
+	public void setInvokedBy(User invokedBy) {
 		this.invokedBy = invokedBy;		
 	}
 	public Map<String, Object> getOperationAttributes() {

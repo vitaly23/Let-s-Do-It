@@ -16,7 +16,7 @@ public class ItemEntity {
 	private Date createdTimestamp;
 	private User createdBy;
 	private Location location;
-	private Map<String, String> itemAttributes;
+	private Map<String, Object> itemAttributes;
 
 	public ItemIdentifier getItemId() {
 		return itemId;
@@ -74,11 +74,11 @@ public class ItemEntity {
 		this.location = location;
 	}
 
-	public Map<String, String> getItemAttributes() {
+	public Map<String, Object> getItemAttributes() {
 		return itemAttributes;
 	}
 
-	public void setItemAttributes(Map<String, String> itemAttributes) {
+	public void setItemAttributes(Map<String, Object> itemAttributes) {
 		this.itemAttributes = itemAttributes;
 	}
 
