@@ -42,7 +42,6 @@ public class AdminController {
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		this.itemService.deleteAll(adminSpace, adminEmail);
-		// TODO delete all items from DB
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/operations/{adminSpace}/{adminEmail}")
