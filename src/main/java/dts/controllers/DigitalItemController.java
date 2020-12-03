@@ -24,8 +24,7 @@ public class DigitalItemController {
 	@RequestMapping(method = RequestMethod.POST, path = "/dts/items/{managerSpace}/{managerEmail}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ItemBoundary createNewDigitalItem(@RequestBody ItemBoundary item,
 			@PathVariable("managerSpace") String managerSpace,
-			@PathVariable("managerEmail") String managerEmail /* //item with no ItemId */) {
-		System.err.println("added item");
+			@PathVariable("managerEmail") String managerEmail) {
 		return this.itemService.create(managerSpace, managerEmail, item);
 	}
 
