@@ -21,13 +21,14 @@ public class UserController {
 	public UserController(UsersService userService) {
 		this.userService=userService;
 	}
-
+	
+	//login user and retrive user detail
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/users/login/{userSpace}/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserBoundary retriveUserDetails(
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail) {
 
-		return this.retriveUserDetails(userSpace, userEmail);
+		return this.userService.login(userSpace, userEmail);
 
 	}
 	//check the  type of newUser
