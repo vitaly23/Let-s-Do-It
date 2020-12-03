@@ -1,8 +1,11 @@
 package logic;
 
+import org.springframework.stereotype.Component;
+
 import boundaries.DigitalItemBoundary;
 import dts.data.ItemEntity;
 
+@Component
 public class ItemConverter {
 
 	// convert boundary to new item(entity)
@@ -82,5 +85,6 @@ public class ItemConverter {
 
 		return itemBoundary;
 	}
-
+	
+	
 }

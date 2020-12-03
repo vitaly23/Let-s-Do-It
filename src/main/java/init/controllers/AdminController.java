@@ -17,50 +17,43 @@ import dts.logic.UsersService;
 
 @RestController
 public class AdminController {
-	
+
 	private ItemService itemService;
 	private UsersService usersService;
 	private OperationService operationService;
-	
-	
+
 	@Autowired
-	public AdminController(ItemService itemService, UsersService usersService,
-			OperationService operationService) {
-		
+	public AdminController(ItemService itemService, UsersService usersService, OperationService operationService) {
+
 		this.itemService = itemService;
 		this.usersService = usersService;
 		this.operationService = operationService;
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/users/{adminSpace}/{adminEmail}")
-	public void deleteAllUsers(
-			@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllUsers(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		this.itemService.deleteAll(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/items/{adminSpace}/{adminEmail}")
-	public void deleteAllItems(
-			@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllItems(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		this.itemService.deleteAll(adminSpace, adminEmail);
-		// TODO delete all items from DB
+
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/dts/admin/operations/{adminSpace}/{adminEmail}")
-	public void deleteAllOperations(
-			@PathVariable("adminSpace") String adminSpace,
+	public void deleteAllOperations(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
 		this.operationService.deleteAllActions(adminSpace, adminEmail);
 	}
 
-	
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/users/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary[] exportAllUsers(
-			@PathVariable("adminSpace") String adminSpace,
+	public UserBoundary[] exportAllUsers(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		List<UserBoundary> listUser=this.usersService.getAllUsers(adminSpace, adminEmail);
-		if(listUser == null) {
+		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
+		if (listUser == null) {
 			return null;
 		}
 		UserBoundary[] array = new UserBoundary[listUser.size()];
@@ -69,11 +62,10 @@ public class AdminController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/admin/operations/{adminSpace}/{adminEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public OperationBoundary[] exportAllOperations(
-			@PathVariable("adminSpace") String adminSpace,
+	public OperationBoundary[] exportAllOperations(@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		List<OperationBoundary>listBoundary= this.operationService.getAllOperations(adminSpace, adminEmail);
-		if(listBoundary ==null) {
+		List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
+		if (listBoundary == null) {
 			return null;
 		}
 		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];

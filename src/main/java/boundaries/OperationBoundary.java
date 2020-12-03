@@ -9,12 +9,12 @@ import models.operations.ItemIdentifier;
 
 public class OperationBoundary {
 
-	public ItemIdentifier operationId;
-	public String type;
-	public Item item;
-	public Date createdTimestamp;
-	public UserBoundary invokedBy;
-	public Map<String, Object> operationAttributes;
+	private ItemIdentifier operationId;
+	private String type;
+	private Item item;
+	private Date createdTimestamp;
+	private UserBoundary invokedBy;
+	private Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {
 		this.operationId = new ItemIdentifier("space", "id");
@@ -22,11 +22,7 @@ public class OperationBoundary {
 		this.item = new Item(new ItemIdentifier("space", "id"));
 		this.createdTimestamp = new Date();
 		this.invokedBy = new UserBoundary();
-		this.operationAttributes = new HashMap<String, Object>() {
-			{
-				put("", "");
-			}
-		};
+		this.operationAttributes = new HashMap<>();
 	}
 
 	public ItemIdentifier getOperationId() {

@@ -28,11 +28,7 @@ public class DigitalItemBoundary {
 		this.createdTimestamp = new Date();
 		this.createdBy = new User();
 		this.location = new Location();
-		this.itemAttributes = new HashMap<String, String>() {
-			{
-				put("key", "val");
-			}
-		};
+		this.itemAttributes = new HashMap<>();
 	}
 
 	public ItemIdentifier getItemId() {
