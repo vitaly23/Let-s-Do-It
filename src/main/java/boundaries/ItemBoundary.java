@@ -8,7 +8,7 @@ import models.operations.ItemIdentifier;
 import models.operations.Location;
 import models.users.User;
 
-public class DigitalItemBoundary {
+public class ItemBoundary {
 
 	private ItemIdentifier itemId;
 	private String type;
@@ -19,7 +19,7 @@ public class DigitalItemBoundary {
 	private Location location;
 	private Map<String, Object> itemAttributes;
 
-	public DigitalItemBoundary() {
+	public ItemBoundary() {
 
 		this.itemId = new ItemIdentifier();
 		this.type = "new_type";

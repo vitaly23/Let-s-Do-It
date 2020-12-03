@@ -1,13 +1,13 @@
 package logic;
 
-import boundaries.DigitalItemBoundary;
+import boundaries.ItemBoundary;
 import dts.data.ItemEntity;
 
 public class ItemConverter {
 
 	// convert boundary to new item(entity)
 
-	public ItemEntity toEntity(DigitalItemBoundary itemBoundary) {
+	public ItemEntity toEntity(ItemBoundary itemBoundary) {
 
 		ItemEntity entity = new ItemEntity();
 
@@ -46,9 +46,9 @@ public class ItemConverter {
 		return entity;
 	}
 
-	public DigitalItemBoundary toBoundary(ItemEntity itemEntity) {
+	public ItemBoundary toBoundary(ItemEntity itemEntity) {
 
-		DigitalItemBoundary itemBoundary = new DigitalItemBoundary();
+		ItemBoundary itemBoundary = new ItemBoundary();
 
 		if (itemEntity.getActive() != null) {
 			itemBoundary.setActive(itemEntity.getActive());
