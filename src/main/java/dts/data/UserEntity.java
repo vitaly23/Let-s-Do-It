@@ -1,26 +1,26 @@
 package dts.data;
 
-import models.users.User;
+import models.users.UserId;
 
 public class UserEntity {
 	
-	private User userId;
+	private UserId userId;
 	private UserRole role;
 	private String username;
 	private String avatar;
 		
 	public UserEntity() {
-		this.userId = new User();
+		this.userId = new UserId();
 		this.role = UserRole.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
 	}
 
-	public User getUserId() {
+	public UserId getUserId() {
 		return userId;
 	}
 
-	public void setUserId(User userId) {
+	public void setUserId(UserId userId) {
 		this.userId = userId;
 	}
 

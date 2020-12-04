@@ -17,9 +17,6 @@ public class OperationConverter {
 	public OperationEntity toEntity(OperationBoundary operationBoundary) {
 		OperationEntity entity= new OperationEntity();
 
-		if(operationBoundary.getOperationId() != null) {
-			entity.getOperationId().setId(""+Long.parseLong(operationBoundary.getOperationId().getId()));
-		}
 		if(operationBoundary.getItem() != null) {
 			entity.setItem(new ItemEntity());
 			entity.getItem().setItemId(operationBoundary.getItem().getItemId());

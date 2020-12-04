@@ -23,9 +23,8 @@ public class OperationController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/dts/operations", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public OperationBoundary invokeOpreation(@RequestBody OperationBoundary operation) {
+	public Object invokeOpreation(@RequestBody OperationBoundary operation) {
 		
-		
-		return (OperationBoundary) this.operationService.invokeOpreation(operation);
+		return  this.operationService.invokeOpreation(operation);
 	}
 }

@@ -1,12 +1,13 @@
 package boundaries;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import models.operations.Item;
 import models.operations.ItemIdentifier;
-import models.users.User;
+import models.users.UserId;
 
 public class OperationBoundary {
 
@@ -14,16 +15,16 @@ public class OperationBoundary {
 	private String type;
 	private Item item;
 	private Date createdTimestamp;
-	private User invokedBy;
+	private UserId invokedBy;
 	private Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {
 		this.operationId = new ItemIdentifier("space", "id");
-		this.type = "type";
+		this.type = "operationType";
 		this.item = new Item(new ItemIdentifier("space", "id"));
 		this.createdTimestamp = new Date();
-		this.invokedBy = new User();
-		this.operationAttributes = new HashMap<>();
+		this.invokedBy = new UserId();
+		this.operationAttributes = Collections.synchronizedMap(new HashMap<>());
 	}
 
 	public ItemIdentifier getOperationId() {
@@ -58,11 +59,11 @@ public class OperationBoundary {
 		this.createdTimestamp = createdTimestamp;
 	}
 
-	public User getInvokedBy() {
+	public UserId getInvokedBy() {
 		return invokedBy;
 	}
 
-	public void setInvokedBy(User invokedBy) {
+	public void setInvokedBy(UserId invokedBy) {
 		this.invokedBy = invokedBy;
 	}
 

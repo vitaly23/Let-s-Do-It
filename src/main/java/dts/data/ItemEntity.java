@@ -1,12 +1,13 @@
 package dts.data;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import models.operations.ItemIdentifier;
 import models.operations.Location;
-import models.users.User;
+import models.users.UserId;
 
 public class ItemEntity {
 
@@ -15,7 +16,7 @@ public class ItemEntity {
 	private String name;
 	private Boolean active;
 	private Date createdTimestamp;
-	private User createdBy;
+	private UserId createdBy;
 	private Location location;
 	private Map<String, Object> itemAttributes;
 
@@ -25,9 +26,9 @@ public class ItemEntity {
 		this.name = "name";
 		this.active = true;
 		this.createdTimestamp = new Date();
-		this.createdBy = new User();
+		this.createdBy = new UserId();
 		this.location = new Location();
-		this.itemAttributes = new HashMap<>();
+		this.itemAttributes = Collections.synchronizedMap(new HashMap<>());
 	}
 
 	public ItemIdentifier getItemId() {
@@ -70,11 +71,11 @@ public class ItemEntity {
 		this.createdTimestamp = createdTimestamp;
 	}
 
-	public User getCreatedBy() {
+	public UserId getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(UserId createdBy) {
 		this.createdBy = createdBy;
 	}
 

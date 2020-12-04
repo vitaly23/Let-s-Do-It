@@ -18,7 +18,7 @@ import boundaries.ItemBoundary;
 import dts.converter.ItemConverter;
 import dts.data.ItemEntity;
 import models.operations.ItemIdentifier;
-import models.users.User;
+import models.users.UserId;
 
 @Service
 public class ItemServiceImplementation implements ItemService {
@@ -28,7 +28,7 @@ public class ItemServiceImplementation implements ItemService {
 	private AtomicLong idGenerator;
 	private ItemConverter itemConvertor;
 
-	@Value("${spring.application.name:2021a.integrative.sun1700.letsdoit}")
+	@Value("${spring.application.name:default}")
 	public void setHelperName(String spaceName) {
 		this.spaceName = spaceName;
 	}
@@ -49,7 +49,7 @@ public class ItemServiceImplementation implements ItemService {
 		String id = "" + idGenerator.getAndIncrement();
 		newItem.setCreatedTimestamp(new Date());
 		newItem.setItemId(new ItemIdentifier(spaceName, id));
-		newItem.setCreatedBy(new User(managerSpace, managerEmail));
+		newItem.setCreatedBy(new UserId(managerSpace, managerEmail));
 		ItemEntity entity = this.itemConvertor.toEntity(newItem);
 		itemStore.put(entity.getItemId(), entity);
 

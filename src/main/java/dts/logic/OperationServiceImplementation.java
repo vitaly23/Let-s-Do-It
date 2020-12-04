@@ -2,6 +2,7 @@ package dts.logic;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,7 +33,7 @@ public class OperationServiceImplementation implements OperationService {
 		this.userService=userService;
 
 	}
-	@Value("${spring.application.name:demodemo}")
+	@Value("${spring.application.name:default}")
 	public void setSpaceName(String spaceName) {
 		this.spaceName = spaceName;
 	}
@@ -40,17 +41,19 @@ public class OperationServiceImplementation implements OperationService {
 	
 	@PostConstruct
 	public void init() {
-		this.operationStore = Collections.synchronizedMap(new TreeMap<>());
+		this.operationStore = Collections.synchronizedMap(new HashMap<>());
 		this.nextId = new AtomicLong(0L);
 	}
 
 	@Override
 	public Object invokeOpreation(OperationBoundary operation) {
-		OperationEntity entity= this.operationEntityConverter.toEntity(operation);
+		OperationEntity entity= new OperationEntity();
 		Long newId = nextId.incrementAndGet();
-		entity.getOperationId().setId(""+newId);
+		entity.getOperationId().setId(""+this.spaceName+newId);
 		entity.setCreatedTimestamp(new Date());
-
+		
+		entity= this.operationEntityConverter.toEntity(operation);
+		
 		this.operationStore.put(newId, entity);
 
 		return this.operationEntityConverter.FromEntity(entity);

@@ -1,16 +1,16 @@
 package models.users;
 
-public class User {
+public class UserId {
 
 	private String space;
 	private String email;
 
-	public User() {
+	public UserId() {
 		space = "2021a.demo";
 		email = "demo@maildomain.com";
 	}
 
-	public User(String space, String email) {
+	public UserId(String space, String email) {
 		this.space = space;
 		this.email = email;
 	}
@@ -48,7 +48,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserId other = (UserId) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
