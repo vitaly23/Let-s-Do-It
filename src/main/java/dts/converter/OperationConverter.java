@@ -12,7 +12,8 @@ import boundaries.OperationBoundary;
 @Component
 public class OperationConverter {
 
-	//convert boundary to entity
+	public OperationConverter() {
+	}
 	public OperationEntity toEntity(OperationBoundary operationBoundary) {
 		OperationEntity entity= new OperationEntity();
 
@@ -23,14 +24,14 @@ public class OperationConverter {
 			entity.setItem(new ItemEntity());
 			entity.getItem().setItemId(operationBoundary.getItem().getItemId());
 		}
-		if(operationBoundary.getInvokedBy() != null) {
-			entity.setInvokedBy(operationBoundary.getInvokedBy());
+		if(operationBoundary.getType()!= null) {
+			entity.setType(operationBoundary.getType());
 		}
 		if(operationBoundary.getCreatedTimestamp()!=null) {
 			entity.setCreatedTimestamp(operationBoundary.getCreatedTimestamp());
 		}
-		if(operationBoundary.getType()!= null) {
-			entity.setType(operationBoundary.getType());
+		if(operationBoundary.getInvokedBy() != null) {
+			entity.setInvokedBy(operationBoundary.getInvokedBy());
 		}
 		if(operationBoundary.getOperationAttributes() !=null) {
 			entity.setOperationAttributes(operationBoundary.getOperationAttributes());

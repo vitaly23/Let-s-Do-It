@@ -7,6 +7,10 @@ import dts.data.UserEntity;
 
 @Component
 public class UserConverter {
+	
+	
+	public UserConverter() {
+	}
 
 	public UserBoundary toBoundary(UserEntity user) {
 		UserBoundary boundary = new UserBoundary();

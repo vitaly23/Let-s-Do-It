@@ -58,7 +58,7 @@ public class OperationServiceImplementation implements OperationService {
 
 	@Override
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
-		if(userService.login(adminSpace, adminEmail).getRole() == UserRole.ADMIN) {
+		if(userService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) {
 			return this.operationStore.values().stream().map(entity -> this.operationEntityConverter.FromEntity(entity))
 					.collect(Collectors.toList());
 		}else {
@@ -70,7 +70,7 @@ public class OperationServiceImplementation implements OperationService {
 	@Override
 	public void deleteAllActions(String adminSpace, String adminEmail) {
 
-		if(userService.login(adminSpace, adminEmail).getRole() == UserRole.ADMIN) {
+		if(userService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) {
 			this.operationStore.clear();
 		}
 		else {

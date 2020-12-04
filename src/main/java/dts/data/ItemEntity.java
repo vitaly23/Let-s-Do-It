@@ -1,6 +1,7 @@
 package dts.data;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import models.operations.ItemIdentifier;
@@ -17,6 +18,17 @@ public class ItemEntity {
 	private User createdBy;
 	private Location location;
 	private Map<String, Object> itemAttributes;
+
+	public ItemEntity() {
+		this.itemId = new ItemIdentifier();
+		this.type = "new_type";
+		this.name = "name";
+		this.active = true;
+		this.createdTimestamp = new Date();
+		this.createdBy = new User();
+		this.location = new Location();
+		this.itemAttributes = new HashMap<>();
+	}
 
 	public ItemIdentifier getItemId() {
 		return itemId;

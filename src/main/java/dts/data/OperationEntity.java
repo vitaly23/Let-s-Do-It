@@ -1,6 +1,7 @@
 package dts.data;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import boundaries.UserBoundary;
@@ -17,7 +18,12 @@ public class OperationEntity {
 
 
 	public OperationEntity() {
-
+		this.operationId = new ItemIdentifier("space", "id");
+		this.type = "type";
+		this.item = new ItemEntity();
+		this.createdTimestamp = new Date();
+		this.invokedBy = new User();
+		this.operationAttributes = new HashMap<>();
 	}
 	public ItemIdentifier getOperationId() {
 		return operationId;

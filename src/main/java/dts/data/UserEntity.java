@@ -8,6 +8,13 @@ public class UserEntity {
 	private UserRole role;
 	private String username;
 	private String avatar;
+		
+	public UserEntity() {
+		this.userId = new User();
+		this.role = UserRole.PLAYER;
+		this.username = "Demo User";
+		this.avatar = "ooOO_()_OOoo";
+	}
 
 	public User getUserId() {
 		return userId;
