@@ -7,7 +7,8 @@ import dts.data.ItemEntity;
 @Component
 public class ItemConverter {
 
-	// convert boundary to new item(entity)
+	public ItemConverter() {
+	}
 
 	public ItemEntity toEntity(ItemBoundary itemBoundary) {
 

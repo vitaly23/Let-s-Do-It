@@ -1,23 +1,30 @@
 package dts.data;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import boundaries.UserBoundary;
 import models.operations.ItemIdentifier;
-import models.users.User;
+import models.users.UserId;
 
 public class OperationEntity {
+	
 	private ItemIdentifier operationId;
 	private String type;
 	private ItemEntity item;
 	private Date createdTimestamp;
-	private User invokedBy; 
+	private UserId invokedBy; 
 	private Map<String, Object> operationAttributes;
 
-
 	public OperationEntity() {
-
+		this.operationId = new ItemIdentifier("space", "id");
+		this.type = "type";
+		this.item = new ItemEntity();
+		this.createdTimestamp = new Date();
+		this.invokedBy = new UserId();
+		this.operationAttributes = Collections.synchronizedMap(new HashMap<>());
 	}
 	public ItemIdentifier getOperationId() {
 		return operationId;
@@ -48,10 +55,10 @@ public class OperationEntity {
 		this.item=item;
 
 	}
-	public User getInvokedBy() {
+	public UserId getInvokedBy() {
 		return invokedBy;
 	}
-	public void setInvokedBy(User invokedBy) {
+	public void setInvokedBy(UserId invokedBy) {
 		this.invokedBy = invokedBy;		
 	}
 	public Map<String, Object> getOperationAttributes() {

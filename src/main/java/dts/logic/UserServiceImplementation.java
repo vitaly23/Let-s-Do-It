@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 import boundaries.UserBoundary;
 import dts.converter.UserConverter;
 import dts.data.UserEntity;
-import models.users.User;
+import models.users.UserId;
 
 @Service
 public class UserServiceImplementation implements UsersService {
 
 	private String spaceName;
-	private Map<User, UserEntity> userStorage;
+	private Map<UserId, UserEntity> userStorage;
 	private UserConverter userConverter;
 	
 	@Autowired
@@ -53,7 +53,7 @@ public class UserServiceImplementation implements UsersService {
 
 	@Override
 	public UserBoundary login(String userSpace, String userEmail) {
-		User uid = new User();
+		UserId uid = new UserId();
 		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
 			uid.setSpace(userSpace);
@@ -68,7 +68,7 @@ public class UserServiceImplementation implements UsersService {
 
 	@Override
 	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
-		User uid = new User();
+		UserId uid = new UserId();
 		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
 			uid.setSpace(userSpace);
