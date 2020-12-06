@@ -22,9 +22,7 @@ public class AdminController {
 	private UsersService usersService;
 	private OperationService operationService;
 	
-	public AdminController() {
-		// TODO Auto-generated constructor stub
-	}
+	
 	@Autowired
 	public AdminController(ItemService itemService, UsersService usersService, OperationService operationService) {
 

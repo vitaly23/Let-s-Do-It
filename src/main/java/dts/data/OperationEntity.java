@@ -5,15 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import boundaries.UserBoundary;
+
 import models.operations.ItemIdentifier;
 import models.users.UserId;
 
 public class OperationEntity {
 	
+	private String id; //?
 	private ItemIdentifier operationId;
 	private String type;
-	private ItemEntity item;
+	private ItemEntity item;//??
 	private Date createdTimestamp;
 	private UserId invokedBy; 
 	private Map<String, Object> operationAttributes;
