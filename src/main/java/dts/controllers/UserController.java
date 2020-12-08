@@ -22,9 +22,8 @@ public class UserController {
 		this.userService=userService;
 	}
 	
-	//login user and retrive user detail
 	@RequestMapping(method = RequestMethod.GET, path = "/dts/users/login/{userSpace}/{userEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary retriveUserDetails(
+	public UserBoundary loginAndRetriveUserDetails(
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail) {
 

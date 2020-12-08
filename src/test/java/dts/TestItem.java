@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -25,7 +26,7 @@ import models.operations.Location;
 import models.users.UserId;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class testItem {
+public class TestItem {
 	
 	@Autowired
 	private ItemController itemRest;
@@ -34,22 +35,25 @@ public class testItem {
 	private AdminController adminRest;
 	
 	private int port;
-	private String url;
+	private String spaceName;
 	private String adminSpace,adminEmail;
 	private ItemBoundary itemBoundary;
+		
+	@PostConstruct
+	public void init() {
+		this.adminSpace="adminSpace";
+		this.adminEmail="adminEmail";
+		this.itemBoundary=new ItemBoundary();		
+	}
 	
 	@LocalServerPort
 	public void setPort(int port) {
 		this.port = port;
 	}
 	
-	@PostConstruct
-	public void init() {
-		this.url = "http://localhost:" + port + "";
-		this.adminSpace="adminSpace";
-		this.adminEmail="adminEmail";
-		this.itemBoundary=new ItemBoundary();
-		
+	@Value("${spring.application.name:default}")
+	public void setSpaceName(String spaceName) {
+		this.spaceName = spaceName;
 	}
 	
 	@BeforeEach
@@ -57,7 +61,7 @@ public class testItem {
 		this.adminRest.deleteAllItems(this.adminSpace, this.adminEmail);
 		
 		this.itemBoundary.setActive(true);
-		this.itemBoundary.setCreatedBy(new UserId("", ""));
+		this.itemBoundary.setCreatedBy(new UserId("", "ha@gmail.com"));
 		this.itemBoundary.setCreatedTimestamp(new Date());
 		Map<String,Object> map=new HashMap<>();
 		map.put("key1", "val1");
@@ -77,15 +81,15 @@ public class testItem {
 		assertThat(this.itemRest.retrieveAllDigitalItems(itemSpace, userEmail)).hasSize(0);
 	}
 	
-	//check if item was added
+	//check if item was added and get item back
 	@Test
-	public void addedOneItem() {
-		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "");
-		ItemBoundary existingItem=this.itemRest.retrieveDigitalItem("", "", "2021a.vitalyg1", "1");
+	public void addedOneItemAndRetieve() {
+		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
+		//change to space name if needed
+		ItemBoundary existingItem=this.itemRest.retrieveDigitalItem("", "", this.spaceName, "1");
 		if(!this.itemBoundary.equals(existingItem)) {
 			throw new RuntimeException("Error In insert Item");
 		}
-		
 	}
 	
 	//check if item delete
@@ -100,7 +104,6 @@ public class testItem {
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "");
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "");
 		assertThat(this.itemRest.retrieveAllDigitalItems("", "")).hasSize(2);	
-		
 	}
 
 }
