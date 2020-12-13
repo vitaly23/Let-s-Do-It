@@ -95,8 +95,9 @@ public class ItemServiceImplementation implements ItemService {
 	@Override
 	public void deleteAll(String adminSpace, String adminEmail) {
 		this.itemStore.clear();
+		System.err.println(itemStore);
 	}
-
+	
 	public ItemConverter getItemConvertor() {
 		return itemConvertor;
 	}

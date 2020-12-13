@@ -10,11 +10,11 @@ public class UserBoundary {
 	private String avatar;
 
 	public UserBoundary() {
+		// default arguments
 		this.userId = new UserId();
 		this.role = UserRole.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
-
 	}
 	
 	public UserId getUserId() {

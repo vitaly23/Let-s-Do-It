@@ -7,6 +7,7 @@ public class NewUserDetailsBoundary {
 	private String avatar;
 
 	public NewUserDetailsBoundary() {
+		// default arguments
 		this.email = "demo@maildomain.com";
 		this.role = "PLAYER";
 		this.username = "Demo User";

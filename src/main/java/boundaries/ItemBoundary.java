@@ -22,7 +22,7 @@ public class ItemBoundary {
 	private Map<String, Object> itemAttributes;
 
 	public ItemBoundary() {
-
+		// default arguments
 		this.itemId = new ItemIdentifier();
 		this.type = "new_type";
 		this.name = "name";

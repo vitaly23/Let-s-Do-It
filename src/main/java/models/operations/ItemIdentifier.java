@@ -6,6 +6,7 @@ public class ItemIdentifier {
 	private String id;
 
 	public ItemIdentifier() {
+		// TODO implement id generator
 		this.space = "default space";
 		this.id = "default id";
 	}

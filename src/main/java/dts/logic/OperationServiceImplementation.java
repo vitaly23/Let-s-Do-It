@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import dts.converter.OperationConverter;
 import dts.data.OperationEntity;
-import dts.data.UserRole;
 
 import boundaries.OperationBoundary;
 
@@ -25,14 +23,13 @@ public class OperationServiceImplementation implements OperationService {
 	private Map<Long,OperationEntity> operationStore;
 	private OperationConverter operationEntityConverter;
 	private AtomicLong nextId;
-	private UsersService userService;
+
 	
 	@Autowired
 	public void setEntityConverter(OperationConverter operationConverter,UsersService userService) {
 		this.operationEntityConverter = operationConverter;
-		this.userService=userService;
-
 	}
+	
 	@Value("${spring.application.name:default}")
 	public void setSpaceName(String spaceName) {
 		this.spaceName = spaceName;
@@ -61,26 +58,18 @@ public class OperationServiceImplementation implements OperationService {
 
 	@Override
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
-		if(userService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) {
-			return this.operationStore.values().stream().map(entity -> this.operationEntityConverter.FromEntity(entity))
-					.collect(Collectors.toList());
-		}else {
-			throw new RuntimeException(adminEmail + " is NOT a admin");
-		}
-
+		return this.operationStore.values().
+				stream().
+				map(entity -> this.operationEntityConverter.FromEntity(entity)).
+				collect(Collectors.toList());
 	}
 
 	@Override
 	public void deleteAllActions(String adminSpace, String adminEmail) {
-
-		if(userService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) {
-			this.operationStore.clear();
-		}
-		else {
-			throw new RuntimeException(adminEmail + " is NOT a admin");
-		}
-
+		this.operationStore.clear();
+		System.err.println(operationStore);
 	}
+	
 	public String getSpaceName() {
 		return spaceName;
 	}
