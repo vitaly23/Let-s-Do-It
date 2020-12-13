@@ -1,6 +1,5 @@
 package dts.converter;
 
-import dts.data.ItemEntity;
 import dts.data.OperationEntity;
 import models.operations.Item;
 import models.operations.ItemIdentifier;
@@ -18,8 +17,7 @@ public class OperationConverter {
 		OperationEntity entity= new OperationEntity();
 
 		if(operationBoundary.getItem() != null) {
-			entity.setItem(new ItemEntity());
-			entity.getItem().setItemId(operationBoundary.getItem().getItemId());
+			entity.setItem(operationBoundary.getItem());
 		}
 		if(operationBoundary.getType()!= null) {
 			entity.setType(operationBoundary.getType());
@@ -33,7 +31,6 @@ public class OperationConverter {
 		if(operationBoundary.getOperationAttributes() !=null) {
 			entity.setOperationAttributes(operationBoundary.getOperationAttributes());
 		}
-
 
 		return entity;
 	}
