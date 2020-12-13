@@ -61,4 +61,10 @@ public class ItemIdentifier {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemIdentifier [space=" + space + ", id=" + id + "]";
+	}
+	
 }

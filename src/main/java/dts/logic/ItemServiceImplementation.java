@@ -29,7 +29,7 @@ public class ItemServiceImplementation implements ItemService {
 	private ItemConverter itemConvertor;
 
 	@Value("${spring.application.name:default}")
-	public void setHelperName(String spaceName) {
+	public void setSpaceName(String spaceName) {
 		this.spaceName = spaceName;
 	}
 
@@ -53,7 +53,7 @@ public class ItemServiceImplementation implements ItemService {
 		ItemEntity entity = this.itemConvertor.toEntity(newItem);
 		itemStore.put(entity.getItemId(), entity);
 
-		return newItem;
+		return this.itemConvertor.toBoundary(entity);
 	}
 
 	@Override
@@ -95,7 +95,10 @@ public class ItemServiceImplementation implements ItemService {
 	@Override
 	public void deleteAll(String adminSpace, String adminEmail) {
 		this.itemStore.clear();
+		this.idGenerator=new AtomicLong(1l);
 	}
+	
+	
 
 	public ItemConverter getItemConvertor() {
 		return itemConvertor;

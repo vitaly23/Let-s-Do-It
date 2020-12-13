@@ -42,13 +42,9 @@ public class UserServiceImplementation implements UsersService {
 	
 	@Override
 	public UserBoundary createUser(UserBoundary user) {
-		UserBoundary newUser = new UserBoundary();
-		newUser.setAvatar(user.getAvatar());
-		newUser.setRole(user.getRole());
-		newUser.setUserId(user.getUserId());
-		newUser.setUsername(user.getRole().toString());
-		userStorage.put(newUser.getUserId(), userConverter.toEntity(newUser));
-		return newUser; 
+		UserEntity newUser = this.userConverter.toEntity(user);
+		userStorage.put(newUser.getUserId(), newUser);
+		return this.userConverter.toBoundary(newUser); 
 	}
 
 	@Override
@@ -57,6 +53,10 @@ public class UserServiceImplementation implements UsersService {
 		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
 			uid.setSpace(userSpace);
+		}
+		else {
+			//error email and space name
+			return null;
 		}
 		
 		if(uid != null && userStorage.containsKey(uid)){
@@ -79,8 +79,9 @@ public class UserServiceImplementation implements UsersService {
 			current.setAvatar(update.getAvatar());
 			current.setRole(update.getRole());
 			current.setUserId(update.getUserId());
-			current.setUsername(update.getRole().toString());
+			current.setUsername(update.getUsername());
 			userStorage.put(uid, userConverter.toEntity(current));
+			return current;
 		}
 		return null;
 	}
