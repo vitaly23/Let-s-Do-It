@@ -20,7 +20,7 @@ import boundaries.OperationBoundary;
 @Service
 public class OperationServiceImplementation implements OperationService {
 	private String spaceName;
-	private Map<Long,OperationEntity> operationStore;
+	private Map<String,OperationEntity> operationStore;
 	private OperationConverter operationEntityConverter;
 	private AtomicLong nextId;
 
@@ -46,12 +46,12 @@ public class OperationServiceImplementation implements OperationService {
 	public Object invokeOpreation(OperationBoundary operation) {
 		OperationEntity entity= new OperationEntity();
 		Long newId = nextId.incrementAndGet();
-		entity.getOperationId().setId(""+this.spaceName+newId);
+		entity.getOperationId().setId(""+this.spaceName+'$'+newId);
 		entity.setCreatedTimestamp(new Date());
 		
 		entity= this.operationEntityConverter.toEntity(operation);
 		
-		this.operationStore.put(newId, entity);
+		this.operationStore.put(this.spaceName+'$'+newId, entity);
 
 		return this.operationEntityConverter.FromEntity(entity);
 	}
@@ -67,6 +67,7 @@ public class OperationServiceImplementation implements OperationService {
 	@Override
 	public void deleteAllActions(String adminSpace, String adminEmail) {
 		this.operationStore.clear();
+		this.nextId = new AtomicLong(0L);
 		System.err.println(operationStore);
 	}
 	

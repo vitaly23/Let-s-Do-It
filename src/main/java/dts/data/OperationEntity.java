@@ -5,16 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import models.operations.Item;
 import models.operations.ItemIdentifier;
 import models.users.UserId;
 
 public class OperationEntity {
 	
-	private String id; //?
+	private String id;
 	private ItemIdentifier operationId;
 	private String type;
-	private ItemEntity item;//??
+	private Item item;
 	private Date createdTimestamp;
 	private UserId invokedBy; 
 	private Map<String, Object> operationAttributes;
@@ -22,7 +22,7 @@ public class OperationEntity {
 	public OperationEntity() {
 		this.operationId = new ItemIdentifier("space", "id");
 		this.type = "type";
-		this.item = new ItemEntity();
+		this.item = new Item();
 		this.createdTimestamp = new Date();
 		this.invokedBy = new UserId();
 		this.operationAttributes = Collections.synchronizedMap(new HashMap<>());
@@ -47,14 +47,19 @@ public class OperationEntity {
 
 	public void setCreatedTimestamp(Date date) {
 		this.createdTimestamp = date;
-
 	}
-	public ItemEntity getItem() {
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public Item getItem() {
 		return item;
 	}
-	public void setItem(ItemEntity item) {
-		this.item=item;
-
+	public void setItem(Item item) {
+		this.item = item;
 	}
 	public UserId getInvokedBy() {
 		return invokedBy;

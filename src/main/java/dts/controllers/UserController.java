@@ -23,19 +23,19 @@ public class UserController {
 	
 	//check the  type of newUser
 	@RequestMapping(
-			path = "/dts/users", method = RequestMethod.POST, 
+			method = RequestMethod.POST,
+			path = "/dts/users",  
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public UserBoundary createNewUser(@RequestBody UserBoundary newUser) {
 		return this.userService.createUser(newUser);
 	}
 	
-	//login user and retrieve user detail
 	@RequestMapping(
-			method = RequestMethod.GET, 
-			path = "/dts/users/login/{userSpace}/{userEmail}", 
+			method = RequestMethod.GET,
+			path = "/dts/users/login/{userSpace}/{userEmail}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary retriveUserDetails(
+	public UserBoundary loginAndRetriveUserDetails(
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail) {
 		return this.userService.login(userSpace, userEmail);
