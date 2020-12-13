@@ -9,7 +9,6 @@ import models.operations.ItemIdentifier;
 import models.operations.Location;
 import models.users.UserId;
 
-
 public class ItemBoundary {
 
 	private ItemIdentifier itemId;
@@ -22,7 +21,7 @@ public class ItemBoundary {
 	private Map<String, Object> itemAttributes;
 
 	public ItemBoundary() {
-
+		// default arguments
 		this.itemId = new ItemIdentifier();
 		this.type = "new_type";
 		this.name = "name";
@@ -154,6 +153,7 @@ public class ItemBoundary {
 		if (name == null) {
 			if (other.name != null)
 				return false;
+
 		} else if (!name.equals(other.name))
 			return false;
 		if (type == null) {
@@ -163,7 +163,5 @@ public class ItemBoundary {
 			return false;
 		return true;
 	}
-	
-	
 
 }

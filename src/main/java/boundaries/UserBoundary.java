@@ -10,17 +10,17 @@ public class UserBoundary {
 	private String avatar;
 
 	public UserBoundary() {
+		// default arguments
 		this.userId = new UserId();
 		this.role = UserRole.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
-
 	}
-	
+
 	public UserId getUserId() {
 		return userId;
 	}
-	
+
 	public void setUserId(UserId userId) {
 		this.userId = userId;
 	}
@@ -48,8 +48,6 @@ public class UserBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -96,5 +94,5 @@ public class UserBoundary {
 		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
 				+ "]";
 	}
-	
+
 }

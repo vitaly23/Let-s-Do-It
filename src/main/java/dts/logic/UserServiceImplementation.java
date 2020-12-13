@@ -49,6 +49,7 @@ public class UserServiceImplementation implements UsersService {
 
 	@Override
 	public UserBoundary login(String userSpace, String userEmail) {
+		// TODO ask vitaly about the implementation
 		UserId uid = new UserId();
 		if(userSpace != null && userEmail != null) {
 			uid.setEmail(userEmail);
@@ -101,6 +102,7 @@ public class UserServiceImplementation implements UsersService {
 	@Override
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
 		this.userStorage.clear();
+		System.err.println(userStorage);
 	}
 
 	public String getSpaceName() {

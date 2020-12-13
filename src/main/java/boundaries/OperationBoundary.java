@@ -19,6 +19,7 @@ public class OperationBoundary {
 	private Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {
+		// default arguments
 		this.operationId = new ItemIdentifier("space", "id");
 		this.type = "operationType";
 		this.item = new Item(new ItemIdentifier("space", "id"));

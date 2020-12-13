@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import dts.logic.OperationService;
-import models.operations.ItemIdentifier;
+
 
 @RestController
 public class OperationController {
@@ -22,9 +22,12 @@ public class OperationController {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST, path = "/dts/operations", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(
+			method = RequestMethod.POST, 
+			path = "/dts/operations", 
+			produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object invokeOpreation(@RequestBody OperationBoundary operation) {
-		
 		return  this.operationService.invokeOpreation(operation);
 	}
 }

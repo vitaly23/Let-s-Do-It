@@ -96,10 +96,9 @@ public class ItemServiceImplementation implements ItemService {
 	public void deleteAll(String adminSpace, String adminEmail) {
 		this.itemStore.clear();
 		this.idGenerator=new AtomicLong(1l);
+		System.err.println(itemStore);
 	}
 	
-	
-
 	public ItemConverter getItemConvertor() {
 		return itemConvertor;
 	}
@@ -108,6 +107,4 @@ public class ItemServiceImplementation implements ItemService {
 		this.itemConvertor = itemConvertor;
 	}
 	
-	
-
 }

@@ -47,7 +47,6 @@ public class OperationEntity {
 
 	public void setCreatedTimestamp(Date date) {
 		this.createdTimestamp = date;
-
 	}
 	
 	public String getId() {
