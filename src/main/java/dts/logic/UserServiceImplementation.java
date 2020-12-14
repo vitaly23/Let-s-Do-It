@@ -117,6 +117,4 @@ public class UserServiceImplementation implements UsersService {
 		this.userConverter = userConverter;
 	}
 	
-	
-	
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import boundaries.UserBoundary;
-import dts.data.UserRole;
 import dts.logic.ItemService;
 import dts.logic.OperationService;
 import dts.logic.UsersService;
@@ -37,7 +36,6 @@ public class AdminController {
 	public void deleteAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
 			this.usersService.deleteAllUsers(adminSpace, adminEmail);
 	}
 
@@ -47,7 +45,6 @@ public class AdminController {
 	public void deleteAllItems(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
 			this.itemService.deleteAll(adminSpace, adminEmail);
 	}
 
@@ -57,7 +54,6 @@ public class AdminController {
 	public void deleteAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
 			this.operationService.deleteAllActions(adminSpace, adminEmail);
 	}
 
@@ -68,12 +64,9 @@ public class AdminController {
 	public UserBoundary[] exportAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		UserBoundary[] array = {};
-		if (this.isAdmin(adminSpace, adminEmail)) {
-			List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
-			array = new UserBoundary[listUser.size()];
-			listUser.toArray(array);
-		}
+		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
+		UserBoundary[] array = new UserBoundary[listUser.size()];
+		listUser.toArray(array);
 		return array;
 	}
 
@@ -84,21 +77,10 @@ public class AdminController {
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		OperationBoundary[] array = {};
-		if (this.isAdmin(adminSpace, adminEmail)) {
-			List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
-			array = new OperationBoundary[listBoundary.size()];
-			listBoundary.toArray(array);
-		}
+		List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
+		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
+		listBoundary.toArray(array);
 		return array;
 	}
 
-	private boolean isAdmin(String adminSpace, String adminEmail) {
-		if (this.usersService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) 
-			return true;
-		else {
-			System.err.println("User" + adminEmail + "is not an Admin user");
-			return false;
-		}
-	}
 }
