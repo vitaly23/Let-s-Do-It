@@ -18,16 +18,16 @@ import dts.logic.UsersService;
 @RestController
 public class AdminController {
 
-	private ItemsService itemService;
+	private ItemsService itemsService;
 	private UsersService usersService;
-	private OperationsService operationService;
+	private OperationsService operationsService;
 	
 	
 	@Autowired
 	public AdminController(ItemsService itemService, UsersService usersService, OperationsService operationService) {
-		this.itemService = itemService;
+		this.itemsService = itemService;
 		this.usersService = usersService;
-		this.operationService = operationService;
+		this.operationsService = operationService;
 	}
 
 	@RequestMapping(
@@ -45,7 +45,7 @@ public class AdminController {
 	public void deleteAllItems(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-			this.itemService.deleteAll(adminSpace, adminEmail);
+			this.itemsService.deleteAll(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -54,7 +54,7 @@ public class AdminController {
 	public void deleteAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-			this.operationService.deleteAllActions(adminSpace, adminEmail);
+			this.operationsService.deleteAllActions(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -77,7 +77,7 @@ public class AdminController {
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
+		List<OperationBoundary> listBoundary = this.operationsService.getAllOperations(adminSpace, adminEmail);
 		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
 		listBoundary.toArray(array);
 		return array;

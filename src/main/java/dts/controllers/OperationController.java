@@ -13,11 +13,11 @@ import dts.logic.OperationsService;
 @RestController
 public class OperationController {
 
-	private OperationsService operationService;
+	private OperationsService operationsService;
 
 	@Autowired
 	public OperationController(OperationsService operationService) {
-		this.operationService = operationService;
+		this.operationsService = operationService;
 	}
 
 	@RequestMapping(
@@ -26,7 +26,7 @@ public class OperationController {
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object invokeOpreation(@RequestBody OperationBoundary operation) {
-		return this.operationService.invokeOpreation(operation);
+		return this.operationsService.invokeOpreation(operation);
 	}
 
 }
