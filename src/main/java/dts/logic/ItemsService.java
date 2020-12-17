@@ -4,7 +4,7 @@ import java.util.List;
 
 import boundaries.ItemBoundary;
 
-public interface ItemService {
+public interface ItemsService {
 
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem);
 

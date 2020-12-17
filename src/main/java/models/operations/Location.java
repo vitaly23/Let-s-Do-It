@@ -1,12 +1,18 @@
 package models.operations;
 
+import constants.Constants;
+
 public class Location {
 	private double lat;
 	private double lng;
 
 	public Location() {
-		this.lat = 5.3;
-		this.lng = 2.7;
+
+	}
+	
+	public Location(double lat, double lng) {
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public double getLan() {
@@ -23,6 +29,11 @@ public class Location {
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	@Override
+	public String toString() {
+		return this.lat + Constants.DELIMITER + this.lng;
 	}
 
 }

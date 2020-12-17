@@ -8,26 +8,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
-import dts.logic.OperationService;
-
+import dts.logic.OperationsService;
 
 @RestController
 public class OperationController {
-	
-	private OperationService operationService;
-	
+
+	private OperationsService operationsService;
+
 	@Autowired
-	public OperationController(OperationService operationService) {
-		this.operationService=operationService;
+	public OperationController(OperationsService operationService) {
+		this.operationsService = operationService;
 	}
-	
-	
+
 	@RequestMapping(
 			method = RequestMethod.POST, 
 			path = "/dts/operations", 
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object invokeOpreation(@RequestBody OperationBoundary operation) {
-		return  this.operationService.invokeOpreation(operation);
+		return this.operationsService.invokeOpreation(operation);
 	}
+
 }

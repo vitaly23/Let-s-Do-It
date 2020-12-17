@@ -8,27 +8,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import boundaries.NewUserDetailsBoundary;
 import boundaries.UserBoundary;
+import dts.converter.UserConverter;
 import dts.logic.UsersService;
 
 @RestController
 public class UserController {
 	
-	private UsersService userService;
+	private UsersService usersService;
+	private UserConverter userConverter;
 	
 	@Autowired
-	public UserController(UsersService userService) {
-		this.userService=userService;
+	public UserController(UsersService userService, UserConverter userConverter) {
+		this.usersService=userService;
+		this.userConverter = userConverter;
 	}
 	
-	//check the  type of newUser
 	@RequestMapping(
 			method = RequestMethod.POST,
 			path = "/dts/users",  
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary createNewUser(@RequestBody UserBoundary newUser) {
-		return this.userService.createUser(newUser);
+	public UserBoundary createNewUser(@RequestBody NewUserDetailsBoundary newUserDetails) {
+		UserBoundary userBoundary = this.userConverter.toBoundary(newUserDetails);
+		return this.usersService.createUser(userBoundary);
 	}
 	
 	@RequestMapping(
@@ -38,7 +42,7 @@ public class UserController {
 	public UserBoundary loginAndRetriveUserDetails(
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail) {
-		return this.userService.login(userSpace, userEmail);
+		return this.usersService.login(userSpace, userEmail);
 	}
 
 	@RequestMapping(
@@ -49,7 +53,7 @@ public class UserController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@RequestBody UserBoundary updateUserDetails) {
-		this.userService.updateUser(updateUserDetails, userSpace, userEmail);
+		this.usersService.updateUser(updateUserDetails, userSpace, userEmail);
 	}
 
 }

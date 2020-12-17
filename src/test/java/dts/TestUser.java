@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import boundaries.NewUserDetailsBoundary;
 import boundaries.UserBoundary;
 import dts.controllers.AdminController;
 import dts.controllers.UserController;
@@ -29,13 +30,13 @@ public class TestUser {
 	private AdminController adminRest;
 	
 	private int port;
-	private UserBoundary userBoundary;
+	private NewUserDetailsBoundary userBoundary;
 	private String spaceName;
 	private final String USEREMAIL="ha@gmail.com";
 	
 	@PostConstruct
 	public void init() {
-		this.userBoundary=new UserBoundary();
+		this.userBoundary=new NewUserDetailsBoundary();
 	}
 	
 	@LocalServerPort
@@ -55,7 +56,7 @@ public class TestUser {
 		this.userBoundary.setAvatar("harel");
 		this.userBoundary.setRole(UserRole.ADMIN);
 		this.userBoundary.setUsername("user1");
-		this.userBoundary.setUserId(new UserId(this.spaceName, this.USEREMAIL));
+		this.userBoundary.setEmail(this.USEREMAIL);
 	}
 	
 	@Test
@@ -88,7 +89,7 @@ public class TestUser {
 		userBoundaryNew.setUserId(new UserId("spaceNew", "new"+this.USEREMAIL));
 		userBoundaryNew.setUsername("moshe");
 		this.userRest.updateExistingUser(this.spaceName, this.USEREMAIL, userBoundaryNew);
-		this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
+		//this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
 		assertEquals(userBoundary, userRest);
 	}
 	
@@ -97,7 +98,7 @@ public class TestUser {
 		this.userRest.createNewUser(userBoundary);
 		userBoundary.setAvatar("dog");
 		userBoundary.setRole(UserRole.MANAGER);
-		userBoundary.setUserId(new UserId(this.spaceName, this.USEREMAIL));
+		//userBoundary.setUserId(new UserId(this.spaceName, this.USEREMAIL));
 		userBoundary.setUsername("moshe");
 		this.userRest.createNewUser(userBoundary);
 		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(2);
@@ -108,7 +109,7 @@ public class TestUser {
 		//added user
 		this.userRest.createNewUser(userBoundary);
 		//login
-		this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
+		//this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
 		assertEquals(userBoundary, userBoundary);		
 	}
 		

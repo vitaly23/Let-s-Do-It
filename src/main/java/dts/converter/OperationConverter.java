@@ -1,64 +1,68 @@
 package dts.converter;
 
 import dts.data.OperationEntity;
+import dts.utils.Utils;
+import models.operations.InvokedBy;
 import models.operations.Item;
-import models.operations.ItemIdentifier;
+import models.operations.ItemId;
+import models.operations.OperationId;
+import models.users.UserId;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import boundaries.OperationBoundary;
+import constants.Constants;
 
 @Component
 public class OperationConverter {
 
-	public OperationConverter() {
-	}
-	public OperationEntity toEntity(OperationBoundary operationBoundary) {
-		OperationEntity entity= new OperationEntity();
+	private Utils utils;
 
-		if(operationBoundary.getItem() != null) {
-			entity.setItem(operationBoundary.getItem());
+	@Autowired
+	public OperationConverter(Utils utils) {
+		this.utils = utils;
+	}
+
+	public OperationEntity toEntity(OperationBoundary operationBoundary) {
+		OperationEntity entity = new OperationEntity();
+		entity.setOperationId(operationBoundary.getOperationId().toString());
+		if (operationBoundary.getItem() != null && operationBoundary.getItem().getItemId() != null) {
+			entity.setItem(operationBoundary.getItem().toString());
 		}
-		if(operationBoundary.getType()!= null) {
+		if (operationBoundary.getType() != null) {
 			entity.setType(operationBoundary.getType());
 		}
-		if(operationBoundary.getCreatedTimestamp()!=null) {
-			entity.setCreatedTimestamp(operationBoundary.getCreatedTimestamp());
+		entity.setCreatedTimestamp(operationBoundary.getCreatedTimestamp());
+		if (operationBoundary.getInvokedBy() != null && operationBoundary.getInvokedBy().getUserId() != null) {
+			entity.setInvokedBy(operationBoundary.getInvokedBy().toString());
 		}
-		if(operationBoundary.getInvokedBy() != null) {
-			entity.setInvokedBy(operationBoundary.getInvokedBy());
+		if (operationBoundary.getOperationAttributes() != null) {
+			entity.setOperationAttributes(this.utils.toEntity(operationBoundary.getOperationAttributes()));
 		}
-		if(operationBoundary.getOperationAttributes() !=null) {
-			entity.setOperationAttributes(operationBoundary.getOperationAttributes());
-		}
-
 		return entity;
 	}
-	//convert entity to boundary
-	public OperationBoundary FromEntity(OperationEntity entity) {
+
+	public OperationBoundary toBoundary(OperationEntity operationEntity) {
 		OperationBoundary boundary = new OperationBoundary();
-
-		if(entity.getCreatedTimestamp()!=null) {
-			boundary.setCreatedTimestamp(entity.getCreatedTimestamp());
+		boundary.setCreatedTimestamp(operationEntity.getCreatedTimestamp());
+		if (operationEntity.getItem() != null) {
+			String[] args = operationEntity.getItem().split(Constants.DELIMITER);
+			boundary.setItem(new Item(new ItemId(args[0], args[1])));
 		}
-
-		if(entity.getItem() != null) {
-			boundary.setItem(new Item());
-			boundary.getItem().setItemId(entity.getItem().getItemId());
+		if (operationEntity.getOperationId() != null) {
+			String[] args = operationEntity.getOperationId().split(Constants.DELIMITER);
+			boundary.setOperationId(new OperationId(args[0], args[1]));
 		}
-
-		if(entity.getOperationId() != null) {
-			boundary.setOperationId( new ItemIdentifier(entity.getOperationId().getSpace(), entity.getOperationId().getId()));
+		if (operationEntity.getInvokedBy() != null) {
+			String[] args = operationEntity.getInvokedBy().split(Constants.DELIMITER);
+			boundary.setInvokedBy(new InvokedBy(new UserId(args[0], args[1])));
 		}
-		if(entity.getInvokedBy() != null) {
-			boundary.setInvokedBy(entity.getInvokedBy());
+		if (operationEntity.getType() != null) {
+			boundary.setType(operationEntity.getType());
 		}
-
-		if(entity.getType()!= null) {
-			boundary.setType(entity.getType());
-		}
-		if(entity.getOperationAttributes() !=null) {
-			boundary.setOperationAttributes(entity.getOperationAttributes());
+		if (operationEntity.getOperationAttributes() != null) {
+			boundary.setOperationAttributes(this.utils.toBoundaryAsMap(operationEntity.getOperationAttributes()));
 		}
 
 		return boundary;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import boundaries.OperationBoundary;
 
-public interface OperationService {
+public interface OperationsService {
 
 	public Object invokeOpreation(OperationBoundary operation);
 

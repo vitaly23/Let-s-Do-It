@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import dts.controllers.AdminController;
 import dts.controllers.ItemController;
 import models.operations.Item;
-import models.operations.ItemIdentifier;
 import models.operations.Location;
 import models.users.UserId;
 
@@ -61,7 +60,7 @@ public class TestItem {
 		this.adminRest.deleteAllItems(this.adminSpace, this.adminEmail);
 		
 		this.itemBoundary.setActive(true);
-		this.itemBoundary.setCreatedBy(new UserId("", "ha@gmail.com"));
+//		this.itemBoundary.setCreatedBy(new UserId("", "ha@gmail.com"));
 		this.itemBoundary.setCreatedTimestamp(new Date());
 		Map<String,Object> map=new HashMap<>();
 		map.put("key1", "val1");
@@ -70,7 +69,7 @@ public class TestItem {
 		this.itemBoundary.setLocation(new Location());
 		this.itemBoundary.setType("new type");
 		this.itemBoundary.setName("first item");
-		this.itemBoundary.setItemId(new ItemIdentifier("", "1"));
+//		this.itemBoundary.setItemId(new ItemIdentifier("", "1"));
 		
 	}
 	

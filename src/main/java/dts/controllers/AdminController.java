@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import boundaries.UserBoundary;
-import dts.data.UserRole;
-import dts.logic.ItemService;
-import dts.logic.OperationService;
+import dts.logic.EnhancedItemsService;
+import dts.logic.ItemsService;
+import dts.logic.OperationsService;
 import dts.logic.UsersService;
 
 @RestController
 public class AdminController {
 
-	private ItemService itemService;
+	private ItemsService itemsService;
 	private UsersService usersService;
-	private OperationService operationService;
+	private OperationsService operationsService;
 	
 	
 	@Autowired
-	public AdminController(ItemService itemService, UsersService usersService, OperationService operationService) {
-		this.itemService = itemService;
+	public AdminController(ItemsService itemService, UsersService usersService, OperationsService operationService) {
+		this.itemsService = itemService;
 		this.usersService = usersService;
-		this.operationService = operationService;
+		this.operationsService = operationService;
 	}
 
 	@RequestMapping(
@@ -37,7 +37,6 @@ public class AdminController {
 	public void deleteAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
 			this.usersService.deleteAllUsers(adminSpace, adminEmail);
 	}
 
@@ -47,8 +46,7 @@ public class AdminController {
 	public void deleteAllItems(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
-			this.itemService.deleteAll(adminSpace, adminEmail);
+			this.itemsService.deleteAll(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -57,8 +55,7 @@ public class AdminController {
 	public void deleteAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		if (this.isAdmin(adminSpace, adminEmail)) 
-			this.operationService.deleteAllActions(adminSpace, adminEmail);
+			this.operationsService.deleteAllActions(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -68,12 +65,9 @@ public class AdminController {
 	public UserBoundary[] exportAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		UserBoundary[] array = {};
-		if (this.isAdmin(adminSpace, adminEmail)) {
-			List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
-			array = new UserBoundary[listUser.size()];
-			listUser.toArray(array);
-		}
+		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
+		UserBoundary[] array = new UserBoundary[listUser.size()];
+		listUser.toArray(array);
 		return array;
 	}
 
@@ -84,21 +78,10 @@ public class AdminController {
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-		OperationBoundary[] array = {};
-		if (this.isAdmin(adminSpace, adminEmail)) {
-			List<OperationBoundary> listBoundary = this.operationService.getAllOperations(adminSpace, adminEmail);
-			array = new OperationBoundary[listBoundary.size()];
-			listBoundary.toArray(array);
-		}
+		List<OperationBoundary> listBoundary = this.operationsService.getAllOperations(adminSpace, adminEmail);
+		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
+		listBoundary.toArray(array);
 		return array;
 	}
 
-	private boolean isAdmin(String adminSpace, String adminEmail) {
-		if (this.usersService.login(adminSpace, adminEmail).getRole().equals(UserRole.ADMIN)) 
-			return true;
-		else {
-			System.err.println("User" + adminEmail + "is not an Admin user");
-			return false;
-		}
-	}
 }
