@@ -1,14 +1,17 @@
 package boundaries;
 
+import dts.data.UserRole;
+
 public class NewUserDetailsBoundary {
 	private String email;
-	private String role;
+	private UserRole role;
 	private String username;
 	private String avatar;
 
 	public NewUserDetailsBoundary() {
+		// default arguments
 		this.email = "demo@maildomain.com";
-		this.role = "PLAYER";
+		this.role = UserRole.PLAYER;
 		this.username = "Demo User";
 		this.avatar = "ooOO_()_OOoo";
 	}
@@ -21,11 +24,11 @@ public class NewUserDetailsBoundary {
 		this.email = email;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 
@@ -44,6 +47,5 @@ public class NewUserDetailsBoundary {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
 
 }

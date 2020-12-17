@@ -1,41 +1,43 @@
 package boundaries;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.operations.ItemIdentifier;
+import models.operations.CreatedBy;
+import models.operations.ItemId;
 import models.operations.Location;
-import models.users.User;
+import models.users.UserId;
 
 public class ItemBoundary {
 
-	private ItemIdentifier itemId;
+	private ItemId itemId;
 	private String type;
 	private String name;
 	private Boolean active;
 	private Date createdTimestamp;
-	private User createdBy;
+	private CreatedBy createdBy;
 	private Location location;
 	private Map<String, Object> itemAttributes;
 
 	public ItemBoundary() {
-
-		this.itemId = new ItemIdentifier();
-		this.type = "new_type";
-		this.name = "name";
+		// default arguments
+		this.itemId = new ItemId("my_space", "my_id");
+		this.type = "my_type";
+		this.name = "my_name";
 		this.active = true;
 		this.createdTimestamp = new Date();
-		this.createdBy = new User();
-		this.location = new Location();
-		this.itemAttributes = new HashMap<>();
+		this.createdBy = new CreatedBy(new UserId("my_space", "my_email"));
+		this.location = new Location(1.1, 2.2);
+		this.itemAttributes = Collections.synchronizedMap(new HashMap<>());
 	}
 
-	public ItemIdentifier getItemId() {
+	public ItemId getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(ItemIdentifier itemId) {
+	public void setItemId(ItemId itemId) {
 		this.itemId = itemId;
 	}
 
@@ -71,11 +73,11 @@ public class ItemBoundary {
 		this.createdTimestamp = createdTimestamp;
 	}
 
-	public User getCreatedBy() {
+	public CreatedBy getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(CreatedBy createdBy) {
 		this.createdBy = createdBy;
 	}
 
