@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.ItemBoundary;
-import dts.logic.EnhancedItemService;
+import dts.logic.EnhancedItemsService;
+import dts.logic.ItemsService;
 
 @RestController
 public class ItemController {
 
-	private EnhancedItemService itemService;
+	private EnhancedItemsService itemService;
 
 	@Autowired
-	public ItemController(EnhancedItemService itemService) {
+	public ItemController(EnhancedItemsService itemService) {
 		this.itemService = itemService;
 	}
 
@@ -72,4 +73,5 @@ public class ItemController {
 		listItem.toArray(array);
 		return array;
 	}
+	
 }

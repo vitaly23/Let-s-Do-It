@@ -15,7 +15,7 @@ public class UserConverter {
 	
 	String spaceName;
 	
-	@Value("${spring.application.name:deafult}")
+	@Value("${spring.application.name:default_space_name}")
 	public void setSpaceName(String spaceName) {
 		this.spaceName = spaceName;
 	}

@@ -2,7 +2,7 @@ package dts.logic;
 
 import boundaries.ItemBoundary;
 
-public interface EnhancedItemService extends ItemsService {
+public interface EnhancedItemsService extends ItemsService {
 
 	public void bindItemToChildItem(String managerSpace, String managerEmail, String itemSpace, String itemId);
 

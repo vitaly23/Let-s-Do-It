@@ -1,75 +1,76 @@
 package dts.logic;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.UserBoundary;
 import constants.Constants;
 import dts.converter.UserConverter;
-import dts.dao.UserDao;
 import dts.data.UserEntity;
-import exceptions.UserNotFoundException;
 
-@Service
+//@Service
 public class UsersServiceImplementation implements UsersService {
 
-	private UserDao userDao;
+	private Map<String, UserEntity> userStorage;
 	private UserConverter userConverter;
 
 	@Autowired
-	public UsersServiceImplementation(UserDao userDao, UserConverter userConverter) {
-		super();
-		this.userDao = userDao;
+	public void setMessageConverter(UserConverter userConverter) {
 		this.userConverter = userConverter;
 	}
 
+	@PostConstruct
+	public void init() {
+		this.userStorage = Collections.synchronizedMap(new HashMap<>()); // thread safe map
+	}
+
 	@Override
-	@Transactional
 	public UserBoundary createUser(UserBoundary user) {
-		UserEntity newUserEntity = this.userConverter.toEntity(user);
-		this.userDao.save(newUserEntity);
-		return this.userConverter.toBoundary(newUserEntity);
+		UserEntity newUser = this.userConverter.toEntity(user);
+		userStorage.put(newUser.getUserId().toString(), newUser);
+		return this.userConverter.toBoundary(newUser);
 	}
 
 	@Override
-	@Transactional
 	public UserBoundary login(String userSpace, String userEmail) {
-		Optional<UserEntity> existingUser = this.userDao.findById(userSpace + Constants.DELIMITER + userEmail);
-		if (!existingUser.isPresent())
-			throw new UserNotFoundException("user with email: " + userEmail + "does not exist");
-		return this.userConverter.toBoundary(existingUser.get());
+		UserEntity existingUser = userStorage.get(userSpace + Constants.DELIMITER + userEmail);
+		if (existingUser == null) {
+			throw new RuntimeException("user with email: " + userEmail + "does not exist");
+		}
+		return userConverter.toBoundary(existingUser);
 	}
 
 	@Override
-	@Transactional
 	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
-		Optional<UserEntity> existingUser = this.userDao.findById(userSpace + Constants.DELIMITER + userEmail);
-		if (!existingUser.isPresent())
-			throw new UserNotFoundException("user with email: " + userEmail + "does not exist");
-		UserEntity existingEntity = existingUser.get();
+		UserEntity existingUser = userStorage.get(userSpace + Constants.DELIMITER + userEmail);
+		if (existingUser == null) {
+			throw new RuntimeException("user with email: " + userEmail + "does not exist");
+		}
 		UserEntity userEntity = this.userConverter.toEntity(update);
-		userEntity.setUserId(existingEntity.getUserId().toString());
-		return this.userConverter.toBoundary(this.userDao.save(userEntity));
+		userEntity.setUserId(existingUser.getUserId().toString());
+		this.userStorage.put(userEntity.getUserId().toString(), userEntity);
+		return this.userConverter.toBoundary(userEntity);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
-		return StreamSupport.stream(this.userDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
-				.map(entity -> this.userConverter.toBoundary(entity)) // Stream<ItemBoundary>
-				.collect(Collectors.toList()); // List<ItemBoundary>
+		return this.userStorage.values() // Collection<UserEntity>
+				.stream() // Stream<UserEntity>
+				.map(entity -> userConverter.toBoundary(entity))// Stream<MessageBoundary>
+				.collect(Collectors.toList()); // List<UserBoundary>
 	}
 
 	@Override
-	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
-		this.userDao.deleteAll();
+		this.userStorage.clear();
 	}
 
 }

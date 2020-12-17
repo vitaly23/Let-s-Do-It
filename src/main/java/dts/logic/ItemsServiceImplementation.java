@@ -1,117 +1,87 @@
 package dts.logic;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.ItemBoundary;
 import constants.Constants;
 import dts.converter.ItemConverter;
-import dts.dao.IdGeneratorDao;
-import dts.dao.ItemDao;
-import dts.data.IdGeneratorEntity;
 import dts.data.ItemEntity;
-import exceptions.ItemNotFoundException;
 import models.operations.CreatedBy;
 import models.operations.ItemId;
 import models.users.UserId;
 
-@Service
-public class ItemsServiceImplementation implements EnhancedItemService {
+//@Service
+public class ItemsServiceImplementation implements ItemsService {
 
-	private ItemDao itemDao;
-	private ItemConverter itemConverter;
-	private IdGeneratorDao idGeneratorDao;
+	private Map<String, ItemEntity> itemStore;
+	private AtomicLong idGenerator;
+	private ItemConverter itemConvertor;
 
 	@Autowired
-	public ItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao, IdGeneratorDao idGeneratorDao) {
-		this.itemConverter = itemConvertor;
-		this.itemDao = itemDao;
-		this.idGeneratorDao = idGeneratorDao;
+	public void setMessageConverter(ItemConverter itemConvertor) {
+		this.itemConvertor = itemConvertor;
+	}
+
+	@PostConstruct
+	public void init() {
+		this.itemStore = Collections.synchronizedMap(new HashMap<>());
+		this.idGenerator = new AtomicLong(1l);
 	}
 
 	@Override
-	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
-		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
-		// generate new id for item
-		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
-		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
-		Long numricId = idGeneratorEntity.getId();
-		this.idGeneratorDao.deleteById(numricId);
-		String strId = "" + numricId;
-		// set the time stamp
-		newItemEntity.setCreatedTimestamp(new Date());
-		// set the item id
-		newItemEntity.setItemId(new ItemId(managerSpace, strId).toString());
-		// set the created by
-		newItemEntity.setCreatedBy(new CreatedBy(new UserId(managerSpace, managerEmail)).toString());
-		// save new item to db
-		itemDao.save(newItemEntity);
-		return this.itemConverter.toBoundary(newItemEntity);
+		ItemEntity itemEntity = this.itemConvertor.toEntity(newItem);
+		String id = "" + this.idGenerator.getAndIncrement();
+		itemEntity.setCreatedTimestamp(new Date());
+		itemEntity.setItemId(new ItemId(managerSpace, id).toString());
+		itemEntity.setCreatedBy(new CreatedBy(new UserId(managerSpace, managerEmail)).toString());
+		itemStore.put(itemEntity.getItemId().toString(), itemEntity);
+		return this.itemConvertor.toBoundary(itemEntity);
 	}
 
 	@Override
-	@Transactional
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
-		Optional<ItemEntity> existingItem = this.itemDao.findById(itemSpace + Constants.DELIMITER + itemId);
-
-		if (!existingItem.isPresent())
-			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
-
-		ItemEntity existingEntity = existingItem.get();
-		ItemEntity itemEntity = this.itemConverter.toEntity(update);
-		itemEntity.setCreatedTimestamp(existingEntity.getCreatedTimestamp());
-		itemEntity.setItemId(existingEntity.getItemId());
-		itemEntity.setCreatedBy(new UserId(managerSpace, managerEmail).toString());
-		return this.itemConverter.toBoundary(this.itemDao.save(itemEntity));
+		ItemEntity item = this.itemStore.get(itemSpace + Constants.DELIMITER + itemId);
+		if (item == null) {
+			throw new RuntimeException("The item don't exist");
+		}
+		item = this.itemConvertor.toEntity(update);
+		item.setCreatedTimestamp(item.getCreatedTimestamp());
+		item.setItemId(item.getItemId());
+		itemStore.put(item.getItemId(), item);
+		return this.itemConvertor.toBoundary(item);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
-		return StreamSupport.stream(this.itemDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
-				.map(entity -> this.itemConverter.toBoundary(entity)) // Stream<ItemBoundary>
-				.collect(Collectors.toList()); // List<ItemBoundary>
+		return this.itemStore.values().stream().map(entity -> itemConvertor.toBoundary(entity))
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public ItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId) {
-		Optional<ItemEntity> existingItem = this.itemDao.findById(itemSpace + Constants.DELIMITER + itemId);
-		if (!existingItem.isPresent())
-			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
-		return this.itemConverter.toBoundary(existingItem.get());
+		ItemEntity item = this.itemStore.get(itemSpace + Constants.DELIMITER + itemId);
+		if (item == null) {
+			throw new RuntimeException("The item don't exist");
+		}
+		return this.itemConvertor.toBoundary(item);
 	}
 
 	@Override
-	@Transactional
 	public void deleteAll(String adminSpace, String adminEmail) {
-		this.itemDao.deleteAll();
-	}
-
-	@Override
-	public void bindItemToChildItem(String managerSpace, String managerEmail, String itemSpace, String itemId) {
-		//TODO
-	}
-
-	@Override
-	public ItemBoundary[] getAllItemChildren(String userSpace, String userEmail, String itemSpace, String itemId) {
-		//TODO
-		return null;
-	}
-
-	@Override
-	public ItemBoundary[] getItemParents(String userSpace, String userEmail, String itemSpace, String itemId) {
-		//TODO
-		return null;
+		this.itemStore.clear();
+		this.idGenerator = new AtomicLong(1l);
 	}
 
 }
