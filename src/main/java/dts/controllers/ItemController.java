@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.ItemBoundary;
-import dts.logic.ExtendedItemService;
+import dts.logic.EnhancedItemService;
 
 @RestController
 public class ItemController {
 
-	private ExtendedItemService itemService;
+	private EnhancedItemService itemService;
 
 	@Autowired
-	public ItemController(ExtendedItemService itemService) {
+	public ItemController(EnhancedItemService itemService) {
 		this.itemService = itemService;
 	}
 

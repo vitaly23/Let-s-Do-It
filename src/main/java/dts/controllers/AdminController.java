@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import boundaries.UserBoundary;
-import dts.logic.ItemService;
-import dts.logic.OperationService;
+import dts.logic.ItemsService;
+import dts.logic.OperationsService;
 import dts.logic.UsersService;
 
 @RestController
 public class AdminController {
 
-	private ItemService itemService;
+	private ItemsService itemService;
 	private UsersService usersService;
-	private OperationService operationService;
+	private OperationsService operationService;
 	
 	
 	@Autowired
-	public AdminController(ItemService itemService, UsersService usersService, OperationService operationService) {
+	public AdminController(ItemsService itemService, UsersService usersService, OperationsService operationService) {
 		this.itemService = itemService;
 		this.usersService = usersService;
 		this.operationService = operationService;

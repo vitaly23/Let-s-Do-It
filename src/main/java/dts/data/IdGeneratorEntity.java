@@ -5,10 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class ItemIdEntity {
+public class IdGeneratorEntity {
 	private Long id;
 
-	public ItemIdEntity() {
+	public IdGeneratorEntity() {
 
 	}
 

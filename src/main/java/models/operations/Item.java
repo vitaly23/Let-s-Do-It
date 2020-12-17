@@ -1,21 +1,28 @@
 package models.operations;
 
 public class Item {
-	private ItemIdentifier itemId;
+	
+	private ItemId itemId;
 
 	public Item() {
-		this.itemId = new ItemIdentifier("", "");
+
 	}
 
-	public Item(ItemIdentifier itemId) {
+	public Item(ItemId itemId) {
 		this.itemId = itemId;
 	}
 
-	public ItemIdentifier getItemId() {
+	public ItemId getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(ItemIdentifier itemId) {
+	public void setItemId(ItemId itemId) {
 		this.itemId = itemId;
 	}
+
+	@Override
+	public String toString() {
+		return this.itemId.toString();
+	}
+
 }

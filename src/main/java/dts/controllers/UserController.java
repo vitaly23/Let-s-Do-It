@@ -8,27 +8,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import boundaries.NewUserDetailsBoundary;
 import boundaries.UserBoundary;
+import dts.converter.UserConverter;
 import dts.logic.UsersService;
 
 @RestController
 public class UserController {
 	
 	private UsersService userService;
+	private UserConverter userConverter;
 	
 	@Autowired
-	public UserController(UsersService userService) {
+	public UserController(UsersService userService, UserConverter userConverter) {
 		this.userService=userService;
+		this.userConverter = userConverter;
 	}
 	
-	//check the  type of newUser
 	@RequestMapping(
 			method = RequestMethod.POST,
 			path = "/dts/users",  
 			produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UserBoundary createNewUser(@RequestBody UserBoundary newUser) {
-		return this.userService.createUser(newUser);
+	public UserBoundary createNewUser(@RequestBody NewUserDetailsBoundary newUserDetails) {
+		UserBoundary userBoundary = this.userConverter.toBoundary(newUserDetails);
+		return this.userService.createUser(userBoundary);
 	}
 	
 	@RequestMapping(
