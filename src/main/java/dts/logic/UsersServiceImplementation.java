@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import boundaries.UserBoundary;
-import constants.Constants;
 import dts.converter.UserConverter;
 import dts.data.UserEntity;
+import models.users.UserId;
 
 //@Service
 public class UsersServiceImplementation implements UsersService {
@@ -41,7 +41,7 @@ public class UsersServiceImplementation implements UsersService {
 
 	@Override
 	public UserBoundary login(String userSpace, String userEmail) {
-		UserEntity existingUser = userStorage.get(userSpace + Constants.DELIMITER + userEmail);
+		UserEntity existingUser = userStorage.get(new UserId(userSpace, userEmail).toString());
 		if (existingUser == null) {
 			throw new RuntimeException("user with email: " + userEmail + "does not exist");
 		}
@@ -50,7 +50,7 @@ public class UsersServiceImplementation implements UsersService {
 
 	@Override
 	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
-		UserEntity existingUser = userStorage.get(userSpace + Constants.DELIMITER + userEmail);
+		UserEntity existingUser = userStorage.get(new UserId(userSpace, userEmail).toString());
 		if (existingUser == null) {
 			throw new RuntimeException("user with email: " + userEmail + "does not exist");
 		}
@@ -64,7 +64,7 @@ public class UsersServiceImplementation implements UsersService {
 	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
 		return this.userStorage.values() // Collection<UserEntity>
 				.stream() // Stream<UserEntity>
-				.map(entity -> userConverter.toBoundary(entity))// Stream<MessageBoundary>
+				.map(entity -> userConverter.toBoundary(entity))// Stream<UserBoundary>
 				.collect(Collectors.toList()); // List<UserBoundary>
 	}
 

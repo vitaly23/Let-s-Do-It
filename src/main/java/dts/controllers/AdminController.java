@@ -19,13 +19,13 @@ import dts.logic.UsersService;
 @RestController
 public class AdminController {
 
-	private ItemsService itemsService;
+	private EnhancedItemsService itemsService;
 	private UsersService usersService;
 	private OperationsService operationsService;
 	
 	
 	@Autowired
-	public AdminController(ItemsService itemService, UsersService usersService, OperationsService operationService) {
+	public AdminController(EnhancedItemsService itemService, UsersService usersService, OperationsService operationService) {
 		this.itemsService = itemService;
 		this.usersService = usersService;
 		this.operationsService = operationService;
