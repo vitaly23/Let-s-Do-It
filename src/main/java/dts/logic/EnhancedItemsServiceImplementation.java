@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.ItemBoundary;
-import constants.Constants;
 import dts.converter.ItemConverter;
 import dts.dao.IdGeneratorDao;
 import dts.dao.ItemDao;
@@ -30,7 +29,8 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	private IdGeneratorDao idGeneratorDao;
 
 	@Autowired
-	public EnhancedItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao, IdGeneratorDao idGeneratorDao) {
+	public EnhancedItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao,
+			IdGeneratorDao idGeneratorDao) {
 		this.itemConverter = itemConvertor;
 		this.itemDao = itemDao;
 		this.idGeneratorDao = idGeneratorDao;
@@ -40,19 +40,14 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
-		// generate new id for item
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
 		Long numricId = idGeneratorEntity.getId();
 		this.idGeneratorDao.deleteById(numricId);
 		String strId = "" + numricId;
-		// set the time stamp
 		newItemEntity.setCreatedTimestamp(new Date());
-		// set the item id
 		newItemEntity.setItemId(new ItemId(managerSpace, strId).toString());
-		// set the created by
 		newItemEntity.setCreatedBy(new CreatedBy(new UserId(managerSpace, managerEmail)).toString());
-		// save new item to db
 		itemDao.save(newItemEntity);
 		return this.itemConverter.toBoundary(newItemEntity);
 	}
@@ -61,11 +56,9 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
-		Optional<ItemEntity> existingItem = this.itemDao.findById(itemSpace + Constants.DELIMITER + itemId);
-
+		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
 		if (!existingItem.isPresent())
 			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
-
 		ItemEntity existingEntity = existingItem.get();
 		ItemEntity itemEntity = this.itemConverter.toEntity(update);
 		itemEntity.setCreatedTimestamp(existingEntity.getCreatedTimestamp());
@@ -77,7 +70,8 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional(readOnly = true)
 	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
-		return StreamSupport.stream(this.itemDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
+		return StreamSupport
+				.stream(this.itemDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
 				.map(entity -> this.itemConverter.toBoundary(entity)) // Stream<ItemBoundary>
 				.collect(Collectors.toList()); // List<ItemBoundary>
 	}
@@ -85,7 +79,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional(readOnly = true)
 	public ItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId) {
-		Optional<ItemEntity> existingItem = this.itemDao.findById(itemSpace + Constants.DELIMITER + itemId);
+		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
 		if (!existingItem.isPresent())
 			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
 		return this.itemConverter.toBoundary(existingItem.get());
@@ -99,18 +93,18 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 
 	@Override
 	public void bindItemToChildItem(String managerSpace, String managerEmail, String itemSpace, String itemId) {
-		//TODO
+		// TODO
 	}
 
 	@Override
 	public ItemBoundary[] getAllItemChildren(String userSpace, String userEmail, String itemSpace, String itemId) {
-		//TODO
+		// TODO
 		return null;
 	}
 
 	@Override
 	public ItemBoundary[] getItemParents(String userSpace, String userEmail, String itemSpace, String itemId) {
-		//TODO
+		// TODO
 		return null;
 	}
 

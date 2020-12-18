@@ -54,7 +54,9 @@ public class OperationsServiceImplementation implements OperationsService {
 
 	@Override
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
-		return this.operationStore.values().stream().map(entity -> this.operationConverter.toBoundary(entity))
+		return this.operationStore.values()
+				.stream()
+				.map(entity -> this.operationConverter.toBoundary(entity))
 				.collect(Collectors.toList());
 	}
 

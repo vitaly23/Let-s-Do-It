@@ -57,9 +57,10 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Override
 	@Transactional(readOnly = true)
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
-		return StreamSupport.stream(this.operationDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
-				.map(entity -> this.operationConverter.toBoundary(entity)) // Stream<ItemBoundary>
-				.collect(Collectors.toList()); // List<ItemBoundary>
+		return StreamSupport
+				.stream(this.operationDao.findAll().spliterator(), false) // Iterable to Stream<OperationEntity>,
+				.map(entity -> this.operationConverter.toBoundary(entity)) // Stream<OperationBoundary>
+				.collect(Collectors.toList()); // List<OperationBoundary>
 	}
 
 	@Override

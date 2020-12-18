@@ -87,7 +87,7 @@ public class TestUser {
 		//update user
 		userBoundaryNew.setAvatar("dog");
 		userBoundaryNew.setRole(UserRole.MANAGER);
-		userBoundaryNew.setUserId(new UserId("spaceNew", "new"+this.USEREMAIL));
+		//userBoundaryNew.setUserId(new UserId("spaceNew", "new"+this.USEREMAIL));
 		userBoundaryNew.setUsername("moshe");
 		this.userRest.updateExistingUser(this.spaceName, this.USEREMAIL, userBoundaryNew);
 		

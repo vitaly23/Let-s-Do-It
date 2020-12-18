@@ -55,6 +55,7 @@ public class UserBoundary {
 		int result = 1;
 		result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -75,6 +76,11 @@ public class UserBoundary {
 			return false;
 		if (role != other.role)
 			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -82,15 +88,5 @@ public class UserBoundary {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "UserBoundary [userId=" + userId + ", role=" + role + ", username=" + username + ", avatar=" + avatar
-				+ "]";
-	}
-	
-	
-	
-	
 
 }
