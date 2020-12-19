@@ -56,6 +56,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
 		
 		Optional<UserEntity> managerEntity= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateUserFound(managerEntity, managerEmail);
 		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 
 		if(newItemEntity.getType().isEmpty() ||
