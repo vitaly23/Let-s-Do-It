@@ -102,7 +102,7 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 
 		UserEntity existingAdminEntity = existingAdmin.get();
 		this.validationService.ValidateNotSuchUser(existingAdminEntity, existingAdmin);
-		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
+		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 
 		return StreamSupport
 				.stream(this.operationDao.findAll().spliterator(), false) // Iterable to Stream<OperationEntity>,
@@ -117,7 +117,7 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
 		UserEntity existingAdminEntity = existingAdmin.get();
-		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
+		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 		this.operationDao.deleteAll();
 	}
 	
