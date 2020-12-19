@@ -2,6 +2,8 @@ package dts.utils;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import constants.Constants;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
@@ -12,9 +14,15 @@ import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
 import models.users.UserId;
 
+@Component
 public class ValidationService {
 	private UserDao userDao;
 
+	public ValidationService()
+	{
+		
+	}
+	
 	public ValidationService(UserDao userDao)
 	{
 		this.userDao = userDao;
@@ -64,5 +72,13 @@ public class ValidationService {
 			throw new RoleViolationException("Invalid role: " + entity.getRole()
 			+ " for user: " + entity.getUsername());
 		}
+	}
+	
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 }
