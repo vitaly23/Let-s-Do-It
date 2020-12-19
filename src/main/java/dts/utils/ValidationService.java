@@ -12,7 +12,6 @@ import exceptions.InvalidUserException;
 import exceptions.RoleViolationException;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
-import models.users.UserId;
 
 @Component
 public class ValidationService {

@@ -10,16 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.UserBoundary;
-import constants.Constants;
 import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
 import dts.utils.ValidationService;
-import exceptions.InvalidUserException;
-import exceptions.RoleViolationException;
-import exceptions.UserAlreadyExistsException;
-import exceptions.UserNotFoundException;
 import models.users.UserId;
 
 @Service
