@@ -57,8 +57,8 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
 		
-		Optional<UserEntity> existingAdmin= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
-		this.validationService.ValidateRole(existingAdmin, UserRole.MANAGER);
+		Optional<UserEntity> managerEntity= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 
 		if(newItemEntity.getType().isEmpty() ||
 		   newItemEntity.getType() == null)
@@ -83,8 +83,8 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
-		Optional<UserEntity> existingAdmin= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
-		this.validationService.ValidateRole(existingAdmin, UserRole.MANAGER);
+		Optional<UserEntity> managerEntity = this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
 		if (!existingItem.isPresent() || 
 				itemId.isEmpty() ||

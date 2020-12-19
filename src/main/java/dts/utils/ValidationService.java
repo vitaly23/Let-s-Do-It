@@ -58,11 +58,11 @@ public class ValidationService {
 	}
 	
 	public void ValidateRole(Optional<UserEntity> user, UserRole role) {
-		UserEntity existingAdminEntity = user.get();
-		if(!existingAdminEntity.getRole().equals(role))
+		UserEntity entity = user.get();
+		if(!entity.getRole().equals(role))
 		{
-			throw new RoleViolationException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
+			throw new RoleViolationException("Invalid role: " + entity.getRole()
+			+ " for user: " + entity.getUsername());
 		}
 	}
 }
