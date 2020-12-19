@@ -14,6 +14,7 @@ import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
+import exceptions.AdminNotFoundException;
 import exceptions.InvalidUserException;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
@@ -45,8 +46,10 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		}
 		if(newUserEntity.getUserId().isEmpty() || 
 		   newUserEntity.getUsername().isEmpty() ||
+		   newUserEntity.getAvatar().isEmpty() ||
 		   newUserEntity.getUserId() == null ||
 		   newUserEntity.getUsername() == null ||
+		   newUserEntity.getAvatar() == null ||
 		   !newUserEntity.getUserId().matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
 		   !(newUserEntity.getRole().equals(UserRole.ADMIN) ||
 			 newUserEntity.getRole().equals(UserRole.MANAGER) ||
@@ -104,13 +107,13 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		if(!existingAdmin.isPresent())
 		{
-			throw new UserNotFoundException("user with email: " + existingAdmin + "does not exist");
+			throw new AdminNotFoundException("Admin with email: " + existingAdmin + "does not exist");
 		}
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
 		{
-			throw new InvalidUserException("Invalid email: " + existingAdminEntity.getUserId()
-			+ " or user name: " + existingAdminEntity.getUsername());
+			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
+			+ " for user: " + existingAdminEntity.getUsername());
 		}
 
 		this.userDao.deleteAll();

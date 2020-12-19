@@ -14,8 +14,14 @@ import boundaries.ItemBoundary;
 import dts.converter.ItemConverter;
 import dts.dao.IdGeneratorDao;
 import dts.dao.ItemDao;
+import dts.dao.UserDao;
 import dts.data.IdGeneratorEntity;
 import dts.data.ItemEntity;
+import dts.data.UserEntity;
+import dts.data.UserRole;
+import exceptions.AdminNotFoundException;
+import exceptions.InvalidItemTypeException;
+import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
 import models.operations.CreatedBy;
 import models.operations.ItemId;
@@ -27,19 +33,30 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	private ItemDao itemDao;
 	private ItemConverter itemConverter;
 	private IdGeneratorDao idGeneratorDao;
+	private UserDao userDao;
+
 
 	@Autowired
 	public EnhancedItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao,
-			IdGeneratorDao idGeneratorDao) {
+			IdGeneratorDao idGeneratorDao,
+			UserDao userDao) {
 		this.itemConverter = itemConvertor;
 		this.itemDao = itemDao;
 		this.idGeneratorDao = idGeneratorDao;
+		this.userDao = userDao;
 	}
 
 	@Override
 	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
+		if(newItemEntity.getType().isEmpty() ||
+		   newItemEntity.getType() == null)
+		{
+			throw new InvalidItemTypeException("Invalid type: " + 
+					newItemEntity.getType() + " for item: " + 
+					newItemEntity.getName());
+		}
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
 		Long numricId = idGeneratorEntity.getId();
@@ -57,8 +74,14 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
 		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
-		if (!existingItem.isPresent())
+		if (!existingItem.isPresent() || 
+				itemId.isEmpty() ||
+				itemId == null ||
+				itemSpace.isEmpty() ||
+				itemSpace == null)
+		{			
 			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
+		}
 		ItemEntity existingEntity = existingItem.get();
 		ItemEntity itemEntity = this.itemConverter.toEntity(update);
 		itemEntity.setCreatedTimestamp(existingEntity.getCreatedTimestamp());
@@ -88,6 +111,17 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional
 	public void deleteAll(String adminSpace, String adminEmail) {
+		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+		if(!existingAdmin.isPresent())
+		{
+			throw new AdminNotFoundException("Admin with email: " + existingAdmin + "does not exist");
+		}
+		UserEntity existingAdminEntity = existingAdmin.get();
+		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
+		{
+			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
+			+ " for user: " + existingAdminEntity.getUsername());
+		}
 		this.itemDao.deleteAll();
 	}
 
