@@ -65,8 +65,8 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		this.validationService.ValidateUserFound(existingUser, userEmail);
 		UserEntity existingEntity = existingUser.get();
 		UserEntity userEntity = this.userConverter.toEntity(update);
-		this.validationService.ValidateUserData(userEntity);
 		userEntity.setUserId(existingEntity.getUserId().toString());
+		this.validationService.ValidateUserData(userEntity);
 		return this.userConverter.toBoundary(this.userDao.save(userEntity));
 	}
 
