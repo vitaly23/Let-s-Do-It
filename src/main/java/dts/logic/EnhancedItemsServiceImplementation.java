@@ -19,10 +19,10 @@ import dts.data.IdGeneratorEntity;
 import dts.data.ItemEntity;
 import dts.data.UserEntity;
 import dts.data.UserRole;
-import exceptions.AdminNotFoundException;
 import exceptions.InvalidItemTypeException;
 import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
+import exceptions.UserNotFoundException;
 import models.operations.CreatedBy;
 import models.operations.ItemId;
 import models.users.UserId;
@@ -114,7 +114,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		if(!existingAdmin.isPresent())
 		{
-			throw new AdminNotFoundException("Admin with email: " + existingAdmin + "does not exist");
+			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
 		}
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))

@@ -15,8 +15,8 @@ import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
-import exceptions.AdminNotFoundException;
 import exceptions.InvalidUserException;
+import exceptions.RoleViolationException;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
 import models.users.UserId;
@@ -107,6 +107,18 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Override
 	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
+		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+		if(!existingAdmin.isPresent())
+		{
+			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
+		}
+		UserEntity existingAdminEntity = existingAdmin.get();
+		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
+		{
+			throw new RoleViolationException("Invalid role: " + existingAdminEntity.getRole()
+			+ " for user: " + existingAdminEntity.getUsername());
+		}
+
 		this.userDao.deleteAll();
 	}
 

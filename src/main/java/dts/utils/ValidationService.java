@@ -5,7 +5,6 @@ import java.util.Optional;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
-import exceptions.AdminNotFoundException;
 import exceptions.InvalidUserException;
 import exceptions.UserNotFoundException;
 import models.users.UserId;
@@ -56,7 +55,7 @@ public class ValidationService {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		if(!existingAdmin.isPresent())
 		{
-			ex = new AdminNotFoundException("Admin with email: " + existingAdmin + "does not exist");
+			ex = new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
 		}
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
