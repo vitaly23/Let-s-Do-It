@@ -84,7 +84,6 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
-		UserEntity existingAdminEntity = existingAdmin.get();
 		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 
 		this.userDao.deleteAll();

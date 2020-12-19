@@ -99,8 +99,6 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
-
-		UserEntity existingAdminEntity = existingAdmin.get();
 		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 
 		return StreamSupport
@@ -115,7 +113,6 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
-		UserEntity existingAdminEntity = existingAdmin.get();
 		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 		this.operationDao.deleteAll();
 	}

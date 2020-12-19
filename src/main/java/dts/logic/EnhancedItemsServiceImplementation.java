@@ -125,8 +125,6 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
-		UserEntity existingAdminEntity = existingAdmin.get();
-		this.validationService.ValidateNotSuchUser(existingAdminEntity, existingAdmin);
 		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 		this.itemDao.deleteAll();
 	}
