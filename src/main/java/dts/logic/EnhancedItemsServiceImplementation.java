@@ -23,9 +23,7 @@ import dts.data.UserEntity;
 import dts.data.UserRole;
 import dts.utils.ValidationService;
 import exceptions.InvalidItemTypeException;
-import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
-import exceptions.UserNotFoundException;
 import models.operations.CreatedBy;
 import models.operations.ItemId;
 import models.users.UserId;
@@ -58,6 +56,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
 		
 		Optional<UserEntity> managerEntity= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateUserFound(managerEntity, managerEmail);
 		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 
 		if(newItemEntity.getType().isEmpty() ||
@@ -84,6 +83,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
 		Optional<UserEntity> managerEntity = this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateUserFound(managerEntity, managerEmail);
 		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
 		if (!existingItem.isPresent() || 
@@ -132,6 +132,9 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional
 	public void bindChild(String managerSpace, String managerEmail, String itemSpace, String itemId, ItemId item) {
+		Optional<UserEntity> manager = this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateUserFound(manager, managerEmail);
+		this.validationService.ValidateRole(manager, UserRole.MANAGER);	
 		ItemEntity parentItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString())
 				.orElseThrow(() -> new ItemNotFoundException(
 						"item with id: " + itemId + "and space: " + itemSpace + " does not exist"));

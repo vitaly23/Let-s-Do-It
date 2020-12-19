@@ -10,16 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.UserBoundary;
-import constants.Constants;
 import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
 import dts.utils.ValidationService;
-import exceptions.InvalidUserException;
-import exceptions.RoleViolationException;
-import exceptions.UserAlreadyExistsException;
-import exceptions.UserNotFoundException;
 import models.users.UserId;
 
 @Service
@@ -65,14 +60,17 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		this.validationService.ValidateUserFound(existingUser, userEmail);
 		UserEntity existingEntity = existingUser.get();
 		UserEntity userEntity = this.userConverter.toEntity(update);
-		this.validationService.ValidateUserData(userEntity);
 		userEntity.setUserId(existingEntity.getUserId().toString());
+		this.validationService.ValidateUserData(userEntity);
 		return this.userConverter.toBoundary(this.userDao.save(userEntity));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
+		Optional<UserEntity> admin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+		this.validationService.ValidateUserFound(admin, adminEmail);
+		this.validationService.ValidateRole(admin, UserRole.ADMIN);	
 		return StreamSupport
 				.stream(this.userDao.findAll().spliterator(), false) // Iterable to Stream<UserEntity>,
 				.map(entity -> this.userConverter.toBoundary(entity)) // Stream<UserBoundary>
