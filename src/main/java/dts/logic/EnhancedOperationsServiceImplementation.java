@@ -21,6 +21,7 @@ import dts.data.ItemEntity;
 import dts.data.OperationEntity;
 import dts.data.UserEntity;
 import dts.data.UserRole;
+import dts.utils.ValidationService;
 import exceptions.InvalidOperationTypeException;
 import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
@@ -39,6 +40,7 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	private IdGeneratorDao idGeneratorDao;
 	private UserDao userDao;
 	private ItemDao itemDao;
+	private ValidationService validationService; 
 
 	@Value("${spring.application.name:default_space_name}")
 	public void setSpaceName(String spaceName) {
@@ -50,12 +52,14 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 			OperationConverter operationConverter,
 			IdGeneratorDao idGeneratorDao,
 			UserDao userDao,
-			ItemDao itemDao) {
+			ItemDao itemDao,
+			ValidationService validationService) {
 		this.operationDao = operationDao;
 		this.operationConverter = operationConverter;
 		this.idGeneratorDao = idGeneratorDao;
 		this.userDao = userDao;
 		this.itemDao = itemDao;
+		this.validationService = validationService;
 	}
 
 	@Override
@@ -70,10 +74,8 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 					operationEntity.getOperationId());
 		}
 		Optional<UserEntity> existingUser = this.userDao.findById(operationEntity.getInvokedBy());
-		if (!existingUser.isPresent())
-		{			
-			throw new UserNotFoundException("user with email: " + operationEntity.getInvokedBy() + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingUser, operationEntity.getInvokedBy());
+
 		Optional<ItemEntity> existingItem = this.itemDao.findById(operationEntity.getItem());
 		if (!existingItem.isPresent())
 		{			
@@ -96,16 +98,12 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Transactional(readOnly = true)
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		if(!existingAdmin.isPresent())
-		{
-			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-		{
-			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
-		}
+			this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());
+
 		return StreamSupport
 				.stream(this.operationDao.findAll().spliterator(), false) // Iterable to Stream<OperationEntity>,
 				.map(entity -> this.operationConverter.toBoundary(entity)) // Stream<OperationBoundary>
@@ -116,10 +114,8 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Transactional
 	public void deleteAllActions(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		if(!existingAdmin.isPresent())
-		{
-			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
 		{

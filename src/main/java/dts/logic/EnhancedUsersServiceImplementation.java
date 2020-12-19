@@ -15,6 +15,7 @@ import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
+import dts.utils.ValidationService;
 import exceptions.InvalidUserException;
 import exceptions.RoleViolationException;
 import exceptions.UserAlreadyExistsException;
@@ -26,12 +27,16 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 
 	private UserDao userDao;
 	private UserConverter userConverter;
+	private ValidationService validationService; 
 
 	@Autowired
-	public EnhancedUsersServiceImplementation(UserDao userDao, UserConverter userConverter) {
+	public EnhancedUsersServiceImplementation(UserDao userDao, 
+			UserConverter userConverter,
+			ValidationService validationService) {
 		super();
 		this.userDao = userDao;
 		this.userConverter = userConverter;
+		this.validationService = validationService;
 	}
 
 	@Override
@@ -39,26 +44,8 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	public UserBoundary createUser(UserBoundary user) {
 		UserEntity newUserEntity = this.userConverter.toEntity(user);
 		Optional<UserEntity> existingUser = this.userDao.findById(newUserEntity.getUserId());
-		if(existingUser.isPresent())
-		{
-			throw new UserAlreadyExistsException("User with email: " +
-					newUserEntity.getUserId() +	" and name " +
-					newUserEntity.getUsername() + " already exists");
-		}
-		if(newUserEntity.getUserId().isEmpty() || 
-		   newUserEntity.getUsername().isEmpty() ||
-		   newUserEntity.getAvatar().isEmpty() ||
-		   newUserEntity.getUserId() == null ||
-		   newUserEntity.getUsername() == null ||
-		   newUserEntity.getAvatar() == null ||
-		   !newUserEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
-		   !(newUserEntity.getRole().equals(UserRole.ADMIN) ||
-			 newUserEntity.getRole().equals(UserRole.MANAGER) ||
-			 newUserEntity.getRole().equals(UserRole.PLAYER)))
-		{
-			throw new InvalidUserException("Invalid email: " + newUserEntity.getUserId()
-					+ " or user name: " + newUserEntity.getUsername());
-		}
+		this.validationService.ValidateUserExists(newUserEntity, existingUser);
+		this.validationService.ValidateUserData(newUserEntity);
 		this.userDao.save(newUserEntity);
 		return this.userConverter.toBoundary(newUserEntity);
 	}
@@ -67,8 +54,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public UserBoundary login(String userSpace, String userEmail) {
 		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		if (!existingUser.isPresent())
-			throw new UserNotFoundException("user with email: " + userEmail + "does not exist");
+		this.validationService.ValidateUserNotFound(existingUser, userEmail);
 		return this.userConverter.toBoundary(existingUser.get());
 	}
 
@@ -76,21 +62,10 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
 		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		if (!existingUser.isPresent())
-		{			
-			throw new UserNotFoundException("user with email: " + userEmail + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingUser, userEmail);
 		UserEntity existingEntity = existingUser.get();
 		UserEntity userEntity = this.userConverter.toEntity(update);
-		if(!userEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
-				userEntity.getUserId() == null || 
-				userEntity.getUserId().isEmpty() || 
-				userEntity.getUsername() == null ||
-				userEntity.getUsername().isEmpty())
-			{
-			throw new InvalidUserException("Invalid email: " + userEntity.getUserId()
-			+ " or user name: " + userEntity.getUsername());
-			}
+		this.validationService.ValidateUserData(userEntity);
 		userEntity.setUserId(existingEntity.getUserId().toString());
 		return this.userConverter.toBoundary(this.userDao.save(userEntity));
 	}
@@ -108,16 +83,9 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		if(!existingAdmin.isPresent())
-		{
-			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
 		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-		{
-			throw new RoleViolationException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
-		}
+		this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());	
 
 		this.userDao.deleteAll();
 	}

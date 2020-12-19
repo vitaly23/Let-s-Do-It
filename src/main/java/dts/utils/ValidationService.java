@@ -2,10 +2,13 @@ package dts.utils;
 
 import java.util.Optional;
 
+import constants.Constants;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
 import exceptions.InvalidUserException;
+import exceptions.RoleViolationException;
+import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
 import models.users.UserId;
 
@@ -18,19 +21,24 @@ public class ValidationService {
 
 	}
 	
-	public Exception ValidateUserExists(UserEntity userEntity) {
-		Exception ex = new Exception();
-		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userEntity.getUsername(), userEntity.getUserId()).toString());
+	public void ValidateUserExists(UserEntity userEntity, Optional<UserEntity> existingUser) {
 		if (!existingUser.isPresent())
 		{			
-			ex = new UserNotFoundException("user with email: " + userEntity.getUserId() + "does not exist");
+			throw new UserAlreadyExistsException("User with email: " +
+					userEntity.getUserId() +	" and name " +
+					userEntity.getUsername() + " already exists");
 		}
-		return ex;
 	}
 	
-	public Exception ValidateUserData(UserEntity userEntity)
+	public void ValidateUserNotFound(Optional<UserEntity> userEntity, String userId) {
+		if (!userEntity.isPresent())
+		{			
+			throw new UserNotFoundException("user with email: " + userId + "does not exist");
+		}
+	}
+	
+	public void ValidateUserData(UserEntity userEntity)
 	{
-		Exception ex = new Exception();
 		
 		if(userEntity.getUserId().isEmpty() || 
 				userEntity.getUsername().isEmpty() ||
@@ -39,30 +47,26 @@ public class ValidationService {
 				userEntity.getUserId() == null ||
 				userEntity.getUsername() == null ||
 				userEntity.getAvatar() == null ||
-				!userEntity.getUserId().matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
+				!userEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
 				!(userEntity.getRole().equals(UserRole.ADMIN) ||
 				  userEntity.getRole().equals(UserRole.MANAGER) ||
 				  userEntity.getRole().equals(UserRole.PLAYER)))
 				{
-					ex = new InvalidUserException("Invalid email: " + userEntity.getUserId()
+					throw new InvalidUserException("Invalid email: " + userEntity.getUserId()
 							+ " or user name: " + userEntity.getUsername());
 				}
-		return ex;
 	}
 	
-	public Exception ValidateAdmin(String adminSpace, String adminEmail) {
-		Exception ex = new Exception();
-		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+	public void ValidateAdmin(Optional<UserEntity> existingAdmin, String adminSpace, String adminEmail, UserRole role) {
 		if(!existingAdmin.isPresent())
 		{
-			ex = new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
+			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
 		}
 		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
+		if(!existingAdminEntity.getRole().equals(role))
 		{
-			ex = new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
+			throw new RoleViolationException("Invalid role: " + existingAdminEntity.getRole()
 			+ " for user: " + existingAdminEntity.getUsername());
 		}
-		return ex;
 	}
 }

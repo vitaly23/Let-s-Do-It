@@ -21,6 +21,7 @@ import dts.data.IdGeneratorEntity;
 import dts.data.ItemEntity;
 import dts.data.UserEntity;
 import dts.data.UserRole;
+import dts.utils.ValidationService;
 import exceptions.InvalidItemTypeException;
 import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
@@ -36,16 +37,19 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	private ItemConverter itemConverter;
 	private IdGeneratorDao idGeneratorDao;
 	private UserDao userDao;
+	private ValidationService validationService; 
 
 
 	@Autowired
 	public EnhancedItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao,
 			IdGeneratorDao idGeneratorDao,
-			UserDao userDao) {
+			UserDao userDao,
+			ValidationService validationService) {
 		this.itemConverter = itemConvertor;
 		this.itemDao = itemDao;
 		this.idGeneratorDao = idGeneratorDao;
 		this.userDao = userDao;
+		this.validationService = validationService;
 	}
 		
 	@Override
@@ -113,16 +117,10 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public void deleteAll(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		if(!existingAdmin.isPresent())
-		{
-			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
+		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+
 		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-		{
-			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
-		}
+		this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());
 		this.itemDao.deleteAll();
 	}
 
