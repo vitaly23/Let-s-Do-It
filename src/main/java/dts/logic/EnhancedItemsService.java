@@ -1,13 +1,16 @@
 package dts.logic;
 
+import java.util.List;
+
 import boundaries.ItemBoundary;
+import models.operations.ItemId;
 
 public interface EnhancedItemsService extends ItemsService {
 
-	public void bindItemToChildItem(String managerSpace, String managerEmail, String itemSpace, String itemId);
+	public void bindChild(String managerSpace, String managerEmail, String itemSpace, String itemId, ItemId item);
 
-	public ItemBoundary[] getAllItemChildren(String userSpace, String userEmail, String itemSpace, String itemId);
+	public List<ItemBoundary> getAllChildren(String userSpace, String userEmail, String itemSpace, String itemId);
 
-	public ItemBoundary[] getItemParents(String userSpace, String userEmail, String itemSpace, String itemId);
+	public List<ItemBoundary> getParents(String userSpace, String userEmail, String itemSpace, String itemId);
 
 }

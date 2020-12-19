@@ -3,6 +3,8 @@ package dts.logic;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -35,7 +37,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		this.itemDao = itemDao;
 		this.idGeneratorDao = idGeneratorDao;
 	}
-
+		
 	@Override
 	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
@@ -70,8 +72,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional(readOnly = true)
 	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
-		return StreamSupport
-				.stream(this.itemDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
+		return StreamSupport.stream(this.itemDao.findAll().spliterator(), false) // Iterable to Stream<ItemEntity>,
 				.map(entity -> this.itemConverter.toBoundary(entity)) // Stream<ItemBoundary>
 				.collect(Collectors.toList()); // List<ItemBoundary>
 	}
@@ -92,20 +93,50 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	}
 
 	@Override
-	public void bindItemToChildItem(String managerSpace, String managerEmail, String itemSpace, String itemId) {
-		// TODO
+	@Transactional
+	public void bindChild(String managerSpace, String managerEmail, String itemSpace, String itemId, ItemId item) {
+		ItemEntity parentItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString())
+				.orElseThrow(() -> new ItemNotFoundException(
+						"item with id: " + itemId + "and space: " + itemSpace + " does not exist"));
+		ItemEntity toBindItem = this.itemDao.findById(item.toString()).orElseThrow(() -> new ItemNotFoundException(
+				"item with id: " + item.getId() + "and space: " + item.getSpace() + " does not exist"));
+		toBindItem.addParent(parentItem);
+		parentItem.addChild(toBindItem);
+		this.itemDao.save(parentItem);
 	}
 
 	@Override
-	public ItemBoundary[] getAllItemChildren(String userSpace, String userEmail, String itemSpace, String itemId) {
-		// TODO
-		return null;
+	@Transactional(readOnly = true)
+	public List<ItemBoundary> getAllChildren(String userSpace, String userEmail, String itemSpace, String itemId) {
+		ItemEntity parentItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString())
+				.orElseThrow(() -> new ItemNotFoundException(
+						"item with id: " + itemId + "and space: " + itemSpace + " does not exist"));
+		Set<ItemEntity> itemChildren = parentItem.getItemChildren();
+		return itemChildren.stream() // Stream<ItemEntity>
+				.map(new Function<ItemEntity, ItemBoundary>() {
+					@Override
+					public ItemBoundary apply(ItemEntity entity) {
+						return itemConverter.toBoundary(entity);
+					}
+				}) // Stream<ItemBoundary>
+				.collect(Collectors.toList()); // List<ItemBoundary>
 	}
 
 	@Override
-	public ItemBoundary[] getItemParents(String userSpace, String userEmail, String itemSpace, String itemId) {
-		// TODO
-		return null;
+	@Transactional(readOnly = true)
+	public List<ItemBoundary> getParents(String userSpace, String userEmail, String itemSpace, String itemId) {
+		ItemEntity childItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString())
+				.orElseThrow(() -> new ItemNotFoundException(
+						"item with id: " + itemId + "and space: " + itemSpace + " does not exist"));
+		Set<ItemEntity> itemParents = childItem.getItemParents();
+		return itemParents.stream() // Stream<ItemEntity>
+				.map(new Function<ItemEntity, ItemBoundary>() {
+					@Override
+					public ItemBoundary apply(ItemEntity entity) {
+						return itemConverter.toBoundary(entity);
+					}
+				}) // Stream<ItemBoundary>
+				.collect(Collectors.toList()); // List<ItemBoundary>
 	}
-
+	
 }

@@ -1,10 +1,14 @@
 package dts.data;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +25,9 @@ public class ItemEntity {
 	private String createdBy;
 	private String location;
 	private String itemAttributes;
-
+	private Set<ItemEntity> itemParents;
+	private Set<ItemEntity> itemChildren;
+	
 	public ItemEntity() {
 
 	}
@@ -105,7 +111,41 @@ public class ItemEntity {
 	public void setItemAttributes(String itemAttributes) {
 		this.itemAttributes = itemAttributes;
 	}
+	
+	@ManyToMany
+	@JoinTable(name="tbl_child_parents",
+	 joinColumns=@JoinColumn(name="childId",referencedColumnName = "itemId"),
+	 inverseJoinColumns=@JoinColumn(name="parents", referencedColumnName = "itemId")
+	)
+	public Set<ItemEntity> getItemParents() {
+		return itemParents;
+	}
 
+	public void setItemParents(Set<ItemEntity> itemParents) {
+		this.itemParents = itemParents;
+	}
+	
+	@ManyToMany
+	@JoinTable(name="tbl_parent_children",
+	 joinColumns=@JoinColumn(name="parentId",referencedColumnName = "itemId"),
+	 inverseJoinColumns=@JoinColumn(name="children", referencedColumnName = "itemId")
+	)
+	public Set<ItemEntity> getItemChildren() {
+		return itemChildren;
+	}
+
+	public void setItemChildren(Set<ItemEntity> itemChildren) {
+		this.itemChildren = itemChildren;
+	}
+	
+	public void addChild(ItemEntity child) {	
+		this.itemChildren.add(child);
+	}
+	
+	public void addParent(ItemEntity parent) {
+		this.itemParents.add(parent);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
