@@ -74,7 +74,7 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 					operationEntity.getOperationId());
 		}
 		Optional<UserEntity> existingUser = this.userDao.findById(operationEntity.getInvokedBy());
-		this.validationService.ValidateUserNotFound(existingUser, operationEntity.getInvokedBy());
+		this.validationService.ValidateUserFound(existingUser, operationEntity.getInvokedBy());
 
 		Optional<ItemEntity> existingItem = this.itemDao.findById(operationEntity.getItem());
 		if (!existingItem.isPresent())
@@ -98,11 +98,11 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Transactional(readOnly = true)
 	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
 		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-			this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());
+		this.validationService.ValidateNotSuchUser(existingAdminEntity, existingAdmin);
+		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
 
 		return StreamSupport
 				.stream(this.operationDao.findAll().spliterator(), false) // Iterable to Stream<OperationEntity>,
@@ -114,14 +114,10 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Transactional
 	public void deleteAllActions(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
 		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-		{
-			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
-		}
+		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
 		this.operationDao.deleteAll();
 	}
 	

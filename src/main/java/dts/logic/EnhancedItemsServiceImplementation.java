@@ -56,6 +56,10 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
+		
+		Optional<UserEntity> existingAdmin= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateAdminRole(existingAdmin, managerSpace, managerEmail, UserRole.MANAGER);
+
 		if(newItemEntity.getType().isEmpty() ||
 		   newItemEntity.getType() == null)
 		{
@@ -79,6 +83,8 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
+		Optional<UserEntity> existingAdmin= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateAdminRole(existingAdmin, managerSpace, managerEmail, UserRole.MANAGER);
 		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
 		if (!existingItem.isPresent() || 
 				itemId.isEmpty() ||
@@ -117,10 +123,11 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public void deleteAll(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
+		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
 		UserEntity existingAdminEntity = existingAdmin.get();
-		this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());
+		this.validationService.ValidateNotSuchUser(existingAdminEntity, existingAdmin);
+		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
 		this.itemDao.deleteAll();
 	}
 

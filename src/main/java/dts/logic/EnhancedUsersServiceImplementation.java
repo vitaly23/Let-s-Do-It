@@ -44,7 +44,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	public UserBoundary createUser(UserBoundary user) {
 		UserEntity newUserEntity = this.userConverter.toEntity(user);
 		Optional<UserEntity> existingUser = this.userDao.findById(newUserEntity.getUserId());
-		this.validationService.ValidateUserExists(newUserEntity, existingUser);
+		this.validationService.ValidateNotSuchUser(newUserEntity, existingUser);
 		this.validationService.ValidateUserData(newUserEntity);
 		this.userDao.save(newUserEntity);
 		return this.userConverter.toBoundary(newUserEntity);
@@ -54,7 +54,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public UserBoundary login(String userSpace, String userEmail) {
 		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		this.validationService.ValidateUserNotFound(existingUser, userEmail);
+		this.validationService.ValidateUserFound(existingUser, userEmail);
 		return this.userConverter.toBoundary(existingUser.get());
 	}
 
@@ -62,7 +62,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
 		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		this.validationService.ValidateUserNotFound(existingUser, userEmail);
+		this.validationService.ValidateUserFound(existingUser, userEmail);
 		UserEntity existingEntity = existingUser.get();
 		UserEntity userEntity = this.userConverter.toEntity(update);
 		this.validationService.ValidateUserData(userEntity);
@@ -83,9 +83,9 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
 		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserNotFound(existingAdmin, adminEmail);
 		UserEntity existingAdminEntity = existingAdmin.get();
-		this.validationService.ValidateAdmin(existingAdmin, adminSpace, adminEmail, existingAdminEntity.getRole());	
+		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
+		this.validationService.ValidateAdminRole(existingAdmin, adminSpace, adminEmail, UserRole.ADMIN);	
 
 		this.userDao.deleteAll();
 	}

@@ -21,8 +21,8 @@ public class ValidationService {
 
 	}
 	
-	public void ValidateUserExists(UserEntity userEntity, Optional<UserEntity> existingUser) {
-		if (!existingUser.isPresent())
+	public void ValidateNotSuchUser(UserEntity userEntity, Optional<UserEntity> existingUser) {
+		if (existingUser.isPresent())
 		{			
 			throw new UserAlreadyExistsException("User with email: " +
 					userEntity.getUserId() +	" and name " +
@@ -30,7 +30,7 @@ public class ValidationService {
 		}
 	}
 	
-	public void ValidateUserNotFound(Optional<UserEntity> userEntity, String userId) {
+	public void ValidateUserFound(Optional<UserEntity> userEntity, String userId) {
 		if (!userEntity.isPresent())
 		{			
 			throw new UserNotFoundException("user with email: " + userId + "does not exist");
@@ -57,11 +57,7 @@ public class ValidationService {
 				}
 	}
 	
-	public void ValidateAdmin(Optional<UserEntity> existingAdmin, String adminSpace, String adminEmail, UserRole role) {
-		if(!existingAdmin.isPresent())
-		{
-			throw new UserNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
+	public void ValidateAdminRole(Optional<UserEntity> existingAdmin, String adminSpace, String adminEmail, UserRole role) {
 		UserEntity existingAdminEntity = existingAdmin.get();
 		if(!existingAdminEntity.getRole().equals(role))
 		{
