@@ -69,36 +69,38 @@ public class TestUser {
 		this.userRest.createNewUser(userBoundary);
 		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(1);
 		UserBoundary userBoundaryNew=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.USEREMAIL);
-		if(!userBoundaryNew.equals(this.userBoundary)) {
-			throw new RuntimeException("Error in added new user (converter)");
-		}
+		
+		assertEquals(userBoundaryNew.getAvatar(),userBoundary.getAvatar());
+		
+		assertEquals(userBoundaryNew.getRole(),userBoundary.getRole());
+		
+		assertEquals(userBoundaryNew.getUsername(),userBoundary.getUsername()); 
+		
 	}
-	
 	@Test
 	public void updateUser() {
 		//added user
 		this.userRest.createNewUser(userBoundary);
 		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(1);
 		UserBoundary userBoundaryNew=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.USEREMAIL);
-		if(!userBoundaryNew.equals(this.userBoundary)) {
-			throw new RuntimeException("Error in added new user (converter)");
-		}
+		
 		//update user
 		userBoundaryNew.setAvatar("dog");
 		userBoundaryNew.setRole(UserRole.MANAGER);
-		userBoundaryNew.setUserId(new UserId("spaceNew", "new"+this.USEREMAIL));
+		//userBoundaryNew.setUserId(new UserId("spaceNew", "new"+this.USEREMAIL));
 		userBoundaryNew.setUsername("moshe");
 		this.userRest.updateExistingUser(this.spaceName, this.USEREMAIL, userBoundaryNew);
-		//this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
-		assertEquals(userBoundary, userRest);
+		
+		//check if equals
+		assertEquals(userBoundaryNew, this.userRest.loginAndRetriveUserDetails(this.spaceName,this.USEREMAIL));
 	}
 	
 	@Test
 	public void addAllUsers() {
 		this.userRest.createNewUser(userBoundary);
+		userBoundary.setEmail("other@gmail.com");
 		userBoundary.setAvatar("dog");
 		userBoundary.setRole(UserRole.MANAGER);
-		//userBoundary.setUserId(new UserId(this.spaceName, this.USEREMAIL));
 		userBoundary.setUsername("moshe");
 		this.userRest.createNewUser(userBoundary);
 		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(2);
@@ -109,8 +111,12 @@ public class TestUser {
 		//added user
 		this.userRest.createNewUser(userBoundary);
 		//login
-		//this.userBoundary=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.spaceName);
-		assertEquals(userBoundary, userBoundary);		
+		UserBoundary userBound=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.USEREMAIL);
+		assertEquals(userBound.getAvatar(),userBoundary.getAvatar());
+		
+		assertEquals(userBound.getRole(),userBoundary.getRole());
+		
+		assertEquals(userBound.getUsername(),userBoundary.getUsername()); 
 	}
 		
 }

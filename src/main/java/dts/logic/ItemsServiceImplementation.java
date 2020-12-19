@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import boundaries.ItemBoundary;
-import constants.Constants;
 import dts.converter.ItemConverter;
 import dts.data.ItemEntity;
 import models.operations.CreatedBy;
@@ -52,7 +51,7 @@ public class ItemsServiceImplementation implements ItemsService {
 	@Override
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
-		ItemEntity item = this.itemStore.get(itemSpace + Constants.DELIMITER + itemId);
+		ItemEntity item = this.itemStore.get(new ItemId(itemSpace, itemId).toString());
 		if (item == null) {
 			throw new RuntimeException("The item don't exist");
 		}
@@ -65,13 +64,15 @@ public class ItemsServiceImplementation implements ItemsService {
 
 	@Override
 	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
-		return this.itemStore.values().stream().map(entity -> itemConvertor.toBoundary(entity))
+		return this.itemStore.values()
+				.stream()
+				.map(entity -> itemConvertor.toBoundary(entity))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public ItemBoundary getSpecificItem(String userSpace, String userEmail, String itemSpace, String itemId) {
-		ItemEntity item = this.itemStore.get(itemSpace + Constants.DELIMITER + itemId);
+		ItemEntity item = this.itemStore.get(new ItemId(itemSpace, itemId).toString());
 		if (item == null) {
 			throw new RuntimeException("The item don't exist");
 		}

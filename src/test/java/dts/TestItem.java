@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import dts.controllers.AdminController;
 import dts.controllers.ItemController;
 import models.operations.Item;
+import models.operations.ItemId;
 import models.operations.Location;
 import models.users.UserId;
 
@@ -40,8 +41,9 @@ public class TestItem {
 		
 	@PostConstruct
 	public void init() {
+		
 		this.adminSpace="adminSpace";
-		this.adminEmail="adminEmail";
+		this.adminEmail="email@gmail.com";
 		this.itemBoundary=new ItemBoundary();		
 	}
 	
@@ -60,7 +62,6 @@ public class TestItem {
 		this.adminRest.deleteAllItems(this.adminSpace, this.adminEmail);
 		
 		this.itemBoundary.setActive(true);
-//		this.itemBoundary.setCreatedBy(new UserId("", "ha@gmail.com"));
 		this.itemBoundary.setCreatedTimestamp(new Date());
 		Map<String,Object> map=new HashMap<>();
 		map.put("key1", "val1");
@@ -69,7 +70,7 @@ public class TestItem {
 		this.itemBoundary.setLocation(new Location());
 		this.itemBoundary.setType("new type");
 		this.itemBoundary.setName("first item");
-//		this.itemBoundary.setItemId(new ItemIdentifier("", "1"));
+		this.itemBoundary.setItemId(new ItemId("space", "1"));
 		
 	}
 	
@@ -82,13 +83,10 @@ public class TestItem {
 	
 	//check if item was added and get item back
 	@Test
-	public void addedOneItemAndRetieve() {
+	public void addedOneItem() {
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
 		//change to space name if needed
-		ItemBoundary existingItem=this.itemRest.retrieveDigitalItem("", "", this.spaceName, "1");
-		if(!this.itemBoundary.equals(existingItem)) {
-			throw new RuntimeException("Error In insert Item");
-		}
+		assertThat(this.itemRest.retrieveAllDigitalItems("userSpace", "userEmail@gmail.com")).hasSize(1);
 	}
 	
 	//check if item delete
@@ -100,8 +98,8 @@ public class TestItem {
 	
 	@Test
 	public void addAllItems() {
-		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "");
-		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "");
+		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
+		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
 		assertThat(this.itemRest.retrieveAllDigitalItems("", "")).hasSize(2);	
 	}
 
