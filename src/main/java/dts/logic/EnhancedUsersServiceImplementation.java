@@ -68,6 +68,9 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
+		Optional<UserEntity> admin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+		this.validationService.ValidateUserFound(admin, adminEmail);
+		this.validationService.ValidateRole(admin, UserRole.ADMIN);	
 		return StreamSupport
 				.stream(this.userDao.findAll().spliterator(), false) // Iterable to Stream<UserEntity>,
 				.map(entity -> this.userConverter.toBoundary(entity)) // Stream<UserBoundary>

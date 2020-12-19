@@ -132,6 +132,9 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional
 	public void bindChild(String managerSpace, String managerEmail, String itemSpace, String itemId, ItemId item) {
+		Optional<UserEntity> manager = this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateUserFound(manager, managerEmail);
+		this.validationService.ValidateRole(manager, UserRole.MANAGER);	
 		ItemEntity parentItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString())
 				.orElseThrow(() -> new ItemNotFoundException(
 						"item with id: " + itemId + "and space: " + itemSpace + " does not exist"));
