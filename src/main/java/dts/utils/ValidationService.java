@@ -55,7 +55,7 @@ public class ValidationService {
 				userEntity.getUserId() == null ||
 				userEntity.getUsername() == null ||
 				userEntity.getAvatar() == null ||
-				!userEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
+				!userEntity.getUserId().split(Constants.DELIMITER)[1].matches("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$") ||
 				!(userEntity.getRole().equals(UserRole.ADMIN) ||
 				  userEntity.getRole().equals(UserRole.MANAGER) ||
 				  userEntity.getRole().equals(UserRole.PLAYER)))
