@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.UserBoundary;
+import constants.Constants;
 import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
@@ -50,7 +51,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		   newUserEntity.getUserId() == null ||
 		   newUserEntity.getUsername() == null ||
 		   newUserEntity.getAvatar() == null ||
-		   !newUserEntity.getUserId().matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
+		   !newUserEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
 		   !(newUserEntity.getRole().equals(UserRole.ADMIN) ||
 			 newUserEntity.getRole().equals(UserRole.MANAGER) ||
 			 newUserEntity.getRole().equals(UserRole.PLAYER)))
@@ -81,9 +82,11 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 		}
 		UserEntity existingEntity = existingUser.get();
 		UserEntity userEntity = this.userConverter.toEntity(update);
-		if(!userEntity.getUserId().matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
+		if(!userEntity.getUserId().split(Constants.DELIMITER)[1].matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$") ||
 				userEntity.getUserId() == null || 
-				userEntity.getUsername() == null)
+				userEntity.getUserId().isEmpty() || 
+				userEntity.getUsername() == null ||
+				userEntity.getUsername().isEmpty())
 			{
 			throw new InvalidUserException("Invalid email: " + userEntity.getUserId()
 			+ " or user name: " + userEntity.getUsername());
@@ -104,18 +107,6 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Override
 	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
-		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		if(!existingAdmin.isPresent())
-		{
-			throw new AdminNotFoundException("Admin with email: " + existingAdmin + "does not exist");
-		}
-		UserEntity existingAdminEntity = existingAdmin.get();
-		if(!existingAdminEntity.getRole().equals(UserRole.ADMIN))
-		{
-			throw new InvalidUserException("Invalid role: " + existingAdminEntity.getRole()
-			+ " for user: " + existingAdminEntity.getUsername());
-		}
-
 		this.userDao.deleteAll();
 	}
 
