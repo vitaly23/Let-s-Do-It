@@ -101,7 +101,6 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
 
 		UserEntity existingAdminEntity = existingAdmin.get();
-		this.validationService.ValidateNotSuchUser(existingAdminEntity, existingAdmin);
 		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 
 		return StreamSupport
