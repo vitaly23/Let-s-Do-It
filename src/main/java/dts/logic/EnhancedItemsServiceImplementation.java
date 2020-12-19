@@ -16,9 +16,16 @@ import boundaries.ItemBoundary;
 import dts.converter.ItemConverter;
 import dts.dao.IdGeneratorDao;
 import dts.dao.ItemDao;
+import dts.dao.UserDao;
 import dts.data.IdGeneratorEntity;
 import dts.data.ItemEntity;
+import dts.data.UserEntity;
+import dts.data.UserRole;
+import dts.utils.ValidationService;
+import exceptions.InvalidItemTypeException;
+import exceptions.InvalidUserException;
 import exceptions.ItemNotFoundException;
+import exceptions.UserNotFoundException;
 import models.operations.CreatedBy;
 import models.operations.ItemId;
 import models.users.UserId;
@@ -29,19 +36,37 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	private ItemDao itemDao;
 	private ItemConverter itemConverter;
 	private IdGeneratorDao idGeneratorDao;
+	private UserDao userDao;
+	private ValidationService validationService; 
+
 
 	@Autowired
 	public EnhancedItemsServiceImplementation(ItemConverter itemConvertor, ItemDao itemDao,
-			IdGeneratorDao idGeneratorDao) {
+			IdGeneratorDao idGeneratorDao,
+			UserDao userDao,
+			ValidationService validationService) {
 		this.itemConverter = itemConvertor;
 		this.itemDao = itemDao;
 		this.idGeneratorDao = idGeneratorDao;
+		this.userDao = userDao;
+		this.validationService = validationService;
 	}
 		
 	@Override
 	@Transactional
 	public ItemBoundary create(String managerSpace, String managerEmail, ItemBoundary newItem) {
 		ItemEntity newItemEntity = this.itemConverter.toEntity(newItem);
+		
+		Optional<UserEntity> managerEntity= this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
+
+		if(newItemEntity.getType().isEmpty() ||
+		   newItemEntity.getType() == null)
+		{
+			throw new InvalidItemTypeException("Invalid type: " + 
+					newItemEntity.getType() + " for item: " + 
+					newItemEntity.getName());
+		}
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
 		Long numricId = idGeneratorEntity.getId();
@@ -58,9 +83,17 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Transactional
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
+		Optional<UserEntity> managerEntity = this.userDao.findById(new UserId(managerSpace, managerEmail).toString());
+		this.validationService.ValidateRole(managerEntity, UserRole.MANAGER);
 		Optional<ItemEntity> existingItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
-		if (!existingItem.isPresent())
+		if (!existingItem.isPresent() || 
+				itemId.isEmpty() ||
+				itemId == null ||
+				itemSpace.isEmpty() ||
+				itemSpace == null)
+		{			
 			throw new ItemNotFoundException("item with id: " + itemId + "and space: " + itemSpace + " does not exist");
+		}
 		ItemEntity existingEntity = existingItem.get();
 		ItemEntity itemEntity = this.itemConverter.toEntity(update);
 		itemEntity.setCreatedTimestamp(existingEntity.getCreatedTimestamp());
@@ -89,6 +122,10 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	@Override
 	@Transactional
 	public void deleteAll(String adminSpace, String adminEmail) {
+		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
+		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
+
+		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
 		this.itemDao.deleteAll();
 	}
 
