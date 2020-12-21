@@ -1,5 +1,14 @@
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer mode="side">
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>
+  </mat-drawer>
+
 <mat-toolbar color="primary">
-  <button mat-icon-button>
+  <button type="button" mat-icon-button (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Lets Do It</span>
@@ -7,23 +16,18 @@
   <button mat-icon-button>
     <mat-icon>favorite</mat-icon>
   </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
-  </button>
 </mat-toolbar>
+
 
 <div class="container">
 <mat-card class="card">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <mat-card-title>I need title</mat-card-title>
+    <mat-card-subtitle>And another one</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
+      Here we will put a login form.
     </p>
   </mat-card-content>
   <mat-card-actions>
@@ -32,3 +36,5 @@
   </mat-card-actions>
 </mat-card>
 </div>
+
+</mat-drawer-container>

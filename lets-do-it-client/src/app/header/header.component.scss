@@ -1,10 +1,16 @@
 .card{
-    height: 80%;
-    width: 80%;
+    height: 500px;
+    width: 500px;
+    margin: 20px;
+}
+
+.drawer-container{
+    height: 100%;
 }
 
 .container{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: 10px;
 }
