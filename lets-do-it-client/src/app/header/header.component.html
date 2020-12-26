@@ -1,14 +1,5 @@
-<mat-drawer-container class="drawer-container" autosize>
-  <mat-drawer #drawer mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
-  </mat-drawer>
-
 <mat-toolbar color="primary">
-  <button type="button" mat-icon-button (click)="drawer.toggle()">
+  <button type="button" mat-icon-button (click)="toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Lets Do It</span>
@@ -17,24 +8,3 @@
     <mat-icon>favorite</mat-icon>
   </button>
 </mat-toolbar>
-
-
-<div class="container">
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>I need title</mat-card-title>
-    <mat-card-subtitle>And another one</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p>
-      Here we will put a login form.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <!-- <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button> -->
-  </mat-card-actions>
-</mat-card>
-</div>
-
-</mat-drawer-container>

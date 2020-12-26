@@ -1,0 +1,33 @@
+<div class="container">
+  <div>
+    <app-header (toggleDrawer)="toggle()"></app-header>
+  </div>
+  <mat-drawer-container class="drawer-container">
+    <div>
+      <mat-drawer #drawer mode="side" autosize>
+        <p>Auto-resizing sidenav</p>
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <button (click)="showFiller = !showFiller" mat-raised-button>
+          Toggle extra text
+        </button>
+      </mat-drawer>
+    </div>
+    <div>
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>I need title</mat-card-title>
+          <mat-card-subtitle>And another one</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Here we will put a login form.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <!-- <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button> -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-drawer-container>
+</div>
