@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomepageModule } from './homepage/homepage.module';
 import { HeaderModule } from './header/header.module';
 import { MatButtonModule } from '@angular/material/button';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
