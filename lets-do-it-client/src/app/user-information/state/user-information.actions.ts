@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Action } from '@ngrx/store';
-import { User } from '../core/services/user-information/user';
+import { User } from '../../core/services/user-information/user';
 
 export const loadUserInformations =   '[UserInformation] Load UserInformations';
 

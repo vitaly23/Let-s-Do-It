@@ -5,7 +5,7 @@ import { concatMap, map } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 
 import * as UserInformationActions from './user-information.actions';
-import { UserInformationService } from '../core/services/user-information/user-information.service';
+import { UserInformationService } from '../../core/services/user-information/user-information.service';
 import { addUserInformations } from './user-information.actions';
 
 

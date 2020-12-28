@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as UserInformationActions from './user-information.actions';
-import { User } from '../core/services/user-information/user'; 
+import { User } from '../../core/services/user-information/user'; 
 import { addUserInformations } from './user-information.actions';
 
 export const userInformationFeatureKey = 'userInformation';
