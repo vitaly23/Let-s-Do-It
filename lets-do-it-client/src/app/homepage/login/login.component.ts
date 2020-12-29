@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  submitForm() {
+  submit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;

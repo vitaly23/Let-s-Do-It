@@ -126,5 +126,8 @@
       }
     }
   },
-  "defaultProject": "lets-do-it-client"
+  "defaultProject": "lets-do-it-client",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
