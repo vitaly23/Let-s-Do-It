@@ -10,10 +10,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MapComponent } from './map/map.component';
+import { MapModule } from './map/map.module';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginComponent],
+  declarations: [HomepageComponent, LoginComponent, MapComponent],
   imports: [
     CommonModule,
     HeaderModule,
@@ -24,7 +27,11 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatSidenavModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MapModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    }),
   ],
   exports:[HomepageComponent]
 })
