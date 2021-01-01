@@ -10,7 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from '.';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-
+import * as UserInformationReducer from './user-information/state/user-information.reducer';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
+    // StoreModule.forFeature("login",reducers: UserInformationReducer)],
     MatButtonModule,
     HeaderModule,
     HomepageModule,
