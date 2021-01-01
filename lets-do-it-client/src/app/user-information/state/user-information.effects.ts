@@ -6,24 +6,24 @@ import { EMPTY } from 'rxjs';
 
 import * as UserInformationActions from './user-information.actions';
 import { UserInformationService } from '../../core/services/user-information/user-information.service';
-import { addUserInformations } from './user-information.actions';
+import { GetUserInformationsAction } from './user-information.actions';
 
 
 @Injectable()
 export class UserInformationEffects {
 
 
-  // loadUserInformations$ = createEffect(() => {
-  //   return this.actions$.pipe( 
+  loadUserInformations$ = createEffect(() => {
+    return this.actions$.pipe( 
 
-  //     ofType(UserInformationActions.loadUserInformations),
-  //     /** An EMPTY observable only emits completion. Replace with your own observable API request */
-  //     concatMap(() => {
-  //       return this.userInformationService.login("")
-  //     }),
-  //       map(user => new addUserInformations())
-  //   );
-  // });
+      ofType(UserInformationActions.loadUserInformations),
+      /** An EMPTY observable only emits completion. Replace with your own observable API request */
+      concatMap(() => {
+        return this.userInformationService.login("")
+      }),
+        map(user => new GetUserInformationsAction(user))
+    );
+  });
 
 
   constructor(private actions$: Actions, 

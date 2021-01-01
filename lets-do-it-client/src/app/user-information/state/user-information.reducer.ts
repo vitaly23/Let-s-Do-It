@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as UserInformationActions from './user-information.actions';
 import { User } from '../../core/services/user-information/user'; 
-import { addUserInformations } from './user-information.actions';
+import { getUserInformations } from './user-information.actions';
 
 export const userInformationFeatureKey = 'userInformation';
 
@@ -17,7 +17,7 @@ export const initialState: State = {
 export function reducer(state = initialState, action: UserInformationActions.UserInformationActions)
 : State {
   switch (action.type) {
-    case addUserInformations:
+    case getUserInformations:
       const user = action.payload;
       return {
         ...initialState,

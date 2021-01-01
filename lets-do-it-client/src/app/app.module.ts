@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { MeetingService } from './core/services/meeting-information/meeting.service';
 import { HttpClientModule } from '@angular/common/http';
 
+import * as UserInformationReducer from './user-information/state/user-information.reducer';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
+    // StoreModule.forFeature("login",reducers: UserInformationReducer)],
     MatButtonModule,
     HeaderModule,
     HomepageModule,

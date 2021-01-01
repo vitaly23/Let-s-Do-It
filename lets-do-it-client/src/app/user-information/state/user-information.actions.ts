@@ -4,7 +4,7 @@ import { User } from '../../core/services/user-information/user';
 
 export const loadUserInformations =   '[UserInformation] Load UserInformations';
 
-export const addUserInformations = '[UserInformation] Add UserInformations';
+export const getUserInformations = '[UserInformation] Add UserInformations';
 
 export class LoadUserInformationsAction implements Action {
   readonly type = loadUserInformations;
@@ -12,14 +12,14 @@ export class LoadUserInformationsAction implements Action {
   constructor(public payload: string) { }
 }
 
-export class AddUserInformationsAction implements Action {
-  readonly type = addUserInformations;
+export class GetUserInformationsAction implements Action {
+  readonly type = getUserInformations;
 
   constructor(public payload: User) { }
 }
 
 export type UserInformationActions =
-LoadUserInformationsAction | AddUserInformationsAction;
+LoadUserInformationsAction | GetUserInformationsAction;
 
 
 

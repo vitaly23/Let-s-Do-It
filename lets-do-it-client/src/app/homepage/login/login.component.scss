@@ -1,3 +1,8 @@
+.example-container{
+  display: flex;
+  //justify-content: center;
+}
+
 .example-container .mat-form-field + .mat-form-field {
     margin-left: 8px;
   }

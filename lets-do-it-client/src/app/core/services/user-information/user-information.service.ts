@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpWrapperService } from '../http-wrapper/http-wrapper.service';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserInformationService {
 
-  public headers: HttpHeaders;
-  constructor(private httpClient: HttpClient) { 
-    //this.headers.set( ,"application/json");
-  }
+  constructor(private httpWrapper: HttpWrapperService) { }
 
-  public login(userMail: string) : Observable<Object>{
-    return this.httpClient.get("");
+  public login(userMail: string) : Observable<User>{
+    return this.httpWrapper.get("");
   }
 }
