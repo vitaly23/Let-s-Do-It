@@ -31,7 +31,7 @@ import { AgmCoreModule } from '@agm/core';
     MapModule,
     AgmCoreModule.forRoot({
       apiKey: ''
-    })
+    }),
   ],
   exports:[HomepageComponent]
 })
