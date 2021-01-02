@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Dictionary } from '@ngrx/entity';
 import { Meeting } from './meeting';
 
 @Injectable({

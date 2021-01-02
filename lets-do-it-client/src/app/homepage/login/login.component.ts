@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadUserInformationsAction } from 'src/app/user-information/state/user-information.actions';
 import { User } from 'src/app/core/services/user-information/user';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +11,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   submitted = false;
 
-  constructor(private store: Store<{user: User}>,
-              private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -31,7 +28,7 @@ export class LoginComponent implements OnInit {
       return;
     }
       
-    this.store.dispatch(new LoadUserInformationsAction(this.loginForm.value));
+    // this.store.dispatch(new LoadUserInformationsAction(this.loginForm.value));
   }
 
 }
