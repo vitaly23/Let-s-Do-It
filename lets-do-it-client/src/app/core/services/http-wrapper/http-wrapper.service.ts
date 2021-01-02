@@ -9,7 +9,17 @@ export class HttpWrapperService {
 private headers: HttpHeaders = new HttpHeaders(
   { 'Content-Type':'application/json'}
   );
+
+  private fixedUrl: string;
   constructor(private httpClient: HttpClient) { }
+
+  private transformUrl(url: string, params: any[]){
+
+  }
+  public getWithParams(url: string ,params: any[]): Observable<any> {
+
+    return this.get(url,{ headers: this.headers, params: params});
+  }
 
   public get(url: string, options?: any): Observable<any> {
     return this.httpClient.get(url, options ? options : this.headers);

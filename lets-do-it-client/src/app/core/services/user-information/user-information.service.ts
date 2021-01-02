@@ -10,7 +10,8 @@ export class UserInformationService {
 
   constructor(private httpWrapper: HttpWrapperService) { }
 
-  public login(userMail: string) : Observable<User>{
-    return this.httpWrapper.get("");
+  public login(userMail: any) : Observable<User>{
+    return this.httpWrapper.get(
+      `http://localhost:8080/dts/users/login/default_space_name/${userMail.email}`);
   }
 }

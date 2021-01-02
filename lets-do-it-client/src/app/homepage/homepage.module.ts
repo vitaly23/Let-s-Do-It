@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MapComponent } from './map/map.component';
 import { MapModule } from './map/map.module';
 import { AgmCoreModule } from '@agm/core';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AgmCoreModule } from '@agm/core';
     MatIconModule,
     BrowserModule,
     MatCardModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
     MatSidenavModule,
