@@ -27,8 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule,
     MatFormFieldModule,
+    MatSidenavModule,
     MatInputModule,
     MapModule,
     AgmCoreModule.forRoot({

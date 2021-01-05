@@ -4,6 +4,7 @@ import { User } from 'src/app/core/services/user-information/user';
 import { UserInformationService } from 'src/app/core/services/user-information/user-information.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   constructor(private formBuilder: FormBuilder,
+              private router: Router,
               private userInformationService: UserInformationService) { }
 
   ngOnInit() {
@@ -37,7 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
       
-    // this.store.dispatch(new LoadUserInformationsAction(this.loginForm.value));
     this.userInformationService.login(this.loginForm.value).pipe(
       takeUntil(this.ngOnUnsubscribe$)
     ).subscribe(user =>{
@@ -47,6 +48,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log(error.message);
       alert(error.message);
     })
+  }
+
+  createUser(){
+    this.router.navigate(["/register"]);
   }
 
   ngOnDestroy(): void {

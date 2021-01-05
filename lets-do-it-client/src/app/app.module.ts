@@ -10,10 +10,12 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../environments/environment';
 import { MeetingService } from './core/services/meeting-information/meeting.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserAnimationsModule,

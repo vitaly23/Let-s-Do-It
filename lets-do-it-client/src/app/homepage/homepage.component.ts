@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { User } from '../core/services/user-information/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -10,7 +11,6 @@ import { User } from '../core/services/user-information/user';
 export class HomepageComponent implements OnInit {
   @ViewChild('drawer') drawer: MatDrawer;
   public showFiller;
-  public loggedUser: User;
 
   constructor() { }
 
@@ -19,9 +19,5 @@ export class HomepageComponent implements OnInit {
 
   public toggle(){
     this.drawer.toggle()
-  }
-
-  public userLogged($event:User){
-    this.loggedUser = $event
   }
 }

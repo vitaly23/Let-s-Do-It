@@ -20,7 +20,6 @@
           <mat-card-subtitle>And another one</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <app-login (userIsLogged)="userLogged($event)"></app-login>
           <div *ngIf="loggedUser">Welcome {{loggedUser.userId.email}} </div>
         </mat-card-content>
         <mat-card-actions>
