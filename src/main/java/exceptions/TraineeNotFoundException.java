@@ -4,23 +4,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class UserNotFoundException extends RuntimeException {
+public class TraineeNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public UserNotFoundException() {
+	public TraineeNotFoundException() {
 	}
 
-	public UserNotFoundException(String message) {
+	public TraineeNotFoundException(String message) {
 		super(message);
 	}
 
-	public UserNotFoundException(Throwable cause) {
+	public TraineeNotFoundException(Throwable cause) {
 		super(cause);
 	}
 
-	public UserNotFoundException(String message, Throwable cause) {
+	public TraineeNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 }

@@ -7,12 +7,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import boundaries.UserBoundary;
 import dts.logic.EnhancedItemsService;
-import dts.logic.ItemsService;
 import dts.logic.OperationsService;
 import dts.logic.UsersService;
 
@@ -22,13 +22,13 @@ public class AdminController {
 	private EnhancedItemsService itemsService;
 	private UsersService usersService;
 	private OperationsService operationsService;
-	
-	
+
 	@Autowired
-	public AdminController(EnhancedItemsService itemService, UsersService usersService, OperationsService operationService) {
-		this.itemsService = itemService;
+	public AdminController(EnhancedItemsService itemsService, UsersService usersService,
+			OperationsService operationsService) {
+		this.itemsService = itemsService;
 		this.usersService = usersService;
-		this.operationsService = operationService;
+		this.operationsService = operationsService;
 	}
 
 	@RequestMapping(
@@ -37,7 +37,7 @@ public class AdminController {
 	public void deleteAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-			this.usersService.deleteAllUsers(adminSpace, adminEmail);
+		this.usersService.deleteAllUsers(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -46,7 +46,7 @@ public class AdminController {
 	public void deleteAllItems(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-			this.itemsService.deleteAll(adminSpace, adminEmail);
+		this.itemsService.deleteAll(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -55,7 +55,7 @@ public class AdminController {
 	public void deleteAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail) {
-			this.operationsService.deleteAllActions(adminSpace, adminEmail);
+		this.operationsService.deleteAllActions(adminSpace, adminEmail);
 	}
 
 	@RequestMapping(
@@ -64,8 +64,10 @@ public class AdminController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserBoundary[] exportAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
-			@PathVariable("adminEmail") String adminEmail) {
-		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail);
+			@PathVariable("adminEmail") String adminEmail,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail, size, page);
 		UserBoundary[] array = new UserBoundary[listUser.size()];
 		listUser.toArray(array);
 		return array;
@@ -77,8 +79,11 @@ public class AdminController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
-			@PathVariable("adminEmail") String adminEmail) {
-		List<OperationBoundary> listBoundary = this.operationsService.getAllOperations(adminSpace, adminEmail);
+			@PathVariable("adminEmail") String adminEmail,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+		List<OperationBoundary> listBoundary = this.operationsService.getAllOperations(adminSpace, adminEmail, size,
+				page);
 		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];
 		listBoundary.toArray(array);
 		return array;

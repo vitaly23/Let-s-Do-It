@@ -8,7 +8,7 @@ public interface OperationsService {
 
 	public Object invokeOpreation(OperationBoundary operation);
 
-	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail);
+	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail, int size, int page);
 
 	public void deleteAllActions(String adminSpace, String adminEmail);
 

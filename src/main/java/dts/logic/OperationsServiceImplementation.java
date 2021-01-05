@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import dts.converter.OperationConverter;
 import dts.data.OperationEntity;
@@ -53,7 +54,7 @@ public class OperationsServiceImplementation implements OperationsService {
 	}
 
 	@Override
-	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail) {
+	public List<OperationBoundary> getAllOperations(String adminSpace, String adminEmail, int size, int page) {
 		return this.operationStore.values()
 				.stream()
 				.map(entity -> this.operationConverter.toBoundary(entity))

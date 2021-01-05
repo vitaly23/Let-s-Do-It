@@ -49,19 +49,24 @@ public class UsersServiceImplementation implements UsersService {
 	}
 
 	@Override
-	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
+	public UserBoundary updateUser(String userSpace, String userEmail, UserBoundary update) {
 		UserEntity existingUser = userStorage.get(new UserId(userSpace, userEmail).toString());
 		if (existingUser == null) {
 			throw new RuntimeException("user with email: " + userEmail + "does not exist");
 		}
-		UserEntity userEntity = this.userConverter.toEntity(update);
-		userEntity.setUserId(existingUser.getUserId().toString());
-		this.userStorage.put(userEntity.getUserId().toString(), userEntity);
-		return this.userConverter.toBoundary(userEntity);
+		UserEntity updatedUser = this.userConverter.toEntity(update);
+		if (update.getUsername() != null)
+			existingUser.setUsername(updatedUser.getUsername());
+		if (update.getAvatar() != null)
+			existingUser.setAvatar(updatedUser.getAvatar());
+		if (update.getRole() != null)
+			existingUser.setRole(updatedUser.getRole());
+		this.userStorage.put(existingUser.getUserId(), existingUser);
+		return this.userConverter.toBoundary(existingUser);
 	}
 
 	@Override
-	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
+	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail, int size, int page) {
 		return this.userStorage.values() // Collection<UserEntity>
 				.stream() // Stream<UserEntity>
 				.map(entity -> userConverter.toBoundary(entity))// Stream<UserBoundary>

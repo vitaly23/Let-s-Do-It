@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.ItemBoundary;
@@ -17,11 +18,11 @@ import models.operations.ItemId;
 @RestController
 public class ItemController {
 
-	private EnhancedItemsService itemService;
+	private EnhancedItemsService itemsService;
 
 	@Autowired
-	public ItemController(EnhancedItemsService itemService) {
-		this.itemService = itemService;
+	public ItemController(EnhancedItemsService itemsService) {
+		this.itemsService = itemsService;
 	}
 
 	@RequestMapping(
@@ -33,7 +34,7 @@ public class ItemController {
 			@RequestBody ItemBoundary item,
 			@PathVariable("managerSpace") String managerSpace, 
 			@PathVariable("managerEmail") String managerEmail) {
-		return this.itemService.create(managerSpace, managerEmail, item);
+		return this.itemsService.create(managerSpace, managerEmail, item);
 	}
 
 	@RequestMapping(
@@ -46,7 +47,7 @@ public class ItemController {
 			@PathVariable("managerEmail") String managerEmail, 
 			@PathVariable("itemSpace") String itemSpace,
 			@PathVariable("itemId") String itemId) {
-		this.itemService.update(managerSpace, managerEmail, itemSpace, itemId, item);
+		this.itemsService.update(managerSpace, managerEmail, itemSpace, itemId, item);
 	}
 
 	@RequestMapping(
@@ -58,7 +59,7 @@ public class ItemController {
 			@PathVariable("userEmail") String userEmail, 
 			@PathVariable("itemSpace") String itemSpace,
 			@PathVariable("itemId") String itemId) {
-		return this.itemService.getSpecificItem(userSpace, userEmail, itemSpace, itemId);
+		return this.itemsService.getSpecificItem(userSpace, userEmail, itemSpace, itemId);
 	}
 
 	@RequestMapping(
@@ -67,8 +68,10 @@ public class ItemController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ItemBoundary[] retrieveAllDigitalItems(
 			@PathVariable("userSpace") String userSpace,
-			@PathVariable("userEmail") String userEmail) {
-		List<ItemBoundary> listItem = this.itemService.getAll(userSpace, userEmail);
+			@PathVariable("userEmail") String userEmail,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+		List<ItemBoundary> listItem = this.itemsService.getAll(userSpace, userEmail, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
 		return array;
@@ -84,7 +87,7 @@ public class ItemController {
 			@PathVariable("managerEmail") String managerEmail,
 			@PathVariable("itemSpace") String itemSpace,
 			@PathVariable("itemId") String itemId) {
-		this.itemService.bindChild(managerSpace, managerEmail, itemSpace, itemId, item);
+		this.itemsService.bindChild(managerSpace, managerEmail, itemSpace, itemId, item);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,
@@ -94,8 +97,10 @@ public class ItemController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("itemSpace") String itemSpace,
-			@PathVariable("itemId") String itemId) {
-		List<ItemBoundary> listItem = this.itemService.getAllChildren(userSpace, userEmail, itemSpace, itemId);
+			@PathVariable("itemId") String itemId,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+		List<ItemBoundary> listItem = this.itemsService.getAllChildren(userSpace, userEmail, itemSpace, itemId, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
 		return array;
@@ -108,8 +113,57 @@ public class ItemController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("itemSpace") String itemSpace,
-			@PathVariable("itemId") String itemId){
-		List<ItemBoundary> listItem = this.itemService.getParents(userSpace, userEmail, itemSpace, itemId);
+			@PathVariable("itemId") String itemId,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page){
+		List<ItemBoundary> listItem = this.itemsService.getParents(userSpace, userEmail, itemSpace, itemId, size, page);
+		ItemBoundary[] array = new ItemBoundary[listItem.size()];
+		listItem.toArray(array);
+		return array;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,
+			path = "/dts/items/{userSpace}/{userEmail}/search/byNamePattern/{namePattern}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ItemBoundary[] getItemsByNamePattern (
+			@PathVariable("userSpace") String userSpace,
+			@PathVariable("userEmail") String userEmail,
+			@PathVariable("namePattern") String namePattern,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page){
+		List<ItemBoundary> listItem = this.itemsService.getAllByNamePattern(userSpace, userEmail, namePattern, size, page);
+		ItemBoundary[] array = new ItemBoundary[listItem.size()];
+		listItem.toArray(array);
+		return array;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,
+			path = "/dts/items/{userSpace}/{userEmail}/search/byType/{type}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ItemBoundary[] getItemsByType (
+			@PathVariable("userSpace") String userSpace,
+			@PathVariable("userEmail") String userEmail,
+			@PathVariable("type") String type,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page){
+		List<ItemBoundary> listItem = this.itemsService.getAllByType(userSpace, userEmail, type, size, page);
+		ItemBoundary[] array = new ItemBoundary[listItem.size()];
+		listItem.toArray(array);
+		return array;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,
+			path = "/dts/items/{userSpace}/{userEmail}/search/near/{lat}/{lng}/{distance}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ItemBoundary[] getItemsByLocation (
+			@PathVariable("userSpace") String userSpace,
+			@PathVariable("userEmail") String userEmail,
+			@PathVariable("lat") double lat,
+			@PathVariable("lng") double lng,
+			@PathVariable("distance") double distance,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page){
+		List<ItemBoundary> listItem = this.itemsService.getAllByLocation(userSpace, userEmail, lat, lng, distance, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
 		return array;
