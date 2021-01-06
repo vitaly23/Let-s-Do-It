@@ -1,15 +1,11 @@
 package boundaries;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import models.operations.InvokedBy;
 import models.operations.Item;
-import models.operations.ItemId;
 import models.operations.OperationId;
-import models.users.UserId;
 
 public class OperationBoundary {
 
@@ -21,13 +17,18 @@ public class OperationBoundary {
 	private Map<String, Object> operationAttributes;
 
 	public OperationBoundary() {
-		// default arguments
-		this.operationId = new OperationId("my_space", "my_id");
-		this.type = "my_type";
-		this.item = new Item(new ItemId("my_space", "my_id"));
-		this.createdTimestamp = new Date();
-		this.invokedBy = new InvokedBy(new UserId("my_space", "my_email"));
-		this.operationAttributes = Collections.synchronizedMap(new HashMap<>());
+
+	}
+
+	public OperationBoundary(OperationId operationId, String type, Item item, Date createdTimestamp,
+			InvokedBy invokedBy, Map<String, Object> operationAttributes) {
+		super();
+		this.operationId = operationId;
+		this.type = type;
+		this.item = item;
+		this.createdTimestamp = createdTimestamp;
+		this.invokedBy = invokedBy;
+		this.operationAttributes = operationAttributes;
 	}
 
 	public OperationId getOperationId() {

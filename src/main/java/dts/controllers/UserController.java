@@ -20,8 +20,8 @@ public class UserController {
 	private UserConverter userConverter;
 	
 	@Autowired
-	public UserController(UsersService userService, UserConverter userConverter) {
-		this.usersService=userService;
+	public UserController(UsersService usersService, UserConverter userConverter) {
+		this.usersService = usersService;
 		this.userConverter = userConverter;
 	}
 	
@@ -53,7 +53,7 @@ public class UserController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@RequestBody UserBoundary updateUserDetails) {
-		this.usersService.updateUser(updateUserDetails, userSpace, userEmail);
+		this.usersService.updateUser(userSpace, userEmail, updateUserDetails);
 	}
 
 }

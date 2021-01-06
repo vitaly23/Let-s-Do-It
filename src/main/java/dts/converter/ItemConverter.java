@@ -26,12 +26,15 @@ public class ItemConverter {
 		if (itemBoundary.getActive() != null) {
 			entity.setActive(itemBoundary.getActive());
 		}
-		entity.setItemId(itemBoundary.getItemId().toString());
+		if (itemBoundary.getItemId() != null) {
+			entity.setItemId(itemBoundary.getItemId().toString());
+		}
 		if (itemBoundary.getName() != null) {
 			entity.setName(itemBoundary.getName());
 		}
 		if (itemBoundary.getLocation() != null) {
-			entity.setLocation(itemBoundary.getLocation().toString());
+			entity.setLat(itemBoundary.getLocation().getLat());
+			entity.setLng(itemBoundary.getLocation().getLng());
 		}
 		if (itemBoundary.getCreatedBy() != null && itemBoundary.getCreatedBy().getUserId() != null) {
 			entity.setCreatedBy(itemBoundary.getCreatedBy().toString());
@@ -48,9 +51,7 @@ public class ItemConverter {
 
 	public ItemBoundary toBoundary(ItemEntity itemEntity) {
 		ItemBoundary itemBoundary = new ItemBoundary();
-		if (itemEntity.getActive() != null) {
-			itemBoundary.setActive(itemEntity.getActive());
-		}
+		itemBoundary.setActive(itemEntity.getActive());
 		if (itemEntity.getItemId() != null) {
 			String[] args = itemEntity.getItemId().split(Constants.DELIMITER);
 			itemBoundary.setItemId(new ItemId(args[0], args[1]));
@@ -58,10 +59,7 @@ public class ItemConverter {
 		if (itemEntity.getName() != null) {
 			itemBoundary.setName(itemEntity.getName());
 		}
-		if (itemEntity.getLocation() != null) {
-			String[] args = itemEntity.getLocation().split(Constants.DELIMITER);
-			itemBoundary.setLocation(new Location(Double.parseDouble(args[0]), Double.parseDouble(args[1])));
-		}
+		itemBoundary.setLocation(new Location(itemEntity.getLat(), itemEntity.getLng()));
 		if (itemEntity.getCreatedBy() != null) {
 			String[] args = itemEntity.getCreatedBy().split(Constants.DELIMITER);
 			itemBoundary.setCreatedBy(new CreatedBy(new UserId(args[0], args[1])));

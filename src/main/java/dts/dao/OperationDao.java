@@ -1,9 +1,9 @@
 package dts.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import dts.data.OperationEntity;
 
-public interface OperationDao extends CrudRepository<OperationEntity, String> {
+public interface OperationDao extends PagingAndSortingRepository<OperationEntity, String> {
 
 }

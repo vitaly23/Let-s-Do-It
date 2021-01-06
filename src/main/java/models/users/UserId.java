@@ -33,11 +33,6 @@ public class UserId {
 	}
 
 	@Override
-	public String toString() {
-		return this.space + Constants.DELIMITER + this.email;
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -66,6 +61,11 @@ public class UserId {
 		} else if (!space.equals(other.space))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return this.space + Constants.DELIMITER + this.email;
 	}
 
 }
