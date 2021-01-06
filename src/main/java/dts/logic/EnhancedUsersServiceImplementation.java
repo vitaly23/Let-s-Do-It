@@ -1,11 +1,12 @@
 package dts.logic;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,76 +15,68 @@ import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
 import dts.data.UserRole;
-import dts.utils.ValidationService;
-import models.users.UserId;
+import dts.utils.UserHelper;
 
 @Service
 public class EnhancedUsersServiceImplementation implements UsersService {
 
 	private UserDao userDao;
 	private UserConverter userConverter;
-	private ValidationService validationService; 
+	private UserHelper userHelper;
 
 	@Autowired
-	public EnhancedUsersServiceImplementation(UserDao userDao, 
-			UserConverter userConverter,
-			ValidationService validationService) {
+	public EnhancedUsersServiceImplementation(UserDao userDao, UserConverter userConverter, UserHelper userHelper) {
 		super();
 		this.userDao = userDao;
 		this.userConverter = userConverter;
-		this.validationService = validationService;
+		this.userHelper = userHelper;
 	}
 
 	@Override
 	@Transactional
 	public UserBoundary createUser(UserBoundary user) {
 		UserEntity newUserEntity = this.userConverter.toEntity(user);
-		Optional<UserEntity> existingUser = this.userDao.findById(newUserEntity.getUserId());
-		this.validationService.ValidateNotSuchUser(newUserEntity, existingUser);
-		this.validationService.ValidateUserData(newUserEntity);
+		this.userHelper.ValidateNewUserData(newUserEntity);
+		this.userHelper.ValidateNoSuchUser(newUserEntity.getUserId());
 		this.userDao.save(newUserEntity);
 		return this.userConverter.toBoundary(newUserEntity);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserBoundary login(String userSpace, String userEmail) {
-		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		this.validationService.ValidateUserFound(existingUser, userEmail);
-		return this.userConverter.toBoundary(existingUser.get());
+		UserEntity existingUser = this.userHelper.getSpecificUser(userSpace, userEmail);
+		return this.userConverter.toBoundary(existingUser);
 	}
 
 	@Override
 	@Transactional
-	public UserBoundary updateUser(UserBoundary update, String userSpace, String userEmail) {
-		Optional<UserEntity> existingUser = this.userDao.findById(new UserId(userSpace, userEmail).toString());
-		this.validationService.ValidateUserFound(existingUser, userEmail);
-		UserEntity existingEntity = existingUser.get();
-		UserEntity userEntity = this.userConverter.toEntity(update);
-		userEntity.setUserId(existingEntity.getUserId().toString());
-		this.validationService.ValidateUserData(userEntity);
-		return this.userConverter.toBoundary(this.userDao.save(userEntity));
+	public UserBoundary updateUser(String userSpace, String userEmail, UserBoundary update) {
+		UserEntity existingUser = this.userHelper.getSpecificUser(userSpace, userEmail);
+		UserEntity updatedUser = this.userConverter.toEntity(update);
+		if (update.getUsername() != null)
+			existingUser.setUsername(updatedUser.getUsername());
+		if (update.getAvatar() != null)
+			existingUser.setAvatar(updatedUser.getAvatar());
+		if (update.getRole() != null)
+			existingUser.setRole(updatedUser.getRole());
+		this.userHelper.ValidateUserData(existingUser);
+		return this.userConverter.toBoundary(this.userDao.save(existingUser));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail) {
-		Optional<UserEntity> admin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserFound(admin, adminEmail);
-		this.validationService.ValidateRole(admin, UserRole.ADMIN);	
+	public List<UserBoundary> getAllUsers(String adminSpace, String adminEmail, int size, int page) {
+		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(adminSpace, adminEmail, UserRole.ADMIN);
 		return StreamSupport
-				.stream(this.userDao.findAll().spliterator(), false) // Iterable to Stream<UserEntity>,
-				.map(entity -> this.userConverter.toBoundary(entity)) // Stream<UserBoundary>
-				.collect(Collectors.toList()); // List<UserBoundary>
+				.stream(this.userDao.findAll(PageRequest.of(page, size, Direction.DESC, "userId")).spliterator(), false)
+				.map(entity -> this.userConverter.toBoundary(entity)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional
 	public void deleteAllUsers(String adminSpace, String adminEmail) {
-		Optional<UserEntity> existingAdmin = this.userDao.findById(new UserId(adminSpace, adminEmail).toString());
-		this.validationService.ValidateUserFound(existingAdmin, adminEmail);
-		this.validationService.ValidateRole(existingAdmin, UserRole.ADMIN);	
-
+		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(adminSpace, adminEmail, UserRole.ADMIN);
 		this.userDao.deleteAll();
 	}
 

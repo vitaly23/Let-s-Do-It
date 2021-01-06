@@ -9,12 +9,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import boundaries.ItemBoundary;
+
 import dts.converter.ItemConverter;
 import dts.data.ItemEntity;
+
 import models.operations.CreatedBy;
 import models.operations.ItemId;
 import models.users.UserId;
@@ -51,22 +54,30 @@ public class ItemsServiceImplementation implements ItemsService {
 	@Override
 	public ItemBoundary update(String managerSpace, String managerEmail, String itemSpace, String itemId,
 			ItemBoundary update) {
-		ItemEntity item = this.itemStore.get(new ItemId(itemSpace, itemId).toString());
-		if (item == null) {
+		ItemEntity existingItem = this.itemStore.get(new ItemId(itemSpace, itemId).toString());
+		if (existingItem == null) {
 			throw new RuntimeException("The item don't exist");
 		}
-		item = this.itemConvertor.toEntity(update);
-		item.setCreatedTimestamp(item.getCreatedTimestamp());
-		item.setItemId(item.getItemId());
-		itemStore.put(item.getItemId(), item);
-		return this.itemConvertor.toBoundary(item);
+		ItemEntity updatedItem = this.itemConvertor.toEntity(update);
+		if (update.getType() != null)
+			existingItem.setType(updatedItem.getType());
+		if (update.getName() != null)
+			existingItem.setName(updatedItem.getName());
+		if (update.getActive() != null)
+			existingItem.setActive(updatedItem.getActive());
+		if (update.getLocation() != null) {
+			existingItem.setLat(updatedItem.getLat());
+			existingItem.setLng(updatedItem.getLng());
+		}
+		if (update.getItemAttributes() != null)
+			existingItem.setItemAttributes(updatedItem.getItemAttributes());
+		itemStore.put(existingItem.getItemId(), existingItem);
+		return this.itemConvertor.toBoundary(existingItem);
 	}
 
 	@Override
-	public List<ItemBoundary> getAll(String userSpace, String userEmail) {
-		return this.itemStore.values()
-				.stream()
-				.map(entity -> itemConvertor.toBoundary(entity))
+	public List<ItemBoundary> getAll(String userSpace, String userEmail, int size, int page) {
+		return this.itemStore.values().stream().map(entity -> itemConvertor.toBoundary(entity))
 				.collect(Collectors.toList());
 	}
 

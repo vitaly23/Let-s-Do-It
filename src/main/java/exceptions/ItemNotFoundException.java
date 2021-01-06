@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class ItemNotFoundException extends RuntimeException {
 
+	private static final long serialVersionUID = 1L;
+
 	public ItemNotFoundException() {
 	}
 
