@@ -10,5 +10,6 @@ public final class OperationTypes {
 	public static final String CREATE_MEETING = "createMeeting";
 	public static final String GET_JOINED_MEETINGS = "getJoinedMeetings";
 	public static final String GET_CREATED_MEETINGS = "getCreatedMeetings";
+	public static final String FIND_MEETINGS = "findMeetings";
 
 }

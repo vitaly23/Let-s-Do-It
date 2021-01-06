@@ -1,5 +1,7 @@
 package dts.operations;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -21,6 +23,8 @@ import dts.data.UserRole;
 import dts.logic.EnhancedItemsService;
 import dts.utils.OperationHelper;
 import dts.utils.UserHelper;
+
+import exceptions.InvalidOperationException;
 
 import models.users.UserId;
 
@@ -44,12 +48,15 @@ public class CreateMeeting implements Operations {
 	public Object invokeOperation(OperationBoundary operationBoundary) {
 		this.operationHelper.ValidateOperationAttributes(operationBoundary.getOperationAttributes(),
 				MeetingAttributes.ALL_MEETING_ATTRIBUTES);
+		Map<String, Object> operationAttributes = operationBoundary.getOperationAttributes();
+		this.ValidateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_START_DATE));
+		this.ValidateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_END_DATE));
 		UserId userId = operationBoundary.getInvokedBy().getUserId();
 		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(userId.getSpace(), userId.getEmail(),
 				UserRole.PLAYER);
 		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Manager role");
 		this.userHelper.ChangeUserRole(existingUser, UserRole.MANAGER);
-		Map<String, Object> operationAttributes = operationBoundary.getOperationAttributes();
+
 		Object[] args = this.operationHelper.getNameAndLatAndLng(operationAttributes);
 		ItemBoundary meetingBoundary = new ItemBoundary(ItemTypes.MEETING, (String) args[0], (double) args[1],
 				(double) args[2], operationAttributes);
@@ -63,6 +70,14 @@ public class CreateMeeting implements Operations {
 		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Player role");
 		this.userHelper.ChangeUserRole(existingUser, UserRole.PLAYER);
 		return meeting;
+	}
+
+	public void ValidateMeetingDateFormat(String date) {
+		try {
+			new SimpleDateFormat(MeetingAttributes.MEETING_DATE_FORMAT).parse(date);
+		} catch (ParseException e) {
+			throw new InvalidOperationException("date fromat is invalid");
+		}
 	}
 
 }

@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import constants.Constants;
-import constants.TraineeAttributes;
+import constants.OperationAttributes;
+
 import dts.data.ItemEntity;
 import dts.data.OperationEntity;
 import dts.data.UserEntity;
 import dts.data.UserRole;
+
 import exceptions.InvalidOperationException;
 
 @Component
@@ -73,11 +75,11 @@ public class OperationHelper {
 		}
 		return new int[] { page, size };
 	}
-	
+
 	public Object[] getNameAndLatAndLng(Map<String, Object> operationAttributes) {
-		String itemName = (String) operationAttributes.remove(TraineeAttributes.NAME);
-		double lat = Double.parseDouble((String) operationAttributes.remove(TraineeAttributes.LAT));
-		double lng = Double.parseDouble((String) operationAttributes.remove(TraineeAttributes.LNG));
+		String itemName = (String) operationAttributes.remove(OperationAttributes.NAME);
+		double lat = Double.parseDouble((String) operationAttributes.remove(OperationAttributes.LAT));
+		double lng = Double.parseDouble((String) operationAttributes.remove(OperationAttributes.LNG));
 		return new Object[] { itemName, lat, lng };
 	}
 

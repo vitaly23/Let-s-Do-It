@@ -73,4 +73,13 @@ public interface ItemDao extends PagingAndSortingRepository<ItemEntity, String> 
 	public List<ItemEntity> findAllByActiveTrue(
 			Pageable pageable);
 
+	public List<ItemEntity> findAllByActiveTrueAndCreatedByNotAndLatBetweenAndLngBetweenAndItemAttributesLikeIgnoreCase(
+			@Param("createdBy") String createdBy,
+			@Param("minLatDistance") double minLatDistance,
+			@Param("maxLatDistance") double maxLatDistance,
+			@Param("minLngDistance") double minLngDistance,
+			@Param("maxLngDistance") double maxLngDistance,
+			@Param("typeOfSport") String typeOfSport,
+			Pageable pageable);
+
 }

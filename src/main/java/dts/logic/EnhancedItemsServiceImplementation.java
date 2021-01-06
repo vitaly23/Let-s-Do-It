@@ -263,4 +263,17 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 				.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ItemBoundary> getAllMeetingsByLocationAndNotCreatedByAndTypeOfSport(String userId, double lat,
+			double lng, double distance, String typeOfSport, int size, int page) {
+		Pageable pageRequest = PageRequest.of(page, size, Direction.DESC, "createdTimestamp", "itemId");
+		String pattern = "%\"typeOfSport\":\"" + typeOfSport + "\"%";
+		return StreamSupport.stream(this.itemDao
+				.findAllByActiveTrueAndCreatedByNotAndLatBetweenAndLngBetweenAndItemAttributesLikeIgnoreCase(userId,
+						lat - distance, lat + distance, lng - distance, lng + distance, pattern, pageRequest)
+				.spliterator(), false).map(entity -> this.itemConverter.toBoundary(entity))
+				.collect(Collectors.toList());
+	}
+
 }
