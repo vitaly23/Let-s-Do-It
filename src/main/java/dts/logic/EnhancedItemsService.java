@@ -19,4 +19,8 @@ public interface EnhancedItemsService extends ItemsService {
 	
 	public List<ItemBoundary> getAllByLocation(String userSpace, String userEmail, double lat, double lng, double distance, int size, int page);
 	
+	public List<ItemBoundary> getAllByTypeAndCreatedBy(String userId, String type, int size, int page);
+	
+	public List<ItemBoundary> getAllJoinedMeetings(String userId, String itemId, int size, int page);
+	
 }

@@ -22,9 +22,10 @@ public class ItemBoundary {
 
 	}
 
-	public ItemBoundary(String type, String name, Map<String, Object> itemAttributes) {
+	public ItemBoundary(String type, String name, double lat, double lng, Map<String, Object> itemAttributes) {
 		this.type = type;
 		this.name = name;
+		this.location = new Location(lat, lng);
 		this.active = true;
 		this.itemAttributes = itemAttributes;
 	}

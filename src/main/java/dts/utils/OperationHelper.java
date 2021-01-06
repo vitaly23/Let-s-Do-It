@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import constants.Constants;
+import constants.TraineeAttributes;
 import dts.data.ItemEntity;
 import dts.data.OperationEntity;
 import dts.data.UserEntity;
@@ -54,4 +55,30 @@ public class OperationHelper {
 
 		}
 	}
+
+	public int[] getPageAndSize(Map<String, Object> operationAttributes) {
+		int page, size;
+		if (operationAttributes == null) {
+			page = 0;
+			size = 10;
+		} else {
+			Object optionalPage = operationAttributes.get(Constants.PAGE);
+			Object optionalSize = operationAttributes.get(Constants.SIZE);
+			try {
+				page = (optionalPage == null) ? 0 : (int) optionalPage;
+				size = (optionalSize == null) ? 10 : (int) optionalSize;
+			} catch (ClassCastException e) {
+				throw new InvalidOperationException(Constants.PAGE + " and " + Constants.SIZE + " must be an int");
+			}
+		}
+		return new int[] { page, size };
+	}
+	
+	public Object[] getNameAndLatAndLng(Map<String, Object> operationAttributes) {
+		String itemName = (String) operationAttributes.remove(TraineeAttributes.NAME);
+		double lat = Double.parseDouble((String) operationAttributes.remove(TraineeAttributes.LAT));
+		double lng = Double.parseDouble((String) operationAttributes.remove(TraineeAttributes.LNG));
+		return new Object[] { itemName, lat, lng };
+	}
+
 }

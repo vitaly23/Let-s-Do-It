@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import boundaries.OperationBoundary;
 import boundaries.UserBoundary;
+import constants.Constants;
 import dts.logic.EnhancedItemsService;
 import dts.logic.OperationsService;
 import dts.logic.UsersService;
@@ -65,8 +66,8 @@ public class AdminController {
 	public UserBoundary[] exportAllUsers(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail,
-			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
 		List<UserBoundary> listUser = this.usersService.getAllUsers(adminSpace, adminEmail, size, page);
 		UserBoundary[] array = new UserBoundary[listUser.size()];
 		listUser.toArray(array);
@@ -80,8 +81,8 @@ public class AdminController {
 	public OperationBoundary[] exportAllOperations(
 			@PathVariable("adminSpace") String adminSpace,
 			@PathVariable("adminEmail") String adminEmail,
-			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
 		List<OperationBoundary> listBoundary = this.operationsService.getAllOperations(adminSpace, adminEmail, size,
 				page);
 		OperationBoundary[] array = new OperationBoundary[listBoundary.size()];

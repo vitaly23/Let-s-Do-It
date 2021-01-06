@@ -59,10 +59,16 @@ public interface ItemDao extends PagingAndSortingRepository<ItemEntity, String> 
 
 	public Optional<ItemEntity> findByActiveTrueAndItemId(
 			@Param("itemId") String itemId);
-
-	public Optional<ItemEntity> findByActiveTrueAndTypeAndCreatedBy(
+	
+	public List<ItemEntity> findAllByActiveTrueAndTypeAndCreatedBy(
 			@Param("type") String type,
-			@Param("createdBy") String createdBy);
+			@Param("createdBy") String createdBy,
+			Pageable pageable);
+
+	public List<ItemEntity> findAllByActiveTrueAndCreatedByNotAndItemChildren_itemId(
+			@Param("createdBy") String createdBy,
+			@Param("itemId") String itemId,
+			Pageable pageable);
 
 	public List<ItemEntity> findAllByActiveTrue(
 			Pageable pageable);

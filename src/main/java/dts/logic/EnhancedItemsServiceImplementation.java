@@ -101,7 +101,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException(
-					"User: " + existingUser.getUserId() + " has insufficient privileges to get all items");
+					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Items");
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException(
-					"User: " + existingUser.getUserId() + " has insufficient privileges to get all item's children");
+					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Item's children");
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException(
-					"User: " + existingUser.getUserId() + " has insufficient privileges to get all item's parents");
+					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Item's parents");
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException("User: " + existingUser.getUserId()
-					+ " has insufficient privileges to get all items by name pattern");
+					+ " has insufficient privileges to get all Items by name pattern");
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException(
-					"User: " + existingUser.getUserId() + " has insufficient privileges to get all items by type");
+					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Items by type");
 	}
 
 	@Override
@@ -239,7 +239,28 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 		else
 			throw new RoleViolationException(
-					"User: " + existingUser.getUserId() + " has insufficient privileges to get all items by location");
+					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Items by location");
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ItemBoundary> getAllByTypeAndCreatedBy(String userId, String type, int size, int page) {
+		Pageable pageRequest = PageRequest.of(page, size, Direction.DESC, "createdTimestamp", "itemId");
+		return StreamSupport
+				.stream(this.itemDao.findAllByActiveTrueAndTypeAndCreatedBy(type, userId, pageRequest).spliterator(),
+						false)
+				.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ItemBoundary> getAllJoinedMeetings(String userId, String itemId, int size, int page) {
+		Pageable pageRequest = PageRequest.of(page, size, Direction.DESC, "createdTimestamp", "itemId");
+		return StreamSupport
+				.stream(this.itemDao
+						.findAllByActiveTrueAndCreatedByNotAndItemChildren_itemId(userId, itemId, pageRequest)
+						.spliterator(), false)
+				.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
 	}
 
 }

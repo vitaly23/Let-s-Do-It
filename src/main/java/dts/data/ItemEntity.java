@@ -1,6 +1,7 @@
 package dts.data;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -28,7 +29,8 @@ public class ItemEntity {
 	private Set<ItemEntity> itemChildren;
 	
 	public ItemEntity() {
-		
+		this.itemParents = new HashSet<>();
+		this.itemChildren = new HashSet<>();
 	}
 
 	public ItemEntity(String itemId, String type, String name, boolean active, Date createdTimestamp,

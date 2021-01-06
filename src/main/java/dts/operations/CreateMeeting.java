@@ -1,6 +1,5 @@
 package dts.operations;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -13,8 +12,8 @@ import boundaries.ItemBoundary;
 import boundaries.OperationBoundary;
 
 import constants.ItemTypes;
+import constants.MeetingAttributes;
 import constants.OperationTypes;
-import constants.TraineeAttributes;
 
 import dts.Application;
 import dts.data.UserEntity;
@@ -23,12 +22,10 @@ import dts.logic.EnhancedItemsService;
 import dts.utils.OperationHelper;
 import dts.utils.UserHelper;
 
-import exceptions.TraineeAlreadyExistsException;
-
 import models.users.UserId;
 
-@Component(OperationTypes.CREATE_TRAINEE)
-public class CreateTrainee implements Operations {
+@Component(OperationTypes.CREATE_MEETING)
+public class CreateMeeting implements Operations {
 
 	private Log log = LogFactory.getLog(Application.class);
 	private EnhancedItemsService itemsService;
@@ -36,7 +33,7 @@ public class CreateTrainee implements Operations {
 	private UserHelper userHelper;
 
 	@Autowired
-	public CreateTrainee(EnhancedItemsService itemsService, OperationHelper operationHelper, UserHelper userHelper) {
+	public CreateMeeting(EnhancedItemsService itemsService, OperationHelper operationHelper, UserHelper userHelper) {
 		this.itemsService = itemsService;
 		this.operationHelper = operationHelper;
 		this.userHelper = userHelper;
@@ -46,29 +43,26 @@ public class CreateTrainee implements Operations {
 	@Transactional
 	public Object invokeOperation(OperationBoundary operationBoundary) {
 		this.operationHelper.ValidateOperationAttributes(operationBoundary.getOperationAttributes(),
-				TraineeAttributes.ALL_TRAINEE_ATTRIBUTES);
+				MeetingAttributes.ALL_MEETING_ATTRIBUTES);
 		UserId userId = operationBoundary.getInvokedBy().getUserId();
 		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(userId.getSpace(), userId.getEmail(),
 				UserRole.PLAYER);
-		this.ValidateNoSuchTrainee(userId.toString());
 		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Manager role");
 		this.userHelper.ChangeUserRole(existingUser, UserRole.MANAGER);
 		Map<String, Object> operationAttributes = operationBoundary.getOperationAttributes();
 		Object[] args = this.operationHelper.getNameAndLatAndLng(operationAttributes);
-		ItemBoundary traineeBoundary = new ItemBoundary(ItemTypes.TRAINEE, (String) args[0], (double) args[1],
+		ItemBoundary meetingBoundary = new ItemBoundary(ItemTypes.MEETING, (String) args[0], (double) args[1],
 				(double) args[2], operationAttributes);
-		this.log.debug("Creating new digital item of type " + ItemTypes.TRAINEE);
-		ItemBoundary trainee = this.itemsService.create(userId.getSpace(), userId.getEmail(), traineeBoundary);
+		this.log.debug("Creating new digital item of type " + ItemTypes.MEETING);
+		ItemBoundary meeting = this.itemsService.create(userId.getSpace(), userId.getEmail(), meetingBoundary);
+		ItemBoundary traineeBoundary = this.itemsService
+				.getAllByTypeAndCreatedBy(userId.toString(), ItemTypes.TRAINEE, 1, 0).get(0);
+		this.log.debug("Binding " + traineeBoundary.getName() + " to meeting " + meeting.getName());
+		this.itemsService.bindChild(userId.getSpace(), userId.getEmail(), meeting.getItemId().getSpace(),
+				meeting.getItemId().getId(), traineeBoundary.getItemId());
 		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Player role");
 		this.userHelper.ChangeUserRole(existingUser, UserRole.PLAYER);
-		return trainee;
+		return meeting;
 	}
 
-	@Transactional(readOnly = true)
-	public void ValidateNoSuchTrainee(String userId) {
-		List<ItemBoundary> traineeList = this.itemsService.getAllByTypeAndCreatedBy(userId, ItemTypes.TRAINEE, 1, 0);
-		if (!traineeList.isEmpty()) {
-			throw new TraineeAlreadyExistsException("Trainee with userId: " + userId + " already exists");
-		}
-	}
 }
