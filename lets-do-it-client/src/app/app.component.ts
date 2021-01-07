@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { User } from './core/services/user-information/user';
 import { Router } from '@angular/router';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,14 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'lets-do-it-client';
   public loggedUser: User;
+  @ViewChild('drawer') drawer: MatDrawer;
+  public showFiller = false;
 
   constructor(private router: Router) {
 
   }
-  public userLogged($event:User){
-    this.loggedUser = $event
-    this.router.navigate(["/homepage"]);
+
+  public toggle(){
+    this.drawer.toggle()
   }
 }

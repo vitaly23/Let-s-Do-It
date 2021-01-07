@@ -13,10 +13,16 @@ export class UserInformationService {
   constructor(private httpWrapper: HttpWrapperService) { }
 
   public login(userMail: any) : Observable<User>{
-    return this.httpWrapper.getWithQueryParams(
-      `http://localhost:8080/dts/users/login/default_space_name/#{0}#`, userMail.email)
-      .pipe(map((res : User) => {
-        return res;
+    return this.httpWrapper.getWithParams(
+      `http://localhost:8080/dts/users/login/default_space_name/#{0}#`, [userMail.email])
+      .pipe(map((res : any) => {
+        let user: User = {
+          avatar: res.avatar,
+          userName: res.username,
+          userId: res.userId,
+          role: res.role
+        } as User;
+        return user;
       }));
   }
 
@@ -25,7 +31,7 @@ export class UserInformationService {
       `http://localhost:8080/dts/users`, 
       { userName: user.userName,
         avatar: user.avatar,
-        email: user.email,
+        userId: user.userId,
         role: UserRole.PLAYER      
       } as User).pipe(map((res : User) => {
         return res;

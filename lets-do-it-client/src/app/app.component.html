@@ -1,3 +1,20 @@
 <!-- <app-homepage></app-homepage> -->
-<app-login (userIsLogged)="userLogged($event)"></app-login>
+<div class="container">
+    <mat-drawer-container class="drawer-container">
+        <div>
+            <mat-drawer #drawer mode="side" autosize>
+                <p>Auto-resizing sidenav</p>
+                <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+                <button (click)="showFiller = !showFiller" mat-raised-button>
+                    Toggle extra text
+                </button>
+            </mat-drawer>
+        </div>
+        <div>
+            <app-header (toggleDrawer)="toggle()"></app-header>
+        </div>
+        <!-- <app-login></app-login> -->
+        <div *ngIf="loggedUser">Welcome {{loggedUser.userId.email}} </div>
+    </mat-drawer-container>
+</div>
 <router-outlet></router-outlet>

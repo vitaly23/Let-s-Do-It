@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  @Output() userIsLogged = new EventEmitter<User>();
+  // @Output() userIsLogged = new EventEmitter<User>();
   public loginForm: FormGroup;
   submitted = false;
   private loggedUser: User;
@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       takeUntil(this.ngOnUnsubscribe$)
     ).subscribe(user =>{
       this.loggedUser = user;
-      this.userIsLogged.emit(user);
+      this.router.navigate([`/homepage/${this.loggedUser.userName}`]);
+      // this.userIsLogged.emit(user);
     }, error => {
       console.log(error.message);
       alert(error.message);

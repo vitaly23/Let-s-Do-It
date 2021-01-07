@@ -7,22 +7,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderModule } from '../header/header.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MapComponent } from './map/map.component';
 import { MapModule } from './map/map.module';
 import { AgmCoreModule } from '@agm/core';
 import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
-  declarations: [HomepageComponent, LoginComponent, MapComponent],
+  declarations: [HomepageComponent],
   imports: [
     CommonModule,
     HeaderModule,
     MatIconModule,
     BrowserModule,
+    MapModule,
     MatCardModule,
     MatButtonModule,
     FormsModule,
@@ -30,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatSidenavModule,
     MatInputModule,
-    MapModule,
     AgmCoreModule.forRoot({
       apiKey: ''
     }),

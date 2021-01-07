@@ -1,32 +1,16 @@
 <div class="container">
   <div>
-    <app-header (toggleDrawer)="toggle()"></app-header>
-  </div>
- 
-  <mat-drawer-container class="drawer-container">
-    <div>
-      <mat-drawer #drawer mode="side" autosize>
-        <p>Auto-resizing sidenav</p>
-        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-        <button (click)="showFiller = !showFiller" mat-raised-button>
-          Toggle extra text
-        </button>
-      </mat-drawer>
-    </div>
-    <div>
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>I need title</mat-card-title>
-          <mat-card-subtitle>And another one</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div *ngIf="loggedUser">Welcome {{loggedUser.userId.email}} </div>
-        </mat-card-content>
-        <mat-card-actions>
+    <!-- <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>I need title</mat-card-title>
+        <mat-card-subtitle>And another one</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions>
 
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </mat-drawer-container>
+      </mat-card-actions>
+    </mat-card> -->
+  </div>
 </div>
-<app-map></app-map>
+<!-- <app-map></app-map> -->

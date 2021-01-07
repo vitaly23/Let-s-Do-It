@@ -22,7 +22,7 @@ export class HttpWrapperService {
     let fixedUrl = url;
     for (let index = 0; index < params.length; index++) {
       const param = params[index];
-      fixedUrl = fixedUrl.replace(`#${index}#`, param);
+      fixedUrl = fixedUrl.replace(`#{${index}}#`, param);
     }
 
     return fixedUrl;
