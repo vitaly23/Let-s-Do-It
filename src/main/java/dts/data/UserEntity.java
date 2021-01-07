@@ -1,13 +1,18 @@
 package dts.data;
 
-import javax.persistence.Entity;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+
+//import javax.persistence.Entity;
+//import javax.persistence.Table;
+//import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "USERS")
+//@Entity
+//@Table(name = "USERS")
+@Document
 public class UserEntity {
 
 	private String userId;

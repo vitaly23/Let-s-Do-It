@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-
 import dts.data.ItemEntity;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface ItemDao extends PagingAndSortingRepository<ItemEntity, String> {
 
 	public List<ItemEntity> findAllByItemChildren_itemId(

@@ -1,19 +1,28 @@
 package dts.data;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+//import javax.persistence.ManyToMany;
+//import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "ITEMS")
+//import javax.persistence.ManyToMany;
+
+
+//@Entity
+//@Table(name = "ITEMS")
+@Document
 public class ItemEntity {
 
 	private String itemId;
@@ -25,7 +34,9 @@ public class ItemEntity {
 	private double lat;
 	private double lng;
 	private String itemAttributes;
+	@DBRef(lazy = true)
 	private Set<ItemEntity> itemParents;
+	@DBRef(lazy = true)
 	private Set<ItemEntity> itemChildren;
 	
 	public ItemEntity() {
@@ -46,8 +57,8 @@ public class ItemEntity {
 		this.lat = lat;
 		this.lng = lng;
 		this.itemAttributes = itemAttributes;
-		this.itemParents = itemParents;
-		this.itemChildren = itemChildren;
+		this.itemParents = new HashSet<>();
+		this.itemChildren = new HashSet<>();
 	}
 
 	@Id
@@ -124,17 +135,17 @@ public class ItemEntity {
 	public void setItemAttributes(String itemAttributes) {
 		this.itemAttributes = itemAttributes;
 	}
-	
-	@ManyToMany
+
+	//@ManyToMany
 	public Set<ItemEntity> getItemParents() {
 		return itemParents;
 	}
-	
+
 	public void setItemParents(Set<ItemEntity> itemParents) {
 		this.itemParents = itemParents;
 	}
-	
-	@ManyToMany(mappedBy = "itemParents")
+
+	//@ManyToMany(mappedBy = "itemParents")
 	public Set<ItemEntity> getItemChildren() {
 		return itemChildren;
 	}
@@ -151,4 +162,16 @@ public class ItemEntity {
 		this.itemParents.add(parent);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ItemEntity that = (ItemEntity) o;
+		return itemId.equals(that.itemId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(itemId);
+	}
 }

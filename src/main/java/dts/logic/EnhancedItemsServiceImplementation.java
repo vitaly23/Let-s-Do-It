@@ -55,9 +55,11 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 		this.itemHelper.ValidateItemData(newItemEntity);
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
-		Long numricId = idGeneratorEntity.getId();
-		this.idGeneratorDao.deleteById(numricId);
-		String strId = "" + numricId;
+		//idGeneratorEntity for h2
+		//Long newId = idGeneratorEntity.getId();
+		//this.idGeneratorDao.deleteById(newId);
+		//String strId = "" + newId;
+		String strId = idGeneratorEntity.getId();
 		newItemEntity.setCreatedTimestamp(new Date());
 		newItemEntity.setItemId(new ItemId(managerSpace, strId).toString());
 		newItemEntity.setCreatedBy(existingUser.getUserId());
@@ -142,21 +144,24 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 			int size, int page) {
 		UserEntity existingUser = this.userHelper.getSpecificUser(userSpace, userEmail);
 		Pageable pageRequest = PageRequest.of(page, size, Direction.DESC, "createdTimestamp", "itemId");
-		if (existingUser.getRole() == UserRole.MANAGER)
+		if (existingUser.getRole() == UserRole.MANAGER) {
 			return StreamSupport
 					.stream(this.itemDao
 							.findAllByItemParents_itemId(new ItemId(itemSpace, itemId).toString(), pageRequest)
 							.spliterator(), false) // Iterable to Stream<ItemEntity>,
 					.map(entity -> this.itemConverter.toBoundary(entity)) // Stream<ItemBoundary>
 					.collect(Collectors.toList()); // List<ItemBoundary>
-		else if (existingUser.getRole() == UserRole.PLAYER)
+		}
+		else if (existingUser.getRole() == UserRole.PLAYER) {
 			return StreamSupport
 					.stream(this.itemDao.findAllByActiveTrueAndItemParents_itemId(
 							new ItemId(itemSpace, itemId).toString(), pageRequest).spliterator(), false)
 					.map(entity -> this.itemConverter.toBoundary(entity)).collect(Collectors.toList());
-		else
+		}
+		else {
 			throw new RoleViolationException(
 					"User: " + existingUser.getUserId() + " has insufficient privileges to get all Item's children");
+		}
 	}
 
 	@Override
@@ -268,7 +273,9 @@ public class EnhancedItemsServiceImplementation implements EnhancedItemsService 
 	public List<ItemBoundary> getAllMeetingsByLocationAndNotCreatedByAndTypeOfSport(String userId, double lat,
 			double lng, double distance, String typeOfSport, int size, int page) {
 		Pageable pageRequest = PageRequest.of(page, size, Direction.DESC, "createdTimestamp", "itemId");
-		String pattern = "%\"typeOfSport\":\"" + typeOfSport + "\"%";
+		// for H2 db
+		// String pattern = "%\"typeOfSport\":\"" + typeOfSport + "\"%";
+		String pattern = "*\"typeOfSport\":\"" + typeOfSport + "\"*";
 		return StreamSupport.stream(this.itemDao
 				.findAllByActiveTrueAndCreatedByNotAndLatBetweenAndLngBetweenAndItemAttributesLikeIgnoreCase(userId,
 						lat - distance, lat + distance, lng - distance, lng + distance, pattern, pageRequest)

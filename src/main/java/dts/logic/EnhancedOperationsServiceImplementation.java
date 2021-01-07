@@ -70,9 +70,11 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 		this.operationHelper.ValidateOpertaionData(operationEntity);
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
-		Long newId = idGeneratorEntity.getId();
-		this.idGeneratorDao.deleteById(newId);
-		String strId = "" + newId;
+		//idGeneratorEntity for h2
+		//Long newId = idGeneratorEntity.getId();
+		//this.idGeneratorDao.deleteById(newId);
+		//String strId = "" + newId;
+		String strId = idGeneratorEntity.getId();
 		operationEntity.setOperationId(new OperationId(this.spaceName, strId).toString());
 		operationEntity.setCreatedTimestamp(new Date());
 		this.operationDao.save(operationEntity);

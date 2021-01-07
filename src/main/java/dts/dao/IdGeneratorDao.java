@@ -3,7 +3,9 @@ package dts.dao;
 import org.springframework.data.repository.CrudRepository;
 
 import dts.data.IdGeneratorEntity;
+import org.springframework.stereotype.Repository;
 
-public interface IdGeneratorDao extends CrudRepository<IdGeneratorEntity, Long> {
+@Repository
+public interface IdGeneratorDao extends CrudRepository<IdGeneratorEntity, String> {
 
 }
