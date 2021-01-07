@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MapComponent } from './map/map.component';
 import { MapModule } from './map/map.module';
 import { AgmCoreModule } from '@agm/core';
-
+import { MeetingModule } from '../meeting/meeting.module';
 
 @NgModule({
   declarations: [HomepageComponent, LoginComponent, MapComponent],
@@ -32,6 +32,7 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: ''
     }),
+    MeetingModule,
   ],
   exports:[HomepageComponent]
 })
