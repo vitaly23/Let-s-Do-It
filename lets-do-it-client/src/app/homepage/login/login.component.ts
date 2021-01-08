@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadUserInformationsAction } from 'src/app/user-information/state/user-information.actions';
 import { User } from 'src/app/core/services/user-information/user';
-import { Store } from '@ngrx/store';
+import { UserInformationService } from 'src/app/core/services/user-information/user-information.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+
+  // @Output() userIsLogged = new EventEmitter<User>();
   public loginForm: FormGroup;
   submitted = false;
+  private loggedUser: User;
+  private ngOnUnsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<{user: User}>,
-              private formBuilder: FormBuilder) { }
+
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private userInformationService: UserInformationService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -30,8 +38,25 @@ export class LoginComponent implements OnInit {
       alert("Invalid user");
       return;
     }
-      
-    this.store.dispatch(new LoadUserInformationsAction(this.loginForm.value));
+
+    this.userInformationService.login(this.loginForm.value).pipe(
+      takeUntil(this.ngOnUnsubscribe$)
+    ).subscribe(user => {
+      this.loggedUser = user;
+      this.router.navigate([`/homepage`]);
+    }, error => {
+      console.log(error.message);
+      alert(error.message);
+    })
+  }
+
+  createUser() {
+    this.router.navigate(["/register"]);
+  }
+
+  ngOnDestroy(): void {
+    this.ngOnUnsubscribe$.next();
+    this.ngOnUnsubscribe$.complete();
   }
 
 }

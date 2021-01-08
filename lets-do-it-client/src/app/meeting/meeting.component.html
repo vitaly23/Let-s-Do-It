@@ -1,0 +1,7 @@
+<h2>My Meetings</h2>
+<mat-selection-list [multiple]="false">
+    <mat-list-option (click)="meetingClick()" *ngFor="let meeting of this.meetings;">
+      {{meeting.name}}
+    </mat-list-option>
+</mat-selection-list>
+
