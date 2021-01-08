@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [MapComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
+  ],
+  exports: [MapComponent]
 })
 export class MapModule { }

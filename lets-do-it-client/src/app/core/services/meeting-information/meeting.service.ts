@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
-import { Dictionary } from '@ngrx/entity';
 import { Meeting } from './meeting';
 import { HttpWrapperService } from '../http-wrapper/http-wrapper.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,10 @@ export class MeetingService {
     ];
 
     return of(meetings);*/
-    return this._httpWrapperService.get(this.getMeetingUrl);
+    return this._httpWrapperService.getWithParams(this.getMeetingUrl,[])
+    .pipe(map((res: any[]) => {
+      return res;
+    }));
   }
 
   updateMeeting(meeting:Meeting): void{
