@@ -16,8 +16,8 @@ public class OperationController {
 	private OperationsService operationsService;
 
 	@Autowired
-	public OperationController(OperationsService operationService) {
-		this.operationsService = operationService;
+	public OperationController(OperationsService operationsService) {
+		this.operationsService = operationsService;
 	}
 
 	@RequestMapping(

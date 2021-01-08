@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import boundaries.ItemBoundary;
+import constants.ItemTypes;
 
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import dts.controllers.AdminController;
@@ -68,7 +69,7 @@ public class TestItem {
 		map.put("key1", 1);
 		this.itemBoundary.setItemAttributes( map);
 		this.itemBoundary.setLocation(new Location());
-		this.itemBoundary.setType("new type");
+		this.itemBoundary.setType(ItemTypes.TRAINEE);
 		this.itemBoundary.setName("first item");
 		this.itemBoundary.setItemId(new ItemId("space", "1"));
 		
@@ -78,7 +79,7 @@ public class TestItem {
 	public void testClearItem()  {
 		String itemSpace="spaceItem";
 		String userEmail="userEmail";
-		assertThat(this.itemRest.retrieveAllDigitalItems(itemSpace, userEmail)).hasSize(0);
+		assertThat(this.itemRest.retrieveAllDigitalItems(itemSpace, userEmail, 0, 10)).hasSize(0);
 	}
 	
 	//check if item was added and get item back
@@ -86,21 +87,21 @@ public class TestItem {
 	public void addedOneItem() {
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
 		//change to space name if needed
-		assertThat(this.itemRest.retrieveAllDigitalItems("userSpace", "userEmail@gmail.com")).hasSize(1);
+		assertThat(this.itemRest.retrieveAllDigitalItems("userSpace", "userEmail@gmail.com", 0, 10)).hasSize(1);
 	}
 	
 	//check if item delete
 	@Test
 	public void deleteAllItem() {
 		this.adminRest.deleteAllItems(this.adminSpace, this.adminEmail);
-		assertThat(this.itemRest.retrieveAllDigitalItems("", "")).hasSize(0);
+		assertThat(this.itemRest.retrieveAllDigitalItems("", "", 0 , 10)).hasSize(0);
 	}
 	
 	@Test
 	public void addAllItems() {
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
 		this.itemRest.createNewDigitalItem(this.itemBoundary, "", "ha@gmail.com");
-		assertThat(this.itemRest.retrieveAllDigitalItems("", "")).hasSize(2);	
+		assertThat(this.itemRest.retrieveAllDigitalItems("", "", 0, 10)).hasSize(2);	
 	}
 
 }

@@ -66,14 +66,14 @@ public class TestOperations {
 	
 	@Test
 	public void deleteAllOperation() {
-		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail)).hasSize(0);
+		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail, 0, 10)).hasSize(0);
 	}
 	
 	
 	@Test
 	public void addOneOperation() {
 		this.operationRest.invokeOpreation(operationBoundary);
-		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail)).hasSize(1);
+		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail, 0, 10)).hasSize(1);
 	}
 	
 	
@@ -81,7 +81,7 @@ public class TestOperations {
 	public void gelAllOperation() {
 		this.operationRest.invokeOpreation(operationBoundary);
 		this.operationRest.invokeOpreation(operationBoundary);
-		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail)).hasSize(2);
+		assertThat(this.adminRest.exportAllOperations(this.adminSpace, this.adminEmail, 0, 10)).hasSize(2);
 	}
 	
 	/*

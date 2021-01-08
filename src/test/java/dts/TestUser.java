@@ -61,13 +61,13 @@ public class TestUser {
 	
 	@Test
 	public void testClearUser()  {
-		assertThat(this.adminRest.exportAllUsers("", "")).hasSize(0);
+		assertThat(this.adminRest.exportAllUsers("", "", 0, 10)).hasSize(0);
 	}
 	
 	@Test
 	public void addUser() {
 		this.userRest.createNewUser(userBoundary);
-		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(1);
+		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL, 0, 10)).hasSize(1);
 		UserBoundary userBoundaryNew=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.USEREMAIL);
 		
 		assertEquals(userBoundaryNew.getAvatar(),userBoundary.getAvatar());
@@ -81,7 +81,7 @@ public class TestUser {
 	public void updateUser() {
 		//added user
 		this.userRest.createNewUser(userBoundary);
-		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(1);
+		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL, 0, 10)).hasSize(1);
 		UserBoundary userBoundaryNew=this.userRest.loginAndRetriveUserDetails(this.spaceName, this.USEREMAIL);
 		
 		//update user
@@ -103,7 +103,7 @@ public class TestUser {
 		userBoundary.setRole(UserRole.MANAGER);
 		userBoundary.setUsername("moshe");
 		this.userRest.createNewUser(userBoundary);
-		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL)).hasSize(2);
+		assertThat(this.adminRest.exportAllUsers(this.spaceName, this.USEREMAIL, 0, 10)).hasSize(2);
 	}
 	
 	@Test

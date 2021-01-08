@@ -9,11 +9,15 @@ public class NewUserDetailsBoundary {
 	private String avatar;
 
 	public NewUserDetailsBoundary() {
-		// default arguments
-		this.email = "demo@maildomain.com";
 		this.role = UserRole.PLAYER;
-		this.username = "Demo User";
-		this.avatar = "ooOO_()_OOoo";
+	}
+
+	public NewUserDetailsBoundary(String email, UserRole role, String username, String avatar) {
+		super();
+		this.email = email;
+		this.role = role;
+		this.username = username;
+		this.avatar = avatar;
 	}
 
 	public String getEmail() {

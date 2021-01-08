@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MapModule } from './map/map.module';
 import { AgmCoreModule } from '@agm/core';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MeetingModule } from '../meeting/meeting.module';
 
 @NgModule({
   declarations: [HomepageComponent],
@@ -32,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
     AgmCoreModule.forRoot({
       apiKey: ''
     }),
+    MeetingModule,
   ],
   exports:[HomepageComponent]
 })

@@ -9,18 +9,18 @@ public class Location {
 	public Location() {
 
 	}
-	
+
 	public Location(double lat, double lng) {
 		this.lat = lat;
 		this.lng = lng;
 	}
 
-	public double getLan() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLan(double lan) {
-		this.lat = lan;
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
 
 	public double getLng() {
