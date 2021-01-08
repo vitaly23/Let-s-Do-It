@@ -6,16 +6,11 @@ import { AgmCoreModule } from '@agm/core';
 import { MatCardModule } from '@angular/material/card';
 
 const routes: Routes = [
-  { 
-    path: '',   
-    redirectTo: '/login',
-    pathMatch: 'full',
-  },
   {
-    path: ':user',
-    component: HomepageComponent, 
-    pathMatch: 'full'
-  }
+    path: '',
+    pathMatch: 'full',
+    component: HomepageComponent
+  },
 ];
 
 @NgModule({

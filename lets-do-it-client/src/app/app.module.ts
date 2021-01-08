@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import { MeetingService } from './core/services/meeting-information/meeting.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './homepage/login/login.module';
-import { CoreModule } from './core/core.module';
 import { RegistrationModule } from './registration/registration.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -18,6 +17,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { HomepageRoutingModule } from './homepage/homepage-routing.module';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,14 +34,18 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    CoreModule,
     HeaderModule,
     LoginModule,
     RegistrationModule,
-    HomepageRoutingModule,
     AppRoutingModule,
+    HomepageRoutingModule,
     CommonModule,
     HttpClientModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [MeetingService],
   bootstrap: [AppComponent]

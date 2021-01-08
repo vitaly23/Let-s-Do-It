@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private userInformationService: UserInformationService) { }
+    private router: Router,
+    private userInformationService: UserInformationService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -38,20 +38,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       alert("Invalid user");
       return;
     }
-      
+
     this.userInformationService.login(this.loginForm.value).pipe(
       takeUntil(this.ngOnUnsubscribe$)
-    ).subscribe(user =>{
+    ).subscribe(user => {
       this.loggedUser = user;
-      this.router.navigate([`/homepage/${this.loggedUser.userName}`]);
-      // this.userIsLogged.emit(user);
+      this.router.navigate([`/homepage`]);
     }, error => {
       console.log(error.message);
       alert(error.message);
     })
   }
 
-  createUser(){
+  createUser() {
     this.router.navigate(["/register"]);
   }
 

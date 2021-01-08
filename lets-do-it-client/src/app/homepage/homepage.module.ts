@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +19,6 @@ import { MeetingModule } from '../meeting/meeting.module';
     CommonModule,
     HeaderModule,
     MatIconModule,
-    BrowserModule,
     MapModule,
     MatCardModule,
     MatButtonModule,
@@ -34,6 +32,6 @@ import { MeetingModule } from '../meeting/meeting.module';
     }),
     MeetingModule,
   ],
-  exports:[HomepageComponent]
+  exports: [HomepageComponent]
 })
 export class HomepageModule { }
