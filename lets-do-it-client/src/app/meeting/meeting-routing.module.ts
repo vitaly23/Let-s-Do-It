@@ -5,8 +5,7 @@ import { MeetingsComponent } from './meetings.component';
 
 const routes: Routes = [
   {
-    path: 'meetings',
-    pathMatch: 'full',
+    path: '',
     component: MeetingsComponent
   },
 ];

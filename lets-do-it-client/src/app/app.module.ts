@@ -15,7 +15,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
-import { HomepageRoutingModule } from './homepage/homepage-routing.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
@@ -40,14 +39,16 @@ import { MatStepperModule } from '@angular/material/stepper';
     LoginModule,
     RegistrationModule,
     AppRoutingModule,
-    HomepageRoutingModule,
     CommonModule,
     HttpClientModule,
     MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   providers: [MeetingService],
   bootstrap: [AppComponent]

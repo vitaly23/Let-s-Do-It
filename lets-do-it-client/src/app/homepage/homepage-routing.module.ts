@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: HomepageComponent
   },
 ];
@@ -20,7 +19,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     AgmCoreModule.forRoot({
       apiKey: ''
-    }),],
+    })],
   exports: [RouterModule],
 })
 export class HomepageRoutingModule { }

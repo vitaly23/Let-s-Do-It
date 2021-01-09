@@ -6,7 +6,6 @@ import { TraineeDetailsComponent } from './trainee-details.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: TraineeDetailsComponent
   },
 ];
