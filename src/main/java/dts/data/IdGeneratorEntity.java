@@ -1,24 +1,29 @@
 package dts.data;
 
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+
+//@Entity
+@Document
 public class IdGeneratorEntity {
-	private Long id;
+
+	private String id;
 
 	public IdGeneratorEntity() {
 
 	}
 
-	@Id
 	@GeneratedValue
-	public Long getId() {
+	@Id
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 }

@@ -66,7 +66,6 @@ public class OperationConverter {
 		if (operationEntity.getOperationAttributes() != null) {
 			boundary.setOperationAttributes(this.utils.toBoundaryAsMap(operationEntity.getOperationAttributes()));
 		}
-
 		return boundary;
 	}
 }

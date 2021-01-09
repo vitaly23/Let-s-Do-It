@@ -24,13 +24,13 @@ public class ItemHelper {
 		this.itemDao = itemDao;
 	}
 
-	public void ValidateItemFound(Optional<ItemEntity> itemEntity, String itemId) {
+	public void validateItemFound(Optional<ItemEntity> itemEntity, String itemId) {
 		if (!itemEntity.isPresent()) {
 			throw new ItemNotFoundException("Item with id: " + itemId + " does not exist");
 		}
 	}
 
-	public void ValidateItemData(ItemEntity itemEntity) {
+	public void validateItemData(ItemEntity itemEntity) {
 		if (itemEntity.getType() == null || itemEntity.getType().isEmpty() || itemEntity.getName() == null
 				|| itemEntity.getName().isEmpty()) {
 			throw new InvalidItemException("Item type or name can not be null or empty");
@@ -40,7 +40,7 @@ public class ItemHelper {
 	@Transactional(readOnly = true)
 	public ItemEntity getSpecificItem(String itemSpace, String itemId) {
 		Optional<ItemEntity> optionalItem = this.itemDao.findById(new ItemId(itemSpace, itemId).toString());
-		this.ValidateItemFound(optionalItem, itemId);
+		this.validateItemFound(optionalItem, itemId);
 		return optionalItem.get();
 	}
 
@@ -48,7 +48,7 @@ public class ItemHelper {
 	public ItemEntity getActiveSpecificItem(String itemSpace, String itemId) {
 		Optional<ItemEntity> optionalItem = this.itemDao
 				.findByActiveTrueAndItemId(new ItemId(itemSpace, itemId).toString());
-		this.ValidateItemFound(optionalItem, itemId);
+		this.validateItemFound(optionalItem, itemId);
 		return optionalItem.get();
 	}
 
