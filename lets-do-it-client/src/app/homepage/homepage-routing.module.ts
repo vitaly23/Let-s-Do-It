@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './homepage.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    CommonModule,
     MatCardModule,
     RouterModule.forChild(routes),
     AgmCoreModule.forRoot({

@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'map', pathMatch: 'full', canActivate: [LoginGuardService],
     loadChildren: () => import('./homepage/map/map.module').then(m => m.MapModule)
+  },
+  {
+    path: 'trainee-details', pathMatch: 'full', canActivate: [LoginGuardService],
+    loadChildren: () => import('./trainee-details/trainee-details.module').then(m => m.TraineeDetailsModule)
   }
 ];
 
