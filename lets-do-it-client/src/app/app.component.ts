@@ -12,7 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   fillerNav: { title: string, route: string }[] = [
-    { title: 'meetings', route: '/meetings' },
+    { title: 'Meetings', route: '/meetings' },
+    { title: 'Trainee details', route: '/trainee-details' }
     // { title: 'map', route: '/map' }
   ]
   loggedUser$: Observable<User | void>;
