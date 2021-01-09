@@ -31,6 +31,7 @@ public class GetCreatedMeetings implements Operations {
 	public Object invokeOperation(OperationBoundary operationBoundary) {
 		int[] args = this.operationHelper.getPageAndSize(operationBoundary.getOperationAttributes());
 		UserId userId = operationBoundary.getInvokedBy().getUserId();
-		return this.itemsService.getAllByTypeAndCreatedBy(userId.toString(), ItemTypes.MEETING, args[1], args[0]);
+		return this.itemsService.getAllActiveByTypeAndCreatedBy(userId.toString(), ItemTypes.MEETING, args[1], args[0]);
 	}
+
 }

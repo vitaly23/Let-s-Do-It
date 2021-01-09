@@ -8,8 +8,8 @@ import org.springframework.data.annotation.Id;
 
 //import javax.persistence.Entity;
 //import javax.persistence.Id;
-import javax.persistence.Lob;
 //import javax.persistence.Table;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,7 +17,6 @@ import javax.persistence.TemporalType;
 //@Table(name = "OPERATIONS")
 @Document
 public class OperationEntity {
-
 
 	private String operationId;
 	private String type;
@@ -65,7 +64,7 @@ public class OperationEntity {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedTimestamp() {
 		return createdTimestamp;
@@ -82,7 +81,7 @@ public class OperationEntity {
 	public void setInvokedBy(String invokedBy) {
 		this.invokedBy = invokedBy;
 	}
-	
+
 	@Lob
 	public String getOperationAttributes() {
 		return operationAttributes;

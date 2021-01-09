@@ -15,17 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dts.converter.OperationConverter;
-
 import dts.dao.IdGeneratorDao;
 import dts.dao.OperationDao;
-
 import dts.data.IdGeneratorEntity;
 import dts.data.OperationEntity;
 import dts.data.UserEntity;
 import dts.data.UserRole;
-
 import dts.operations.Operations;
-
 import dts.utils.OperationHelper;
 import dts.utils.UserHelper;
 
@@ -67,10 +63,10 @@ public class EnhancedOperationsServiceImplementation implements OperationsServic
 	@Transactional
 	public Object invokeOpreation(OperationBoundary operation) {
 		OperationEntity operationEntity = this.operationConverter.toEntity(operation);
-		this.operationHelper.ValidateOpertaionData(operationEntity);
+		this.operationHelper.validateOpertaionData(operationEntity);
 		IdGeneratorEntity idGeneratorEntity = new IdGeneratorEntity();
 		idGeneratorEntity = this.idGeneratorDao.save(idGeneratorEntity);
-		//idGeneratorEntity for h2
+		//idGeneratorEntity for h2 database
 		//Long newId = idGeneratorEntity.getId();
 		//this.idGeneratorDao.deleteById(newId);
 		//String strId = "" + newId;

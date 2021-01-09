@@ -1,8 +1,8 @@
 package dts.data;
 
 //import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
 //import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
@@ -17,7 +17,7 @@ public class IdGeneratorEntity {
 
 	}
 
-	//@GeneratedValue
+	@GeneratedValue
 	@Id
 	public String getId() {
 		return id;

@@ -2,23 +2,20 @@ package dts.data;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.springframework.data.annotation.Id;
 //import javax.persistence.Entity;
 //import javax.persistence.Id;
-import javax.persistence.Lob;
 //import javax.persistence.ManyToMany;
 //import javax.persistence.Table;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-//import javax.persistence.ManyToMany;
-
 
 //@Entity
 //@Table(name = "ITEMS")
@@ -38,15 +35,14 @@ public class ItemEntity {
 	private Set<ItemEntity> itemParents;
 	@DBRef(lazy = true)
 	private Set<ItemEntity> itemChildren;
-	
+
 	public ItemEntity() {
 		this.itemParents = new HashSet<>();
 		this.itemChildren = new HashSet<>();
 	}
 
-	public ItemEntity(String itemId, String type, String name, boolean active, Date createdTimestamp,
-			String createdBy, double lat, double lng, String itemAttributes, Set<ItemEntity> itemParents,
-			Set<ItemEntity> itemChildren) {
+	public ItemEntity(String itemId, String type, String name, boolean active, Date createdTimestamp, String createdBy,
+			double lat, double lng, String itemAttributes, Set<ItemEntity> itemParents, Set<ItemEntity> itemChildren) {
 		super();
 		this.itemId = itemId;
 		this.type = type;
@@ -57,8 +53,8 @@ public class ItemEntity {
 		this.lat = lat;
 		this.lng = lng;
 		this.itemAttributes = itemAttributes;
-		this.itemParents = new HashSet<>();
-		this.itemChildren = new HashSet<>();
+		this.itemParents = itemParents;
+		this.itemChildren = itemChildren;
 	}
 
 	@Id
@@ -110,7 +106,7 @@ public class ItemEntity {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
+
 	public double getLat() {
 		return lat;
 	}
@@ -136,7 +132,7 @@ public class ItemEntity {
 		this.itemAttributes = itemAttributes;
 	}
 
-	//@ManyToMany
+	// @ManyToMany
 	public Set<ItemEntity> getItemParents() {
 		return itemParents;
 	}
@@ -145,7 +141,7 @@ public class ItemEntity {
 		this.itemParents = itemParents;
 	}
 
-	//@ManyToMany(mappedBy = "itemParents")
+	// @ManyToMany(mappedBy = "itemParents")
 	public Set<ItemEntity> getItemChildren() {
 		return itemChildren;
 	}
@@ -153,19 +149,29 @@ public class ItemEntity {
 	public void setItemChildren(Set<ItemEntity> itemChildren) {
 		this.itemChildren = itemChildren;
 	}
-	
-	public void addChild(ItemEntity child) {	
+
+	public void addChild(ItemEntity child) {
 		this.itemChildren.add(child);
+	}
+
+	public void removeChild(ItemEntity child) {
+		this.itemChildren.remove(child);
 	}
 	
 	public void addParent(ItemEntity parent) {
 		this.itemParents.add(parent);
 	}
 
+	public void removeParent(ItemEntity parent) {
+		this.itemParents.remove(parent);
+	}
+	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		ItemEntity that = (ItemEntity) o;
 		return itemId.equals(that.itemId);
 	}
