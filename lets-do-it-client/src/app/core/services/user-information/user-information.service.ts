@@ -39,7 +39,7 @@ export class UserInformationService {
         })
       )).pipe(map((res: User) => {
         return res;
-      }));
+      }), tap(loggedUser => this.loggedInUser$.next(loggedUser)));
   }
 
   public getLoggedInUser(): Observable<User | void> {
