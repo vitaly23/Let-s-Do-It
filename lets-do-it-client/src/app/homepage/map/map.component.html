@@ -1,4 +1,4 @@
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+<agm-map [style.height.px]="height" [style.width.px]="width" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-    <agm-marker [latitude]="meeting.location.lat" [longitude]="meeting.location.lng" *ngFor="let meeting of meetings; let i=index;"></agm-marker>
+    <agm-marker [latitude]="meeting.location.lat" [longitude]="meeting.location.lng" *ngFor="let meeting of this.meetings; let i=index;"></agm-marker>
 </agm-map>

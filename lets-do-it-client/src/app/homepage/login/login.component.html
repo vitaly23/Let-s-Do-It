@@ -1,8 +1,16 @@
-<div class="example-container">
-    <form [formGroup]="loginForm" (submit)="submit()"> 
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" required>
-      </mat-form-field>
-    </form>
+<div class="flex-container">
+  <h1>Lets do it</h1>
+  <form [formGroup]="loginForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" required>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" (click)="submit()"> Login</button>
+  </form>
+  <br>
+  <div>
+    <p>Or create one</p>
+    <button mat-raised-button color="accent" type="button" (click)="createUser()"> Create</button>
   </div>
+</div>
