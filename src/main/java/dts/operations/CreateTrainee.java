@@ -45,28 +45,27 @@ public class CreateTrainee implements Operations {
 	@Override
 	@Transactional
 	public Object invokeOperation(OperationBoundary operationBoundary) {
-		this.operationHelper.ValidateOperationAttributes(operationBoundary.getOperationAttributes(),
+		this.operationHelper.validateOperationAttributes(operationBoundary.getOperationAttributes(),
 				TraineeAttributes.ALL_TRAINEE_ATTRIBUTES);
 		UserId userId = operationBoundary.getInvokedBy().getUserId();
 		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(userId.getSpace(), userId.getEmail(),
 				UserRole.PLAYER);
-		this.ValidateNoSuchTrainee(userId.toString());
-		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Manager role");
-		this.userHelper.ChangeUserRole(existingUser, UserRole.MANAGER);
+		this.validateNoSuchTrainee(userId.toString());
+		this.userHelper.changeUserRole(existingUser, UserRole.MANAGER);
 		Map<String, Object> operationAttributes = operationBoundary.getOperationAttributes();
 		Object[] args = this.operationHelper.getNameAndLatAndLng(operationAttributes);
 		ItemBoundary traineeBoundary = new ItemBoundary(ItemTypes.TRAINEE, (String) args[0], (double) args[1],
 				(double) args[2], operationAttributes);
 		this.log.debug("Creating new digital item of type " + ItemTypes.TRAINEE);
 		ItemBoundary trainee = this.itemsService.create(userId.getSpace(), userId.getEmail(), traineeBoundary);
-		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Player role");
-		this.userHelper.ChangeUserRole(existingUser, UserRole.PLAYER);
+		this.userHelper.changeUserRole(existingUser, UserRole.PLAYER);
 		return trainee;
 	}
 
 	@Transactional(readOnly = true)
-	public void ValidateNoSuchTrainee(String userId) {
-		List<ItemBoundary> traineeList = this.itemsService.getAllByTypeAndCreatedBy(userId, ItemTypes.TRAINEE, 1, 0);
+	public void validateNoSuchTrainee(String userId) {
+		List<ItemBoundary> traineeList = this.itemsService.getAllActiveByTypeAndCreatedBy(userId, ItemTypes.TRAINEE, 1,
+				0);
 		if (!traineeList.isEmpty()) {
 			throw new TraineeAlreadyExistsException("Trainee with userId: " + userId + " already exists");
 		}

@@ -1,16 +1,21 @@
 package dts.data;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+//import javax.persistence.Table;
 import javax.persistence.Lob;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "OPERATIONS")
+//@Entity
+//@Table(name = "OPERATIONS")
+@Document
 public class OperationEntity {
 
 	private String operationId;
@@ -34,7 +39,7 @@ public class OperationEntity {
 		this.invokedBy = invokedBy;
 		this.operationAttributes = operationAttributes;
 	}
-	
+
 	@Id
 	public String getOperationId() {
 		return operationId;
@@ -59,7 +64,7 @@ public class OperationEntity {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedTimestamp() {
 		return createdTimestamp;
@@ -76,7 +81,7 @@ public class OperationEntity {
 	public void setInvokedBy(String invokedBy) {
 		this.invokedBy = invokedBy;
 	}
-	
+
 	@Lob
 	public String getOperationAttributes() {
 		return operationAttributes;

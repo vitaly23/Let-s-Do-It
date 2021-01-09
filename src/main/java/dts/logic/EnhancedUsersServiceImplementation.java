@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import boundaries.UserBoundary;
+
 import dts.converter.UserConverter;
 import dts.dao.UserDao;
 import dts.data.UserEntity;
@@ -36,8 +37,8 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 	@Transactional
 	public UserBoundary createUser(UserBoundary user) {
 		UserEntity newUserEntity = this.userConverter.toEntity(user);
-		this.userHelper.ValidateNewUserData(newUserEntity);
-		this.userHelper.ValidateNoSuchUser(newUserEntity.getUserId());
+		this.userHelper.validateNewUserData(newUserEntity);
+		this.userHelper.validateNoSuchUser(newUserEntity.getUserId());
 		this.userDao.save(newUserEntity);
 		return this.userConverter.toBoundary(newUserEntity);
 	}
@@ -60,7 +61,7 @@ public class EnhancedUsersServiceImplementation implements UsersService {
 			existingUser.setAvatar(updatedUser.getAvatar());
 		if (update.getRole() != null)
 			existingUser.setRole(updatedUser.getRole());
-		this.userHelper.ValidateUserData(existingUser);
+		this.userHelper.validateUserData(existingUser);
 		return this.userConverter.toBoundary(this.userDao.save(existingUser));
 	}
 

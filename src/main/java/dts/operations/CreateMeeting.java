@@ -26,6 +26,7 @@ import dts.utils.UserHelper;
 
 import exceptions.InvalidOperationException;
 
+import models.operations.ItemId;
 import models.users.UserId;
 
 @Component(OperationTypes.CREATE_MEETING)
@@ -46,38 +47,44 @@ public class CreateMeeting implements Operations {
 	@Override
 	@Transactional
 	public Object invokeOperation(OperationBoundary operationBoundary) {
-		this.operationHelper.ValidateOperationAttributes(operationBoundary.getOperationAttributes(),
+		this.operationHelper.validateOperationAttributes(operationBoundary.getOperationAttributes(),
 				MeetingAttributes.ALL_MEETING_ATTRIBUTES);
 		Map<String, Object> operationAttributes = operationBoundary.getOperationAttributes();
-		this.ValidateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_START_DATE));
-		this.ValidateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_END_DATE));
+		this.validateMaximumParticipantsNumber(
+				(String) operationAttributes.get(MeetingAttributes.MAX_PARTICIPANTS_NUMBER));
+		this.validateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_START_DATE));
+		this.validateMeetingDateFormat((String) operationAttributes.get(MeetingAttributes.MEETING_END_DATE));
+		ItemId itemId = operationBoundary.getItem().getItemId();
 		UserId userId = operationBoundary.getInvokedBy().getUserId();
 		UserEntity existingUser = this.userHelper.getSpecificUserWithRole(userId.getSpace(), userId.getEmail(),
 				UserRole.PLAYER);
-		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Manager role");
-		this.userHelper.ChangeUserRole(existingUser, UserRole.MANAGER);
-
+		this.userHelper.changeUserRole(existingUser, UserRole.MANAGER);
 		Object[] args = this.operationHelper.getNameAndLatAndLng(operationAttributes);
+		operationAttributes.put(MeetingAttributes.NUMBER_OF_PARTICIPANTS, "1");
 		ItemBoundary meetingBoundary = new ItemBoundary(ItemTypes.MEETING, (String) args[0], (double) args[1],
 				(double) args[2], operationAttributes);
 		this.log.debug("Creating new digital item of type " + ItemTypes.MEETING);
-		ItemBoundary meeting = this.itemsService.create(userId.getSpace(), userId.getEmail(), meetingBoundary);
-		ItemBoundary traineeBoundary = this.itemsService
-				.getAllByTypeAndCreatedBy(userId.toString(), ItemTypes.TRAINEE, 1, 0).get(0);
-		this.log.debug("Binding " + traineeBoundary.getName() + " to meeting " + meeting.getName());
-		this.itemsService.bindChild(userId.getSpace(), userId.getEmail(), meeting.getItemId().getSpace(),
-				meeting.getItemId().getId(), traineeBoundary.getItemId());
-		this.log.debug("Setting user with email '" + userId.getEmail() + "' to Player role");
-		this.userHelper.ChangeUserRole(existingUser, UserRole.PLAYER);
-		return meeting;
+		ItemBoundary newMeeting = this.itemsService.create(userId.getSpace(), userId.getEmail(), meetingBoundary);
+		ItemBoundary traineeBoundary = this.itemsService.getSpecificItem(userId.getSpace(), userId.getEmail(),
+				itemId.getSpace(), itemId.getId());
+		this.log.debug("Binding Trainee " + traineeBoundary.getItemId() + " to meeting " + newMeeting.getItemId());
+		this.itemsService.bindChild(userId.getSpace(), userId.getEmail(), newMeeting.getItemId().getSpace(),
+				newMeeting.getItemId().getId(), traineeBoundary.getItemId());
+		this.userHelper.changeUserRole(existingUser, UserRole.PLAYER);
+		return newMeeting;
 	}
 
-	public void ValidateMeetingDateFormat(String date) {
+	public void validateMeetingDateFormat(String date) {
 		try {
 			new SimpleDateFormat(MeetingAttributes.MEETING_DATE_FORMAT).parse(date);
 		} catch (ParseException e) {
-			throw new InvalidOperationException("date fromat is invalid");
+			throw new InvalidOperationException("Date fromat is invalid");
 		}
+	}
+
+	public void validateMaximumParticipantsNumber(String maximumNumberOfParticipants) {
+		if (Integer.parseInt(maximumNumberOfParticipants) < 1)
+			throw new InvalidOperationException("Maximum number of participants can not be less then 1");
 	}
 
 }
