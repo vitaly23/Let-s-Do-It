@@ -70,8 +70,8 @@ public class ItemController {
 	public ItemBoundary[] retrieveAllDigitalItems(
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
 		List<ItemBoundary> listItem = this.itemsService.getAll(userSpace, userEmail, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
@@ -99,8 +99,8 @@ public class ItemController {
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("itemSpace") String itemSpace,
 			@PathVariable("itemId") String itemId,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page) {
 		List<ItemBoundary> listItem = this.itemsService.getAllChildren(userSpace, userEmail, itemSpace, itemId, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
@@ -115,8 +115,8 @@ public class ItemController {
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("itemSpace") String itemSpace,
 			@PathVariable("itemId") String itemId,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
 		List<ItemBoundary> listItem = this.itemsService.getParents(userSpace, userEmail, itemSpace, itemId, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
@@ -130,8 +130,8 @@ public class ItemController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("namePattern") String namePattern,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
 		List<ItemBoundary> listItem = this.itemsService.getAllByNamePattern(userSpace, userEmail, namePattern, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
@@ -145,8 +145,8 @@ public class ItemController {
 			@PathVariable("userSpace") String userSpace,
 			@PathVariable("userEmail") String userEmail,
 			@PathVariable("type") String type,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
 		List<ItemBoundary> listItem = this.itemsService.getAllByType(userSpace, userEmail, type, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);
@@ -162,8 +162,8 @@ public class ItemController {
 			@PathVariable("lat") double lat,
 			@PathVariable("lng") double lng,
 			@PathVariable("distance") double distance,
-			@RequestParam(name = "size", required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
-			@RequestParam(name = "page", required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
+			@RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.DEFAULT_SIZE) int size,
+			@RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) int page){
 		List<ItemBoundary> listItem = this.itemsService.getAllByLocation(userSpace, userEmail, lat, lng, distance, size, page);
 		ItemBoundary[] array = new ItemBoundary[listItem.size()];
 		listItem.toArray(array);

@@ -15,7 +15,7 @@ export class UserInformationService {
 
   public login(userMail: any): Observable<User> {
     return this.httpWrapper.getWithParams(
-      `http://localhost:8080/dts/users/login/default_space_name/#{0}#`, [userMail.email])
+      `http://localhost:8081/dts/users/login/default_space_name/#{0}#`, [userMail.email])
       .pipe(map((res: any) => {
         let user: User = {
           avatar: res.avatar,
@@ -29,13 +29,15 @@ export class UserInformationService {
 
   public create(user: User): Observable<User> {
     return this.httpWrapper.post(
-      `http://localhost:8080/dts/users`,
-      {
-        userName: user.userName,
-        avatar: user.avatar,
-        userId: user.userId,
-        role: UserRole.PLAYER
-      } as User).pipe(map((res: User) => {
+      `http://localhost:8081/dts/users`,
+      JSON.parse(
+        JSON.stringify({
+          username: user.userName,
+          avatar: user.avatar,
+          email: user.userId.email,
+          //role: UserRole.PLAYER
+        })
+      )).pipe(map((res: User) => {
         return res;
       }));
   }

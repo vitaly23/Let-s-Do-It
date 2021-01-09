@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Meeting } from './meeting';
 import { HttpWrapperService } from '../http-wrapper/http-wrapper.service';
 import { map } from 'rxjs/operators';
@@ -10,14 +10,14 @@ import { map } from 'rxjs/operators';
 })
 export class MeetingService {
 
-  private getMeetingUrl = 'http://127.0.0.1:8081/dts/2021a.demo/';
-  private deleteMeetingUrl = 'http://127.0.0.1:8081/dts/2021a.demo/';
-  private updateMeetingUrl = 'http://127.0.0.1:8081/dts/2021a.demo/';
-  
+  private getMeetingUrl = 'http://localhost:8081/dts/2021a.demo/';
+  private deleteMeetingUrl = 'http://localhost:8081/dts/2021a.demo/';
+  private updateMeetingUrl = 'http://localhost:8081/dts/2021a.demo/';
+
 
   constructor(private _httpWrapperService: HttpWrapperService) { }
 
-  getMeetings():Observable<Meeting[]>{
+  getMeetings(): Observable<Meeting[]> {
     /*let meetings: Meeting[] = [
       {
         itemId:{space:"space", id:"id"},
@@ -47,17 +47,17 @@ export class MeetingService {
     ];
 
     return of(meetings);*/
-    return this._httpWrapperService.getWithParams(this.getMeetingUrl,[])
-    .pipe(map((res: any[]) => {
-      return res;
-    }));
+    return this._httpWrapperService.getWithParams(this.getMeetingUrl, [])
+      .pipe(map((res: any[]) => {
+        return res;
+      }));
   }
 
-  updateMeeting(meeting:Meeting): void{
+  updateMeeting(meeting: Meeting): void {
 
   }
 
-  deleteMeeting(meeting:Meeting): void{
+  deleteMeeting(meeting: Meeting): void {
 
   }
 

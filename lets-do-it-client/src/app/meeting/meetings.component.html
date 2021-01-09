@@ -1,0 +1,36 @@
+<h2>My Meetings</h2>
+<mat-tab-group (selectedTabChange)="onTabClick($event)">
+  <mat-tab label="My Meetings"> 
+      <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let meeting of this.meetings">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{meeting.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{meeting.type}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-meeting-info [meeting]='meeting' [buttons]="'creator'" ></app-meeting-info> 
+        </mat-expansion-panel>
+      </mat-accordion>
+  </mat-tab>
+  <mat-tab label="Joined Meetings">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let meeting of this.meetings">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{meeting.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{meeting.type}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-meeting-info [meeting]='meeting' [buttons]="'participant'" ></app-meeting-info> 
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-tab>
+  <mat-tab label="Find Meeting"> <app-find-meeting></app-find-meeting> </mat-tab>
+  <mat-tab label="Create New Meeting"> Content 3 </mat-tab>
+</mat-tab-group>
+
