@@ -12,6 +12,14 @@ const routes: Routes = [
   {
     path: 'homepage', pathMatch: 'full', canActivate: [LoginGuardService],
     loadChildren: () => import('./homepage/homepage.module').then(m => m.HomepageModule)
+  },
+  {
+    path: 'meetings', pathMatch: 'full', canActivate: [LoginGuardService],
+    loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)
+  },
+  {
+    path: 'map', pathMatch: 'full', canActivate: [LoginGuardService],
+    loadChildren: () => import('./homepage/map/map.module').then(m => m.MapModule)
   }
 ];
 
