@@ -8,7 +8,6 @@ import { HeaderModule } from '../header/header.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AgmCoreModule } from '@agm/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
@@ -24,9 +23,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatSidenavModule,
     MatInputModule,
-    AgmCoreModule.forRoot({
-      apiKey: ''
-    }),
   ],
   exports: [HomepageComponent]
 })

@@ -1,0 +1,23 @@
+<mat-grid-list cols="2" rowHeight="fit" style="height: 500px">
+    <mat-label>Meeting Type</mat-label>
+    <input matInput>
+    <mat-label>Distance</mat-label>
+    <input matInput>
+    
+    <mat-grid-tile>
+        <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let meeting of this.meetings">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{meeting.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{meeting.type}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-meeting-info [meeting]='meeting' [buttons]="'participant'" ></app-meeting-info> 
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-grid-tile>
+    <mat-grid-tile><app-map [width]=1000 [height]=500 ></app-map></mat-grid-tile>
+</mat-grid-list>
