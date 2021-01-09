@@ -8,9 +8,7 @@ import { HeaderModule } from '../header/header.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MapModule } from './map/map.module';
 import { MatButtonModule } from '@angular/material/button';
-import { MeetingModule } from '../meeting/meeting.module';
 
 @NgModule({
   declarations: [HomepageComponent],
@@ -18,7 +16,6 @@ import { MeetingModule } from '../meeting/meeting.module';
     CommonModule,
     HeaderModule,
     MatIconModule,
-    MapModule,
     MatCardModule,
     MatButtonModule,
     FormsModule,
@@ -26,7 +23,6 @@ import { MeetingModule } from '../meeting/meeting.module';
     MatFormFieldModule,
     MatSidenavModule,
     MatInputModule,
-    MeetingModule,
   ],
   exports: [HomepageComponent]
 })

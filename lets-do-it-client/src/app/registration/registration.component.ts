@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { User } from '../core/services/user-information/user';
 import { takeUntil } from 'rxjs/operators';
 import { UserInformationService } from '../core/services/user-information/user-information.service';
+import { UserRole } from '../core/services/user-information/user-role';
 
 @Component({
   selector: 'app-registration',
@@ -12,15 +13,14 @@ import { UserInformationService } from '../core/services/user-information/user-i
 })
 export class RegistrationComponent implements OnInit {
 
-  @Output() registerUser = new EventEmitter<User>();
   public registerForm: FormGroup;
   submitted = false;
   private ngOnUnsubscribe$: Subject<void> = new Subject<void>();
-  
-  constructor(private formBuilder: FormBuilder,
-              private userInformationService: UserInformationService) {
 
-     }
+  constructor(private formBuilder: FormBuilder,
+    private userInformationService: UserInformationService) {
+
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -39,11 +39,17 @@ export class RegistrationComponent implements OnInit {
       alert("Invalid user");
       return;
     }
-      
-    this.userInformationService.create(this.registerForm.value).pipe(
+
+    const user: User = {
+      avatar: this.registerForm.controls["avatar"].value,
+      role: UserRole.PLAYER,
+      userId: { email: this.registerForm.controls["email"].value, space: 'default_space' },
+      userName: this.registerForm.controls["name"].value
+    };
+    this.userInformationService.create(user).pipe(
       takeUntil(this.ngOnUnsubscribe$)
-    ).subscribe(user =>{
-      this.registerUser.emit(user);
+    ).subscribe(user => {
+      console.log(`Welcome ${user.userName}`);
     }, error => {
       console.log(error.message);
       alert(error.message);

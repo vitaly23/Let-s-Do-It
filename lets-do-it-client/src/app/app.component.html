@@ -1,10 +1,10 @@
 <ng-container *ngIf="(loggedUser$ | async); else login">
-    <div class="example-container">
+    <div>
         <mat-toolbar color="primary" class="example-toolbar">
             <button mat-icon-button (click)="snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <h1 class="example-app-name">Responsive App</h1>
+            <h1 class="example-app-name">Lets do it</h1>
         </mat-toolbar>
 
         <mat-sidenav-container class="example-sidenav-container">
@@ -14,13 +14,13 @@
                 </mat-nav-list>
             </mat-sidenav>
 
-            <mat-sidenav-content>
+            <mat-sidenav-content class="flex-container">
                 <router-outlet></router-outlet>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
 </ng-container>
 
-<ng-template #login>
+<ng-template #login class="flex-container">
     <router-outlet></router-outlet>
 </ng-template>

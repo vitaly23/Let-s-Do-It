@@ -4,6 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RegistrationComponent } from './registration.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
@@ -15,7 +17,9 @@ import { RegistrationComponent } from './registration.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatStepperModule
   ],
-  exports:[RegistrationComponent]
+  exports: [RegistrationComponent]
 })
 export class RegistrationModule { }
