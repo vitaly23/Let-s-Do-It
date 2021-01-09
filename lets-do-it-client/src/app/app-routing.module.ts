@@ -9,7 +9,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'homepage', pathMatch: 'full', canActivate: [LoginGuardService], loadChildren: () => import('./homepage/homepage.module').then(m => m.HomepageModule) }
+  {
+    path: 'homepage', pathMatch: 'full', canActivate: [LoginGuardService],
+    loadChildren: () => import('./homepage/homepage.module').then(m => m.HomepageModule)
+  }
 ];
 
 @NgModule({

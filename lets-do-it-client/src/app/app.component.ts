@@ -11,7 +11,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  fillerNav: { title: string, route: string }[] = [{ title: 'bla', route: '/hompepage' }, { title: 'meetings', route: '/meetings' }, { title: 'map', route: '/map' }]
+  fillerNav: { title: string, route: string }[] = [
+    { title: 'meetings', route: '/meetings' },
+    { title: 'map', route: '/map' }]
   loggedUser$: Observable<User | void>;
 
   title = 'lets-do-it-client';
