@@ -9,7 +9,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MapModule } from './map/map.module';
-import { AgmCoreModule } from '@agm/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MeetingModule } from '../meeting/meeting.module';
 
@@ -27,9 +26,6 @@ import { MeetingModule } from '../meeting/meeting.module';
     MatFormFieldModule,
     MatSidenavModule,
     MatInputModule,
-    AgmCoreModule.forRoot({
-      apiKey: ''
-    }),
     MeetingModule,
   ],
   exports: [HomepageComponent]
