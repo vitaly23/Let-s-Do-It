@@ -14,6 +14,7 @@ import { UserRole } from '../core/services/user-information/user-role';
 export class RegistrationComponent implements OnInit {
 
   public registerForm: FormGroup;
+  public traineeDetails: FormGroup;
   submitted = false;
   private ngOnUnsubscribe$: Subject<void> = new Subject<void>();
 
@@ -28,6 +29,10 @@ export class RegistrationComponent implements OnInit {
       name: ['', [Validators.required]],
       avatar: ['', [Validators.required]],
     })
+
+    this.traineeDetails = this.formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
   }
 
   get f() { return this.registerForm.controls; }
