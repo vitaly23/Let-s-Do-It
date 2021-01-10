@@ -1,0 +1,13 @@
+<div class="example-container">
+    <form [formGroup]="accountDetails">
+        <mat-form-field appearance="fill">
+            <mat-label>User Name</mat-label>
+            <input matInput placeholder="User Name" formControlName="userName" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Avatar</mat-label>
+            <input matInput placeholder="Avatar" formControlName="avatar" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()"> Submit</button>
+    </form>
+</div>

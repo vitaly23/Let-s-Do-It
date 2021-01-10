@@ -1,22 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User } from '../core/services/user-information/user';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { TraineeDetails } from '../core/services/trainee-details/trainee-details';
 import { TraineeDetailsService } from '../core/services/trainee-details/trainee-details.service';
 import { UserInformationService } from '../core/services/user-information/user-information.service';
-import { User } from '../core/services/user-information/user';
+import { takeUntil, switchMap } from 'rxjs/operators';
+import { TraineeDetails } from '../core/services/trainee-details/trainee-details';
+import { UserRole } from '../core/services/user-information/user-role';
 
 @Component({
-  selector: 'app-trainee-details',
-  templateUrl: './trainee-details.component.html',
-  styleUrls: ['./trainee-details.component.scss']
+  selector: 'app-trainee',
+  templateUrl: './trainee.component.html',
+  styleUrls: ['./trainee.component.scss']
 })
-export class TraineeDetailsComponent implements OnInit, OnDestroy {
+export class TraineeComponent implements OnInit, OnDestroy {
 
   public traineeDetails: FormGroup;
   public submitted = false;
   public loggedUser: User;
+  public trainee: TraineeDetails;
   private ngOnUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private formBuilder: FormBuilder,
@@ -26,21 +28,30 @@ export class TraineeDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.traineeDetails = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      age: ['', [Validators.required]],
-      height: ['', [Validators.required]],
-      weight: ['', [Validators.required]],
-    });
 
     this.userInformationService.getLoggedInUser()
       .pipe(takeUntil(this.ngOnUnsubscribe$)).subscribe((user: User) => {
         this.loggedUser = user;
+        this.traineeDetailsService.getTraineeDetails(this.loggedUser)
+          .pipe(takeUntil(this.ngOnUnsubscribe$))
+          .subscribe(trainee => {
+            this.trainee = trainee;
+            this.initForm();
+          });
       });
   }
   ngOnDestroy() {
     this.ngOnUnsubscribe$.next();
     this.ngOnUnsubscribe$.complete();
+  }
+
+  initForm() {
+    this.traineeDetails = this.formBuilder.group({
+      name: [this.trainee.name, [Validators.required]],
+      age: [this.trainee.age, [Validators.required]],
+      height: [this.trainee.height, [Validators.required]],
+      weight: [this.trainee.weight, [Validators.required]],
+    });
   }
 
 
@@ -60,6 +71,15 @@ export class TraineeDetailsComponent implements OnInit, OnDestroy {
       height: this.traineeDetails.controls["height"].value,
       weight: this.traineeDetails.controls["weight"].value,
     };
+
+    this.loggedUser.role = UserRole.MANAGER;
+    this.userInformationService.updateUser(this.loggedUser.userName,
+      this.loggedUser.avatar, this.loggedUser).pipe(takeUntil(this.ngOnUnsubscribe$)).subscribe(
+        user => {
+
+        }
+      );
+
     this.traineeDetailsService.create(trainee, this.loggedUser).pipe(
       takeUntil(this.ngOnUnsubscribe$)
     ).subscribe(trainee => {

@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/core/services/user-information/user';
 import { UserInformationService } from 'src/app/core/services/user-information/user-information.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { TraineeDetailsService } from 'src/app/core/services/trainee-details/trainee-details.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
+    private traineeDetailsService: TraineeDetailsService,
     private userInformationService: UserInformationService) { }
 
   ngOnInit() {
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.userInformationService.login(this.loginForm.value).pipe(
-      takeUntil(this.ngOnUnsubscribe$)
+      takeUntil(this.ngOnUnsubscribe$),
     ).subscribe(user => {
       this.loggedUser = user;
       this.router.navigate([`/homepage`]);

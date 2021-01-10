@@ -1,4 +1,3 @@
-<h2>My Meetings</h2>
 <mat-tab-group (selectedTabChange)="onTabClick($event)">
   <mat-tab label="My Meetings"> 
       <mat-accordion>
@@ -31,6 +30,6 @@
     </mat-accordion>
   </mat-tab>
   <mat-tab label="Find Meeting"> <app-find-meeting></app-find-meeting> </mat-tab>
-  <mat-tab label="Create New Meeting"> Content 3 </mat-tab>
+  <mat-tab label="Create New Meeting"> <app-create-meeting></app-create-meeting> </mat-tab>
 </mat-tab-group>
 

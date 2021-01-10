@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { HomepageRoutingModule } from './homepage-routing.module';
 
 @NgModule({
   declarations: [HomepageComponent],
@@ -23,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatSidenavModule,
     MatInputModule,
+    HomepageRoutingModule
   ],
   exports: [HomepageComponent]
 })

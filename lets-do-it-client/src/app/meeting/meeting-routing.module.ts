@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes } from '@angular/router';
-import { MeetingComponent } from './meeting.component';
+import { Routes, RouterModule } from '@angular/router';
+import { MeetingsComponent } from './meetings.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    component: MeetingComponent
+    component: MeetingsComponent
   },
 ];
 
 @NgModule({
-  declarations: [],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule.forChild(routes),
+  ],
+  exports: [RouterModule],
 })
 export class MeetingRoutingModule { }
