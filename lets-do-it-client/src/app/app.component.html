@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="(loggedUser$ | async); else login">
     <!-- *ngIf="(loggedUser$ | async); else login" -->
     <div class="example-container">
         <mat-toolbar color="primary" class="example-toolbar">
@@ -22,6 +22,6 @@
     </div>
 </ng-container>
 
-<!-- <ng-template #login class="flex-container">
+<ng-template #login class="flex-container">
     <router-outlet></router-outlet>
-</ng-template> -->
+</ng-template>

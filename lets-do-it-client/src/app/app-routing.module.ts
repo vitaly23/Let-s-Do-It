@@ -24,6 +24,14 @@ const routes: Routes = [
     path: 'trainee-details', canActivate: [LoginGuardService],
     loadChildren: () => import('./trainee-details/trainee-details.module').then(m => m.TraineeDetailsModule)
   },
+  {
+    path: 'my-trainee', canActivate: [LoginGuardService],
+    loadChildren: () => import('./trainee/trainee.module').then(m => m.TraineeModule)
+  },
+  {
+    path: 'my-account', canActivate: [LoginGuardService],
+    loadChildren: () => import('./homepage/user-account/user-account.module').then(m => m.UserAccountModule)
+  },
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 ];
 

@@ -1,0 +1,22 @@
+<div class="example-container">
+    <form [formGroup]="traineeDetails">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="Age" formControlName="age" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Height</mat-label>
+            <input matInput placeholder="Height" formControlName="height" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Weight</mat-label>
+            <input matInput placeholder="Weight" formControlName="weight" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()"> Update</button>
+    </form>
+</div>
