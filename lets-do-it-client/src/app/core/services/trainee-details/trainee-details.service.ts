@@ -5,6 +5,8 @@ import { map, tap } from 'rxjs/operators';
 import { HttpWrapperService } from '../http-wrapper/http-wrapper.service';
 import { Operation } from '../operations/operation';
 import { User } from '../user-information/user';
+import { Item } from '../operations/item';
+import { ItemBoundary } from '../operations/item-boundary';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +16,27 @@ export class TraineeDetailsService {
   public traineeDetails$: Subject<TraineeDetails | void> = new BehaviorSubject(null);
   constructor(private httpWrapper: HttpWrapperService) { }
 
-  public getCurrentTraineDetails() {
+  public getCurrentTraineDetails(): Observable<TraineeDetails | void> {
     return this.traineeDetails$.asObservable();
   }
 
-  public updateExistingTrainee() {
-
+  public updateExistingTrainee(managerSpace: string, managerEmail: string, itemSpace: string, itemId: string, item: ItemBoundary) {
+    return this.httpWrapper.putWithParams(
+      `http://localhost:8081/dts/items/#{0}#/#{1}#/#{2}#/#{3}#`, [managerSpace, managerEmail, itemSpace, itemId],
+      JSON.parse(
+        JSON.stringify({
+          name: item.name,
+          type: item.type,
+          itemId: item.itemId,
+          //role: UserRole.PLAYER
+        })
+      )
+    ).pipe(map((res: TraineeDetails) => {
+      return res;
+    }), tap(traineeDetails => this.traineeDetails$.next(traineeDetails)));
   }
 
-  public getTraineeDetails(trainee: TraineeDetails, user: User): Observable<TraineeDetails> {
+  public getTraineeDetails(user: User): Observable<TraineeDetails> {
     const operation: Operation = {
       invokedBy: { userId: { email: user.userId.email, space: user.userId.space } },
       type: "getTraineeDetails",
@@ -44,13 +58,19 @@ export class TraineeDetailsService {
             item: {
               itemId: {
                 space: operation.item.itemId.space,
-                id: "5ff998f97b7abf51c3395fc8"
+                id: "5ff999207b7abf51c3395fc9"
               }
             },
           }
         )
-      )).pipe(map((res: TraineeDetails) => {
-        return res;
+      )).pipe(map((res: any) => {
+        const traineeDetails: TraineeDetails = {
+          age: res.itemAttributes.age,
+          height: res.itemAttributes.height,
+          weight: res.itemAttributes.wieght,
+          name: res.name
+        };
+        return traineeDetails;
       }), tap(traineeDetails => this.traineeDetails$.next(traineeDetails)));
   }
 
@@ -94,7 +114,7 @@ export class TraineeDetailsService {
               name: operation.operationAttributes.get("name"),
               age: operation.operationAttributes.get("age"),
               height: operation.operationAttributes.get("height"),
-              weight: operation.operationAttributes.get("weight")
+              wieght: operation.operationAttributes.get("weight")
             }
           }
         )

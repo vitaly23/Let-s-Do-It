@@ -9,7 +9,7 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserInformationService {
-
+  private loggedUser: User;
   private loggedInUser$: Subject<User | void> = new BehaviorSubject(null);
   private space = '2021a.vitalyg1';
   constructor(private httpWrapper: HttpWrapperService) { }
@@ -25,7 +25,8 @@ export class UserInformationService {
           role: res.role
         } as User;
         return user;
-      }), tap(loggedUser => this.loggedInUser$.next(loggedUser)));
+      }), tap(loggedUser => this.loggedInUser$.next(loggedUser),
+        tap((loggedUser: User) => this.loggedUser = loggedUser)));
   }
 
   public create(user: User): Observable<User> {
@@ -45,7 +46,7 @@ export class UserInformationService {
 
   public updateUser(userName: string, avatar: string, user: User): Observable<User> {
     return this.httpWrapper.putWithParams(
-      `http://localhost:8081/dts/users`, [userName, this.space],
+      `http://localhost:8081/dts/users/#{0}#/#{1}#`, [userName, this.space],
       JSON.parse(
         JSON.stringify({
           username: user.userName,
@@ -61,5 +62,9 @@ export class UserInformationService {
 
   public getLoggedInUser(): Observable<User | void> {
     return this.loggedInUser$.asObservable();
+  }
+
+  public getLoggedUser() {
+    return this.loggedUser;
   }
 }
