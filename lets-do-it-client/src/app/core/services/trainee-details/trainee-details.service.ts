@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TraineeDetails } from './trainee-details';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { HttpWrapperService } from '../http-wrapper/http-wrapper.service';
 import { Operation } from '../operations/operation';
 import { User } from '../user-information/user';
@@ -11,10 +11,47 @@ import { User } from '../user-information/user';
 })
 export class TraineeDetailsService {
 
+  public traineeDetails$: Subject<TraineeDetails | void> = new BehaviorSubject(null);
   constructor(private httpWrapper: HttpWrapperService) { }
+
+  public getCurrentTraineDetails() {
+    return this.traineeDetails$.asObservable();
+  }
 
   public updateExistingTrainee() {
 
+  }
+
+  public getTraineeDetails(trainee: TraineeDetails, user: User): Observable<TraineeDetails> {
+    const operation: Operation = {
+      invokedBy: { userId: { email: user.userId.email, space: user.userId.space } },
+      type: "getTraineeDetails",
+      item: { itemId: { id: user.userId.email, space: user.userId.space } },
+      operationId: { id: user.userId.email, space: user.userId.space },
+    };
+    return this.httpWrapper.post(
+      `http://localhost:8081/dts/operations`,
+      JSON.parse(
+        JSON.stringify(
+          {
+            type: operation.type,
+            invokedBy: {
+              userId: {
+                space: operation.invokedBy.userId.space,
+                email: operation.invokedBy.userId.email
+              }
+            },
+            item: {
+              itemId: {
+                space: operation.item.itemId.space,
+                id: "5ff998f97b7abf51c3395fc8"
+              }
+            },
+          }
+        )
+      )).pipe(map((res: TraineeDetails) => {
+        return res;
+      }), tap(traineeDetails => this.traineeDetails$.next(traineeDetails)));
   }
 
   public create(trainee: TraineeDetails, user: User): Observable<TraineeDetails> {
@@ -48,7 +85,7 @@ export class TraineeDetailsService {
             item: {
               itemId: {
                 space: operation.item.itemId.space,
-                id: operation.item.itemId.id
+                id: "5ff998f97b7abf51c3395fc8"
               }
             },
             operationAttributes: {

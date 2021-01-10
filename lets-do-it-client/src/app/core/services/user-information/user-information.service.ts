@@ -9,6 +9,7 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserInformationService {
+
   private loggedInUser$: Subject<User | void> = new BehaviorSubject(null);
   private space = '2021a.vitalyg1';
   constructor(private httpWrapper: HttpWrapperService) { }

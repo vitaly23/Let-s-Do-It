@@ -8,5 +8,5 @@ export interface Operation {
     item: Item;
     createdTimeStamp?: Date;
     invokedBy: InvokedBy;
-    operationAttributes: Map<string, Object>;
+    operationAttributes?: Map<string, Object>;
 }
