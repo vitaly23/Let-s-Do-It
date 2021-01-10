@@ -33,7 +33,29 @@ export class TraineeDetailsService {
       `http://localhost:8081/dts/operations`,
       JSON.parse(
         JSON.stringify(
-          operation
+          {
+            type: operation.type,
+            invokedBy: {
+              userId: {
+                space: operation.invokedBy.userId.space,
+                email: operation.invokedBy.userId.email
+              }
+            },
+            item: {
+              itemId: {
+                space: operation.item.itemId.space,
+                id: operation.item.itemId.id
+              }
+            },
+            operationAttributes: {
+              lat: operation.operationAttributes.get("lat"),
+              lng: operation.operationAttributes.get("lng"),
+              name: operation.operationAttributes.get("name"),
+              age: operation.operationAttributes.get("age"),
+              height: operation.operationAttributes.get("height"),
+              weight: operation.operationAttributes.get("weight")
+            }
+          }
         )
       )).pipe(map((res: TraineeDetails) => {
         return res;
