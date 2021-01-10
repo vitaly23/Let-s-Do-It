@@ -9,18 +9,27 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FindMeetingComponent } from './find-meeting/find-meeting.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
+import { MeetingRoutingModule } from './meeting-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CreateMeetingComponent } from './create-meeting/create-meeting.component';
 
 
 @NgModule({
-  declarations: [MeetingsComponent, MeetingInfoComponent, FindMeetingComponent],
+  declarations: [MeetingsComponent, MeetingInfoComponent, FindMeetingComponent, CreateMeetingComponent],
   imports: [
     CommonModule,
-    MapModule,
     MatTabsModule,
     MatCardModule,
     MatExpansionModule,
     MatGridListModule,
-    MatInputModule
+    MatInputModule,
+    MeetingRoutingModule,
+    MapModule,
+    MatButtonModule,
+    FormsModule,
+    ScrollingModule
   ],
   exports: [MeetingsComponent],
 })

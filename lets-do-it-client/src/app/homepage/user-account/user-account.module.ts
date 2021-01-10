@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TraineeDetailsComponent } from './trainee-details.component';
+import { UserAccountComponent } from './user-account.component';
+import { UserAccountRoutingModule } from './user-account-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TraineeDetailsRoutingModule } from './trainee-details-routing.module';
 
 
 
 @NgModule({
-  declarations: [TraineeDetailsComponent],
+  declarations: [UserAccountComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -18,8 +18,8 @@ import { TraineeDetailsRoutingModule } from './trainee-details-routing.module';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    TraineeDetailsRoutingModule
+    UserAccountRoutingModule
   ],
-  exports: [TraineeDetailsComponent]
+  exports: [UserAccountComponent]
 })
-export class TraineeDetailsModule { }
+export class UserAccountModule { }
