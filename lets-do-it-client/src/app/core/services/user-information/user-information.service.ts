@@ -10,12 +10,12 @@ import { map, tap } from 'rxjs/operators';
 })
 export class UserInformationService {
   private loggedInUser$: Subject<User | void> = new BehaviorSubject(null);
-
+  private space = '2021a.vitalyg1';
   constructor(private httpWrapper: HttpWrapperService) { }
 
   public login(userMail: any): Observable<User> {
     return this.httpWrapper.getWithParams(
-      `http://localhost:8081/dts/users/login/2021a.vitalyg1/#{0}#`, [userMail.email])
+      `http://localhost:8081/dts/users/login/${this.space}/#{0}#`, [userMail.email])
       .pipe(map((res: any) => {
         let user: User = {
           avatar: res.avatar,
@@ -44,7 +44,7 @@ export class UserInformationService {
 
   public updateUser(userName: string, avatar: string, user: User): Observable<User> {
     return this.httpWrapper.putWithParams(
-      `http://localhost:8081/dts/users`, [userName, avatar],
+      `http://localhost:8081/dts/users`, [userName, this.space],
       JSON.parse(
         JSON.stringify({
           username: user.userName,

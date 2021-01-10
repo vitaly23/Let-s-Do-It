@@ -13,6 +13,10 @@ export class TraineeDetailsService {
 
   constructor(private httpWrapper: HttpWrapperService) { }
 
+  public updateExistingTrainee() {
+
+  }
+
   public create(trainee: TraineeDetails, user: User): Observable<TraineeDetails> {
     const operation: Operation = {
       invokedBy: { userId: { email: user.userId.email, space: user.userId.space } },
