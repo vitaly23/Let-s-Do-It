@@ -1,23 +1,37 @@
 <mat-grid-list cols="2" rowHeight="fit" style="height: 500px">
-    <mat-label>Meeting Type</mat-label>
-    <input matInput>
-    <mat-label>Distance</mat-label>
-    <input matInput>
-    
     <mat-grid-tile>
-        <mat-accordion>
-        <mat-expansion-panel hideToggle *ngFor="let meeting of this.meetings">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{meeting.name}}
-            </mat-panel-title>
-            <mat-panel-description>
-              {{meeting.type}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <app-meeting-info [meeting]='meeting' [buttons]="'participant'" ></app-meeting-info> 
-        </mat-expansion-panel>
-      </mat-accordion>
+        
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                <mat-label>Sport Type</mat-label>
+                <input matInput [(ngModel)]="sportType" type="text" [ngModelOptions]="{standalone: true}" required>
+                </mat-form-field>
+            
+                <mat-form-field class="example-full-width">
+                <mat-label>Radius</mat-label>
+                <input matInput [(ngModel)]="radius" type="number" [ngModelOptions]="{standalone: true}" required>
+                </mat-form-field>
+                <button mat-button type="button" (click)="searchClick()">Search</button>
+            </form>
+       
+      
+            <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+                <mat-accordion>
+                    <mat-expansion-panel  *cdkVirtualFor="let meeting of this.meetings; let i=index;" 
+                    (opened)="setChosen(i);" hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                        {{meeting.name}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                        {{meeting.type}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-meeting-info [meeting]='meeting' [buttons]="'not-joined'" ></app-meeting-info> 
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </cdk-virtual-scroll-viewport>             
+       
     </mat-grid-tile>
-    <mat-grid-tile><app-map [width]=1000 [height]=500 ></app-map></mat-grid-tile>
+    <mat-grid-tile><app-map [width]=1000 [height]=500 [zoom]=15 [lat]="getChosenMeetingLat()" [lng]="getChosenMeetingLng()"></app-map></mat-grid-tile>
 </mat-grid-list>
